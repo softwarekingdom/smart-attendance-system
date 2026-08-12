@@ -1,0 +1,478 @@
+/* =====================================
+   AI SCHOOL
+   ABOUT ME PAGE
+===================================== */
+
+.about-body {
+
+    margin: 0;
+
+    padding: 0;
+
+    min-height: 100vh;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f0fdfb,
+            #eef6ff
+        );
+
+    color: #222;
+
+}
+
+
+/* =====================================
+   MAIN CONTAINER
+===================================== */
+
+.about-container {
+
+    width: min(
+        900px,
+        calc(100% - 30px)
+    );
+
+    margin: 0 auto;
+
+    padding:
+        70px 0 40px;
+
+}
+
+
+/* =====================================
+   HERO
+===================================== */
+
+.about-hero {
+
+    text-align: center;
+
+    padding: 35px 20px 30px;
+
+}
+
+
+.about-icon {
+
+    width: 90px;
+
+    height: 90px;
+
+    margin: 0 auto 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 48px;
+
+    background: #ffffff;
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0, 0, 0, 0.10);
+
+}
+
+
+.about-hero h1 {
+
+    margin: 10px 0;
+
+    font-size: 38px;
+
+    color: #075e54;
+
+}
+
+
+.about-hero p {
+
+    margin: 0;
+
+    font-size: 17px;
+
+    color: #666;
+
+}
+
+
+/* =====================================
+   CARDS
+===================================== */
+
+.about-card {
+
+    margin-bottom: 22px;
+
+    padding: 28px;
+
+    background: #ffffff;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 6px 22px
+        rgba(0, 0, 0, 0.07);
+
+    border:
+        1px solid
+        rgba(18, 140, 126, 0.10);
+
+}
+
+
+.about-card h2 {
+
+    margin-top: 0;
+
+    margin-bottom: 16px;
+
+    color: #075e54;
+
+    font-size: 24px;
+
+}
+
+
+.about-card h3 {
+
+    margin-top: 5px;
+
+    color: #128c7e;
+
+    font-size: 18px;
+
+}
+
+
+.about-card p {
+
+    line-height: 1.8;
+
+    color: #555;
+
+    font-size: 15px;
+
+}
+
+
+/* =====================================
+   CHATGPT CARD
+===================================== */
+
+.chatgpt-card {
+
+    border:
+        2px solid #128c7e;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #f1fffc
+        );
+
+}
+
+
+.chatgpt-icon {
+
+    font-size: 42px;
+
+    margin-bottom: 8px;
+
+}
+
+
+.chatgpt-card h2 {
+
+    font-size: 30px;
+
+    margin-bottom: 5px;
+
+}
+
+
+/* =====================================
+   CHATGPT NOTE
+===================================== */
+
+.chatgpt-note {
+
+    margin-top: 22px;
+
+    padding: 16px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+
+    border-radius: 12px;
+
+    background: #e8f8f5;
+
+    border-left:
+        5px solid #128c7e;
+
+}
+
+
+.chatgpt-note strong {
+
+    color: #075e54;
+
+    font-size: 16px;
+
+}
+
+
+.chatgpt-note span {
+
+    color: #555;
+
+    line-height: 1.5;
+
+}
+
+
+/* =====================================
+   HIGHLIGHT CARD
+===================================== */
+
+.highlight-card {
+
+    background:
+        linear-gradient(
+            135deg,
+            #075e54,
+            #128c7e
+        );
+
+    color: #ffffff;
+
+}
+
+
+.highlight-card h2 {
+
+    color: #ffffff;
+
+}
+
+
+.highlight-card p {
+
+    color: #eafff9;
+
+}
+
+
+/* =====================================
+   FOOTER
+===================================== */
+
+.about-footer {
+
+    text-align: center;
+
+    padding: 25px 10px 10px;
+
+    color: #777;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+
+}
+
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media (max-width: 600px) {
+
+    .about-container {
+
+        width:
+            calc(100% - 20px);
+
+        padding-top: 60px;
+
+    }
+
+
+    .about-hero h1 {
+
+        font-size: 30px;
+
+    }
+
+
+    .about-hero p {
+
+        font-size: 15px;
+
+    }
+
+
+    .about-card {
+
+        padding: 21px;
+
+        border-radius: 14px;
+
+    }
+
+
+    .about-card h2 {
+
+        font-size: 21px;
+
+    }
+
+
+    .about-card p {
+
+        font-size: 14px;
+
+        line-height: 1.7;
+
+    }
+
+
+    .chatgpt-card h2 {
+
+        font-size: 27px;
+
+    }
+
+}
+/* =====================================
+   MY PROFILE
+===================================== */
+
+.profile-card {
+
+    border:
+        2px solid #128c7e;
+
+}
+
+
+.profile-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 16px;
+
+}
+
+
+.profile-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 17px;
+
+    background: #f5fbfa;
+
+    border-radius: 12px;
+
+    border:
+        1px solid #dcefeb;
+
+}
+
+
+.profile-icon {
+
+    width: 45px;
+
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    font-size: 23px;
+
+    background: #ffffff;
+
+    border-radius: 50%;
+
+}
+
+
+.profile-item small {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #777;
+
+    font-size: 12px;
+
+}
+
+
+.profile-item strong {
+
+    display: block;
+
+    color: #075e54;
+
+    font-size: 15px;
+
+    line-height: 1.4;
+
+}
+
+
+/* =====================================
+   MOBILE PROFILE
+===================================== */
+
+@media (max-width: 600px) {
+
+    .profile-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .profile-item {
+
+        padding: 14px;
+
+    }
+
+}

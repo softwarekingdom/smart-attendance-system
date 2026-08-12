@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        About Me - AI School
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="sidebar.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="about.css"
+    >
+
+</head>
+
+
+<body class="about-body">
+
+
+<!-- =====================================
+     MENU BUTTON
+===================================== -->
+
+<button
+    class="menu-btn"
+    onclick="toggleSidebar()"
+    aria-label="Open Menu"
+>
+
+    ☰
+
+</button>
+
+
+<!-- =====================================
+     OVERLAY
+===================================== -->
+
+<div
+    class="overlay"
+    onclick="closeSidebar()"
+></div>
+
+
+<!-- =====================================
+     SIDEBAR
+===================================== -->
+
+<div
+    class="sidebar"
+    id="sidebar"
+>
+
+    <div class="sidebar-logo">
+
+        <h2>
+            🤖 AI School
+        </h2>
+
+        <p>
+            Attendance Management System
+        </p>
+
+    </div>
+
+
+    <ul>
+
+        <li class="sidebar-title">
+            🏠 Dashboard
+        </li>
+
+        <li>
+            <a href="dashboard.html">
+                📊 Dashboard
+            </a>
+        </li>
+
+
+        <li class="sidebar-title">
+            👨‍🎓 Students
+        </li>
+
+        <li>
+            <a href="studentadmission.html">
+                ➕ Student Admission
+            </a>
+        </li>
+
+
+        <li class="sidebar-title">
+            📋 Attendance
+        </li>
+
+        <li>
+            <a href="attendance.html">
+                ✅ Take Attendance
+            </a>
+        </li>
+
+        <li>
+            <a href="attendancehistory.html">
+                📅 Attendance History
+            </a>
+        </li>
+
+
+        <li class="sidebar-title">
+            💬 Communication
+        </li>
+
+        <li>
+            <a href="whatsapp.html">
+                📱 WhatsApp Notification
+            </a>
+        </li>
+
+
+        <li class="sidebar-title">
+            ⚙ Administration
+        </li>
+
+        <li>
+            <a href="teachers.html">
+                👨‍🏫 Teacher Management
+            </a>
+        </li>
+
+        <li>
+            <a href="classmanagement.html">
+                🏫 Class Management
+            </a>
+        </li>
+
+
+        <!-- ABOUT ME -->
+
+        <li class="sidebar-title">
+            👤 About
+        </li>
+
+        <li>
+            <a href="about.html">
+                🤖 About Me
+            </a>
+        </li>
+
+
+        <li class="sidebar-title">
+            🚪 Account
+        </li>
+
+        <li>
+
+            <a
+                href="#"
+                onclick="logout()"
+            >
+
+                🚪 Logout
+
+            </a>
+
+        </li>
+
+    </ul>
+
+</div>
+
+
+<!-- =====================================
+     MAIN CONTENT
+===================================== -->
+
+<main class="about-container">
+
+
+    <!-- =================================
+         HERO
+    ================================= -->
+
+    <section class="about-hero">
+
+        <div class="about-icon">
+            🤖
+        </div>
+
+        <h1>
+            About Me
+        </h1>
+
+        <p>
+            The story behind AI attendace management system
+        </p>
+
+    </section>
+
+<!-- =================================
+     MY PROFILE
+================================= -->
+
+<section class="about-card profile-card">
+
+    <h2>
+        👤 My Profile
+    </h2>
+
+
+    <div class="profile-grid">
+
+
+        <div class="profile-item">
+
+            <span class="profile-icon">
+                👤
+            </span>
+
+            <div>
+
+                <small>
+                    Name
+                </small>
+
+                <strong>
+                    Justan Ashwin Fernando
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="profile-item">
+
+            <span class="profile-icon">
+                🎓
+            </span>
+
+            <div>
+
+                <small>
+                    Grade
+                </small>
+
+                <strong>
+                    Grade 9
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="profile-item">
+
+            <span class="profile-icon">
+                🏫
+            </span>
+
+            <div>
+
+                <small>
+                    School
+                </small>
+
+                <strong>
+                    St Xavier Boys College Mannar
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="profile-item">
+
+            <span class="profile-icon">
+                🚀
+            </span>
+
+            <div>
+
+                <small>
+                    Ambition
+                </small>
+
+                <strong>
+                    AI Security Researcher
+                </strong>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+    <!-- =================================
+         CREATOR
+    ================================= -->
+
+    <section class="about-card">
+
+        <h2>
+            👨‍💻 About the Creator
+        </h2>
+
+        <p>
+            I am the creator of the AI School
+            Attendance Management System.
+        </p>
+
+        <p>
+            This project represents my first
+            complete website and my journey into
+            technology, programming, and
+            artificial intelligence.
+        </p>
+
+        <p>
+            I built this system step by step,
+            learning from every problem,
+            testing new ideas, and improving
+            the system along the way.
+        </p>
+
+    </section>
+
+
+    <!-- =================================
+         CHATGPT
+    ================================= -->
+
+    <section class="about-card chatgpt-card">
+
+        <div class="chatgpt-icon">
+            🤖
+        </div>
+
+        <h2>
+            ChatGPT
+        </h2>
+
+        <h3>
+            My AI Development Partner
+        </h3>
+
+        <p>
+            ChatGPT is an AI assistant created by
+            OpenAI. During the development of this
+            project, ChatGPT helped me understand
+            programming concepts, troubleshoot
+            errors, work with Supabase, GitHub,
+            JavaScript, HTML, CSS, and improve the
+            overall system step by step.
+        </p>
+
+        <p>
+            More importantly, ChatGPT helped turn
+            ideas into practical solutions while
+            explaining the process along the way.
+        </p>
+<p>
+  Technology itself is neither good nor bad. Its impact depends on how people choose to use it.
+</p>
+        <div class="chatgpt-note">
+
+            <strong>
+                🤝 Human + AI
+            </strong>
+
+            <span>
+                A project built through learning,
+                experimentation, and collaboration.
+            </span>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================
+         MY FIRST WEBSITE
+    ================================= -->
+
+    <section class="about-card highlight-card">
+
+        <h2>
+            🌱 My First Website
+        </h2>
+
+        <p>
+            AI School is my first complete website
+            project.
+        </p>
+
+        <p>
+            What started as an idea became a real
+            working attendance management system
+            with student management, teacher
+            management, attendance tracking,
+            WhatsApp parent notifications,
+            Supabase database integration,
+            and GitHub Pages deployment.
+        </p>
+
+    </section>
+
+
+    <!-- =================================
+         PROJECT VISION
+    ================================= -->
+
+    <section class="about-card">
+
+        <h2>
+            🚀 My Vision
+        </h2>
+
+        <p>
+            My goal is to continue learning,
+            improving this system, and developing
+            useful technology that can make
+            everyday work easier for teachers,
+            schools, students, and parents.
+        </p>
+
+        <p>
+            This is only the beginning.
+        </p>
+
+    </section>
+
+
+    <!-- =================================
+         FOOTER
+    ================================= -->
+
+    <footer class="about-footer">
+
+        <p>
+            Built with ❤️, learning, and technology.
+        </p>
+
+        <p>
+            AI School Attendance Management System
+        </p>
+
+    </footer>
+
+
+</main>
+
+
+<!-- =====================================
+     SCRIPTS
+===================================== -->
+
+<script
+    src="sidebar.js"
+></script>
+
+
+</body>
+
+</html>
