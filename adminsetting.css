@@ -1,0 +1,120 @@
+/* =====================================
+   AI ATTENDANCE MANAGEMENT SYSTEM
+   Admin Settings CSS
+===================================== */
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+}
+
+body{
+
+    font-family:Arial,sans-serif;
+
+    background:linear-gradient(135deg,#dbeafe,#f8fafc);
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:20px;
+
+}
+
+.settings-box{
+
+    width:100%;
+
+    max-width:500px;
+
+    background:white;
+
+    padding:35px;
+
+    border-radius:20px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+
+}
+
+.settings-box h1{
+
+    text-align:center;
+
+    color:#1e3a8a;
+
+    margin-bottom:30px;
+
+}
+
+.settings-box input{
+
+    width:100%;
+
+    padding:14px;
+
+    margin-bottom:18px;
+
+    border:1px solid #cbd5e1;
+
+    border-radius:10px;
+
+    font-size:16px;
+
+}
+
+.settings-box input:focus{
+
+    outline:none;
+
+    border-color:#2563eb;
+
+}
+
+.settings-box button{
+
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#2563eb;
+
+    color:white;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.settings-box button:hover{
+
+    background:#1d4ed8;
+
+}
+
+@media(max-width:768px){
+
+    .settings-box{
+
+        padding:25px;
+
+    }
+
+}

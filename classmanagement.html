@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>AI School - Class Management</title><link rel="stylesheet" href="classmanagement.css">
+<link rel="stylesheet" href="sidebar.css"></head><body class="class-management-body"><!-- =========================
+     MENU BUTTON
+========================= --><button class="menu-btn" onclick="toggleSidebar()">
+    ☰
+</button><div class="overlay" onclick="closeSidebar()"></div><!-- =========================
+     SIDEBAR
+========================= --><div class="sidebar" id="sidebar"><div class="sidebar-logo">
+
+    <h2>🤖 AI School</h2>
+
+    <p>Attendance Management System</p>
+
+</div>
+
+
+<ul>
+
+    <li class="sidebar-title">
+        🏠 Dashboard
+    </li>
+
+    <li>
+        <a href="dashboard.html">
+            📊 Dashboard
+        </a>
+    </li>
+
+
+    <li class="sidebar-title">
+        👨‍🎓 Students
+    </li>
+
+    <li>
+        <a href="studentadmission.html">
+            ➕ Student Admission
+        </a>
+    </li>
+
+    <li>
+        <a href="studentprofile.html">
+            👤 Student Profile
+        </a>
+    </li>
+
+    <li>
+        <a href="studentidcard.html">
+            🪪 Student ID Card
+        </a>
+    </li>
+
+
+    <li class="sidebar-title">
+        📋 Attendance
+    </li>
+
+    <li>
+        <a href="attendance.html">
+            ✅ Take Attendance
+        </a>
+    </li>
+
+    <li>
+        <a href="attendancehistory.html">
+            📅 Attendance History
+        </a>
+    </li>
+
+
+    <li class="sidebar-title">
+        💬 Communication
+    </li>
+
+    <li>
+        <a href="whatsapp.html">
+            📱 WhatsApp Notification
+        </a>
+    </li>
+
+
+    <li class="sidebar-title">
+        🤖 AI Analytics
+    </li>
+
+    <li>
+        <a href="aidashboard.html">
+            🧠 AI Dashboard
+        </a>
+    </li>
+
+
+    <li class="sidebar-title">
+        ⚙ Administration
+    </li>
+
+    <li>
+        <a href="teachers.html">
+            👨‍🏫 Teacher Management
+        </a>
+    </li>
+
+    <li>
+        <a href="classmanagement.html">
+            🏫 Class Management
+        </a>
+    </li>
+
+    <li>
+        <a href="institution.html">
+            🏢 Institution
+        </a>
+    </li>
+
+
+    <li class="sidebar-title">
+        👤 My Profile
+    </li>
+
+    <li>
+        <a href="teacherprofile.html">
+            👨‍🏫 Teacher Profile
+        </a>
+    </li>
+
+    <li>
+        <a href="adminprofile.html">
+            👑 Admin Profile
+        </a>
+    </li>
+
+
+    <li class="sidebar-title">
+        🚪 Account
+    </li>
+
+    <li>
+        <a href="#" onclick="logout()">
+            🚪 Logout
+        </a>
+    </li>
+
+</ul>
+
+</div><!-- =========================
+     MAIN CONTENT
+========================= --><div class="main-content"><header class="page-header">
+
+    <div>
+
+        <h1>
+            🏫 Class Management
+        </h1>
+
+        <p>
+            Create and manage school classes
+        </p>
+
+    </div>
+
+</header>
+
+
+<!-- =========================
+     CREATE CLASS
+========================= -->
+
+<div class="class-card">
+
+    <h2>
+        ➕ Create New Class
+    </h2>
+
+    <p>
+        Add a new class to your school.
+    </p>
+
+
+    <div class="class-input-area">
+
+        <input
+            type="text"
+            id="newClassName"
+            placeholder="Example: Grade 9A"
+            autocomplete="off"
+        >
+
+        <button onclick="addClass()">
+            ➕ Add Class
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     CLASS STATISTICS
+========================= -->
+
+<div class="stats-grid">
+
+    <div class="stat-card">
+
+        <h3>
+            🏫 Total Classes
+        </h3>
+
+        <h1 id="classCount">
+            0
+        </h1>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <h3>
+            👨‍🎓 Total Students
+        </h3>
+
+        <h1 id="studentCount">
+            0
+        </h1>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     CLASS LIST
+========================= -->
+
+<div class="class-card">
+
+    <div class="section-header">
+
+        <h2>
+            📚 School Classes
+        </h2>
+
+        <input
+            type="text"
+            id="classSearch"
+            placeholder="🔎 Search class..."
+            oninput="searchClasses()"
+        >
+
+    </div>
+
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        No
+                    </th>
+
+                    <th>
+                        Class Name
+                    </th>
+
+                    <th>
+                        Students
+                    </th>
+
+                    <th>
+                        Teacher
+                    </th>
+
+                    <th>
+                        Actions
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="classList">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</div><script src="sidebar.js"></script><script src="auth.js"></script><script src="classmanagement.js"></script></body></html>

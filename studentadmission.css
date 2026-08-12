@@ -1,0 +1,201 @@
+//* --- Global Reset & Variables --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+  --primary-color: #075e54;
+  --whatsapp-green: #25d366;
+  --whatsapp-green-dark: #128c7e;
+  --bg-color: #f0f2f5;
+  --card-bg: #ffffff;
+  --text-main: #333333;
+  --text-muted: #666666;
+  --border-color: #e5e7eb;
+  --danger-color: #ef4444;
+  --sidebar-width: 280px;
+}
+
+.student-admission-body {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  display: flex;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* --- Main Admission Container --- */
+.admission-container {
+  flex: 1;
+  margin-left: 0;
+  padding: 30px;
+  max-width: 1200px;
+  transition: margin-left 0.3s ease;
+}
+
+@media (min-width: 768px) {
+  .admission-container {
+    margin-left: var(--sidebar-width);
+  }
+}
+
+.admission-container > h1 {
+  font-size: 26px;
+  color: var(--primary-color);
+  margin-bottom: 25px;
+}
+
+/* --- Form and List Cards --- */
+.admission-card,
+.student-list-card {
+  background-color: var(--card-bg);
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+}
+
+.admission-card h2,
+.student-list-card h2 {
+  font-size: 18px;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* --- Form Fields Layout --- */
+.admission-card label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  margin-top: 14px;
+}
+
+.admission-card label:first-of-type {
+  margin-top: 0;
+}
+
+.admission-card input[type="text"],
+.admission-card input[type="tel"],
+.admission-card input[type="date"],
+.admission-card select {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: #fafafa;
+  color: var(--text-main);
+  outline: none;
+  margin-bottom: 12px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.admission-card input:focus,
+.admission-card select:focus {
+  border-color: var(--primary-color);
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(7, 94, 84, 0.1);
+}
+
+/* --- Save Student Button --- */
+.admission-card button {
+  background-color: var(--primary-color);
+  color: #ffffff;
+  border: none;
+  padding: 12px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  width: 100%;
+}
+
+.admission-card button:hover {
+  background-color: #054e44;
+}
+
+.admission-card button:active {
+  transform: scale(0.99);
+}
+
+@media (min-width: 768px) {
+  .admission-card button {
+    width: auto;
+  }
+}
+
+/* --- Student List Table --- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--card-bg);
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+thead {
+  background-color: var(--primary-color);
+  color: #ffffff;
+}
+
+th, td {
+  padding: 14px 16px;
+  text-align: left;
+  font-size: 14px;
+}
+
+th {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+tbody tr {
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.2s ease;
+}
+
+tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+tbody tr:last-child {
+  border-bottom: none;
+}
+
+/* Table action buttons (if dynamically added via JS) */
+table button,
+.student-list-card button {
+  background-color: var(--danger-color);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+table button:hover {
+  opacity: 0.9;
+}
+
+/* --- Responsive adjustments --- */
+@media (max-width: 576px) {
+  .admission-container {
+    padding: 15px;
+  }
+  .admission-card,
+  .student-list-card {
+    padding: 15px;
+  }
+}

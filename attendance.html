@@ -1,0 +1,316 @@
+<!DOCTYPE html><html lang="en">
+  <head><meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>AI School - Attendance</title>
+
+<link rel="stylesheet" href="attendance.css">
+
+<link rel="stylesheet" href="sidebar.css">
+
+</head><body class="attendance-body"><!-- =====================================
+     MENU
+===================================== --><button
+class="menu-btn"
+onclick="toggleSidebar()">
+
+☰
+
+</button><div
+    class="overlay"
+    onclick="closeSidebar()">
+</div><!-- =====================================
+     SIDEBAR
+===================================== --><div
+    class="sidebar"
+    id="sidebar"><div class="sidebar-logo">
+
+    <h2>🤖 AI School</h2>
+
+    <p>
+        Attendance Management System
+    </p>
+
+</div>
+
+
+<ul>
+
+    <li class="sidebar-title">
+        🏠 Dashboard
+    </li>
+
+    <li>
+        <a href="dashboard.html">
+            📊 Dashboard
+        </a>
+    </li>
+
+
+    <li class="sidebar-title">
+        👨‍🎓 Students
+    </li>
+
+    <li>
+        <a href="studentadmission.html">
+            ➕ Student Admission
+        </a>
+    </li>
+
+    <li>
+        <a href="studentprofile.html">
+            👤 Student Profile
+        </a>
+    </li>
+
+
+    <li class="sidebar-title">
+        📋 Attendance
+    </li>
+
+    <li>
+        <a href="attendance.html">
+            ✅ Take Attendance
+        </a>
+    </li>
+
+    <li>
+        <a href="attendancehistory.html">
+            📅 Attendance History
+        </a>
+    </li>
+
+
+    <li class="sidebar-title">
+        💬 Communication
+    </li>
+
+    <li>
+        <a href="whatsapp.html">
+            📱 WhatsApp Notification
+        </a>
+    </li>
+
+
+    <li class="sidebar-title">
+        🤖 AI Analytics
+    </li>
+
+    <li>
+        <a href="aidashboard.html">
+            🧠 AI Dashboard
+        </a>
+    </li>
+
+
+    <li class="sidebar-title">
+        ⚙ Administration
+    </li>
+
+    <li>
+        <a href="teachers.html">
+            👨‍🏫 Teacher Management
+        </a>
+    </li>
+
+    <li>
+        <a href="classmanagement.html">
+            🏫 Class Management
+        </a>
+    </li>
+
+
+    <li class="sidebar-title">
+        👤 My Profile
+    </li>
+
+    <li>
+        <a href="teacherprofile.html">
+            👨‍🏫 Teacher Profile
+        </a>
+    </li>
+
+
+    <li class="sidebar-title">
+        🚪 Account
+    </li>
+
+    <li>
+        <a
+            href="#"
+            onclick="logout()">
+
+            🚪 Logout
+
+        </a>
+    </li>
+
+</ul>
+
+</div><!-- =====================================
+     MAIN CONTENT
+===================================== --><main class="main-content"><div class="attendance-header">
+
+    <div>
+
+        <h1>
+            📋 Student Attendance
+        </h1>
+
+        <p>
+            Mark today's attendance
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- =================================
+     CLASS SELECTION
+================================== -->
+
+<section class="attendance-box">
+
+
+    <div class="class-select-box">
+
+        <label for="attendanceClass">
+
+            🏫 Select Class
+
+        </label>
+
+
+        <select
+            id="attendanceClass"
+            onchange="loadAttendanceStudents()">
+
+            <option value="">
+
+                Select Class
+
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- =================================
+         ATTENDANCE TABLE
+    ================================== -->
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>No</th>
+
+                    <th>Student Name</th>
+
+                    <th>Class</th>
+
+                    <th>Status</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="attendanceList">
+
+                <tr>
+
+                    <td
+                        colspan="4"
+                        class="empty-message">
+
+                        Select a class to load students.
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- =================================
+         SAVE
+    ================================== -->
+
+    <button
+        type="button"
+        class="submit-btn"
+        onclick="saveAttendance()">
+
+        💾 Save Attendance
+
+    </button>
+
+
+    <!-- =================================
+         QUICK ACTIONS
+    ================================== -->
+
+    <div class="dashboard-buttons">
+
+        <a href="studentadmission.html">
+
+            <button type="button">
+
+                👨‍🎓 Manage Students
+
+            </button>
+
+        </a>
+
+
+        <a href="attendancehistory.html">
+
+            <button type="button">
+
+                📊 View History
+
+            </button>
+
+        </a>
+
+
+        <a href="whatsapp.html">
+
+            <button type="button">
+
+                💬 WhatsApp
+
+            </button>
+
+        </a>
+
+    </div>
+
+
+</section>
+
+</main><!-- =====================================
+     SCRIPTS
+===================================== --><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+
+<script src="sidebar.js"></script>
+<script src="rolesidebar.js"></script>
+<script src="attendance.js"></script>
+</body>
+</html>

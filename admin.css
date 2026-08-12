@@ -1,0 +1,144 @@
+/* =====================================
+   AI ATTENDANCE MANAGEMENT SYSTEM
+   Admin Panel CSS
+===================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:Arial,sans-serif;
+
+    background:linear-gradient(135deg,#dbeafe,#f8fafc);
+
+    min-height:100vh;
+
+    padding:30px;
+
+}
+
+.admin-container{
+
+    max-width:1200px;
+
+    margin:auto;
+
+}
+
+.admin-container h1{
+
+    text-align:center;
+
+    color:#1e3a8a;
+
+    margin-bottom:35px;
+
+}
+
+.admin-cards{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+
+    gap:25px;
+
+}
+
+.admin-card{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:30px;
+
+    text-align:center;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.12);
+
+    transition:.3s;
+
+}
+
+.admin-card:hover{
+
+    transform:translateY(-5px);
+
+}
+
+.admin-card h2{
+
+    color:#2563eb;
+
+    margin-bottom:15px;
+
+}
+
+.admin-card h1{
+
+    font-size:42px;
+
+    color:#0f172a;
+
+}
+
+.admin-actions{
+
+    margin-top:40px;
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+
+}
+
+.admin-actions button{
+
+    padding:14px 25px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#2563eb;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+    transition:.3s;
+
+}
+
+.admin-actions button:hover{
+
+    background:#1d4ed8;
+
+}
+
+@media(max-width:768px){
+
+    body{
+
+        padding:15px;
+
+    }
+
+    .admin-card{
+
+        padding:20px;
+
+    }
+
+}

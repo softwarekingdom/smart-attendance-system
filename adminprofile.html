@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Admin Profile</title>
+
+<link rel="stylesheet" href="sidebar.css">
+<link rel="stylesheet" href="adminprofile.css">
+</head>
+
+
+<body>
+<!-- Sidebar Start -->
+
+<button class="menu-btn" onclick="toggleSidebar()">
+
+☰
+
+</button>
+
+
+<div class="overlay"></div>
+
+
+
+
+<div class="sidebar" id="sidebar">
+
+
+<div class="sidebar-logo">
+
+<h2>
+🤖 AI Attendance
+</h2>
+
+<p>
+Management System
+</p>
+
+</div>
+
+
+
+
+<ul>
+
+
+<li>
+<a href="dashboard.html">
+🏠 Dashboard
+</a>
+</li>
+
+
+
+<li>
+<a href="studentadmission.html">
+👨‍🎓 Students
+</a>
+</li>
+
+
+
+<li>
+<a href="attendance.html">
+📋 Attendance
+</a>
+</li>
+
+
+
+<li>
+<a href="attendancehistory.html">
+📅 History
+</a>
+</li>
+
+
+
+<li>
+<a href="attendanceview.html">
+👁 Reports
+</a>
+</li>
+
+
+
+<li>
+<a href="ai-dashboard.html">
+🤖 AI Analytics
+</a>
+</li>
+
+
+
+<div id="teacherMenu">
+
+
+<li>
+<a href="teacherprofile.html">
+👤 Teacher Profile
+</a>
+</li>
+
+
+</div>
+
+
+
+
+<div id="adminMenu">
+
+
+<li>
+<a href="teachers.html">
+👨‍🏫 Teacher Management
+</a>
+</li>
+
+
+<li>
+<a href="classmanagement.html">
+🏫 Class Management
+</a>
+</li>
+
+
+<li>
+<a href="adminsettings.html">
+⚙ Settings
+</a>
+</li>
+
+
+</div>
+
+
+
+
+<li>
+
+<a href="#" onclick="logout()">
+
+🚪 Logout
+
+</a>
+
+</li>
+
+
+</ul>
+
+
+</div>
+
+<!-- Sidebar End -->
+
+<div class="profile-container">
+
+
+<h1>
+🔐 Admin Profile
+</h1>
+
+
+
+<div class="profile-box" id="adminProfile">
+
+Loading Admin Data...
+
+</div>
+
+
+
+
+<a href="admin.html">
+
+<button>
+⬅ Back To Admin Panel
+</button>
+
+</a>
+
+
+
+</div>
+
+
+
+<script src="auth.js"></script>
+
+<script src="sidebar.js"></script>
+
+<script src="rolesidebar.js"></script>
+
+<script src="adminprofile.js"></script>
+
+</body>
+
+</html>

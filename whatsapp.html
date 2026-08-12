@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        AI School - WhatsApp Notification
+    </title>
+
+
+    <!-- ===============================
+         SIDEBAR CSS
+    ================================= -->
+
+    <link
+        rel="stylesheet"
+        href="sidebar.css"
+    >
+
+
+    <!-- ===============================
+         WHATSAPP CSS
+    ================================= -->
+
+    <link
+        rel="stylesheet"
+        href="Whatsapp.css"
+    >
+
+</head>
+
+
+<body class="Whatsapp-body">
+
+
+<!-- =================================
+     MENU BUTTON
+================================= -->
+
+<button
+    class="menu-btn"
+    onclick="toggleSidebar()"
+    aria-label="Open Menu"
+>
+
+    ☰
+
+</button>
+
+
+<!-- =================================
+     OVERLAY
+================================= -->
+
+<div
+    class="overlay"
+    onclick="closeSidebar()"
+></div>
+
+
+<!-- =================================
+     SIDEBAR
+================================= -->
+
+<div
+    class="sidebar"
+    id="sidebar"
+>
+
+    <div class="sidebar-logo">
+
+        <h2>
+            🤖 AI School
+        </h2>
+
+        <p>
+            Attendance Management System
+        </p>
+
+    </div>
+
+
+    <ul>
+
+        <!-- Dashboard -->
+
+        <li class="sidebar-title">
+            🏠 Dashboard
+        </li>
+
+        <li>
+            <a href="dashboard.html">
+                📊 Dashboard
+            </a>
+        </li>
+
+
+        <!-- Students -->
+
+        <li class="sidebar-title">
+            👨‍🎓 Students
+        </li>
+
+        <li>
+            <a href="studentadmission.html">
+                ➕ Student Admission
+            </a>
+        </li>
+
+
+        <!-- Attendance -->
+
+        <li class="sidebar-title">
+            📋 Attendance
+        </li>
+
+        <li>
+            <a href="attendance.html">
+                ✅ Take Attendance
+            </a>
+        </li>
+
+        <li>
+            <a href="attendancehistory.html">
+                📅 Attendance History
+            </a>
+        </li>
+
+
+        <!-- Communication -->
+
+        <li class="sidebar-title">
+            💬 Communication
+        </li>
+
+        <li>
+            <a href="whatsapp.html">
+                📱 WhatsApp Notification
+            </a>
+        </li>
+
+
+        <!-- Administration -->
+
+        <li class="sidebar-title">
+            ⚙ Administration
+        </li>
+
+        <li>
+            <a href="teachers.html">
+                👨‍🏫 Teacher Management
+            </a>
+        </li>
+
+        <li>
+            <a href="classmanagement.html">
+                🏫 Class Management
+            </a>
+        </li>
+
+
+        <!-- Account -->
+
+        <li class="sidebar-title">
+            🚪 Account
+        </li>
+
+        <li>
+
+            <a
+                href="#"
+                onclick="logout()"
+            >
+
+                🚪 Logout
+
+            </a>
+
+        </li>
+
+    </ul>
+
+</div>
+
+
+<!-- =================================
+     MAIN CONTENT
+================================= -->
+
+<div class="whatsapp-container">
+
+
+    <!-- =================================
+         HEADER
+    ================================= -->
+
+    <div class="whatsapp-header">
+
+        <h2>
+            📱 WhatsApp Parent Notification
+        </h2>
+
+        <p>
+            Send attendance notifications to parents
+        </p>
+
+    </div>
+
+
+    <!-- =================================
+         ABSENT STUDENTS
+    ================================= -->
+
+    <div class="message-box">
+
+        <h3>
+            ❌ Absent Students Today
+        </h3>
+
+
+        <select
+            id="studentSelect"
+            onchange="loadStudentPhone()"
+        >
+
+            <option value="">
+                Loading absent students...
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- =================================
+         STUDENT DETAILS
+    ================================= -->
+
+    <div
+        class="message-box"
+        id="studentDetails"
+    >
+
+        <h3>
+            👨‍🎓 Student Details
+        </h3>
+
+
+        <div class="student-info">
+
+            <p>
+
+                <strong>
+                    Student Name:
+                </strong>
+
+                <span id="previewStudentName">
+                    -
+                </span>
+
+            </p>
+
+
+            <p>
+
+                <strong>
+                    Class:
+                </strong>
+
+                <span id="previewClass">
+                    -
+                </span>
+
+            </p>
+
+
+            <p>
+
+                <strong>
+                    Parent WhatsApp:
+                </strong>
+
+                <span id="previewPhone">
+                    -
+                </span>
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================
+         WHATSAPP NUMBER
+    ================================= -->
+
+    <div class="message-box">
+
+        <h3>
+            📞 Parent WhatsApp Number
+        </h3>
+
+
+        <input
+            type="text"
+            id="parentNumber"
+            placeholder="Parent WhatsApp Number"
+        >
+
+    </div>
+
+
+    <!-- =================================
+         MESSAGE
+    ================================= -->
+
+    <div class="message-box">
+
+        <h3>
+            💬 Message Preview
+        </h3>
+
+
+        <textarea
+            id="message"
+            rows="10"
+            placeholder="Absent notification will appear here..."
+        ></textarea>
+
+    </div>
+
+
+    <!-- =================================
+         SEND BUTTON
+    ================================= -->
+
+    <button
+        class="send"
+        type="button"
+        onclick="sendWhatsApp()"
+    >
+
+        📲 Send WhatsApp
+
+    </button>
+
+
+</div>
+
+
+<!-- =================================
+     SCRIPTS
+================================= -->
+
+<!-- =================================
+     SUPABASE LIBRARY
+================================= -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+></script>
+
+
+<!-- Supabase Configuration -->
+
+<script
+    src="supabase-config.js"
+></script>
+
+
+<!-- Sidebar -->
+
+<script
+    src="sidebar.js"
+></script>
+
+
+<!-- WhatsApp -->
+
+<script
+    src="whatsapp.js"
+></script>
+
+
+</body>
+
+</html>

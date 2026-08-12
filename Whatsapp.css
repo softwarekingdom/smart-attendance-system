@@ -1,0 +1,1412 @@
+/* /* =====================================
+   AI SCHOOL
+   WHATSAPP NOTIFICATION
+   MODERN STYLE
+===================================== */
+
+
+/* =====================================
+   RESET
+===================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* =====================================
+   BODY
+===================================== */
+
+.Whatsapp-body {
+
+    min-height: 100vh;
+
+    background: #f3f7f6;
+
+    color: #222;
+
+    padding-top: 1px;
+
+}
+
+
+/* =====================================
+   MAIN CONTAINER
+===================================== */
+
+.whatsapp-container {
+
+    width: 95%;
+
+    max-width: 900px;
+
+    margin: 80px auto 40px;
+
+    background: #ffffff;
+
+    padding: 30px;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.08);
+
+}
+
+
+/* =====================================
+   PAGE TITLE
+===================================== */
+
+.whatsapp-container > h2 {
+
+    text-align: center;
+
+    color: #128C7E;
+
+    font-size: 30px;
+
+    margin-bottom: 8px;
+
+}
+
+
+.whatsapp-container > p {
+
+    text-align: center;
+
+    color: #777;
+
+    font-size: 15px;
+
+    margin-bottom: 30px;
+
+}
+
+
+/* =====================================
+   MESSAGE BOX
+===================================== */
+
+.message-box {
+
+    background: #f8faf9;
+
+    border: 1px solid #e3e9e7;
+
+    border-radius: 14px;
+
+    padding: 20px;
+
+    margin-bottom: 20px;
+
+}
+
+
+.message-box h3 {
+
+    color: #128C7E;
+
+    font-size: 18px;
+
+    margin-bottom: 15px;
+
+}
+
+
+/* =====================================
+   SELECT
+===================================== */
+
+#studentSelect {
+
+    width: 100%;
+
+    padding: 14px 15px;
+
+    border: 1px solid #d5dcdc;
+
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    font-size: 16px;
+
+    outline: none;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+
+}
+
+
+#studentSelect:focus {
+
+    border-color: #25D366;
+
+    box-shadow:
+        0 0 0 3px rgba(37,211,102,0.12);
+
+}
+
+
+/* =====================================
+   STUDENT INFORMATION
+===================================== */
+
+.student-info {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 15px;
+
+}
+
+
+.student-info p {
+
+    background: #ffffff;
+
+    border: 1px solid #e5e9e8;
+
+    padding: 15px;
+
+    border-radius: 10px;
+
+    color: #555;
+
+    font-size: 14px;
+
+}
+
+
+.student-info strong {
+
+    display: block;
+
+    color: #333;
+
+    margin-bottom: 7px;
+
+}
+
+
+.student-info span {
+
+    color: #128C7E;
+
+    font-weight: bold;
+
+    word-break: break-word;
+
+}
+
+
+/* =====================================
+   PHONE NUMBER
+===================================== */
+
+#parentNumber {
+
+    width: 100%;
+
+    padding: 14px 15px;
+
+    border: 1px solid #d5dcdc;
+
+    border-radius: 10px;
+
+    font-size: 16px;
+
+    background: #ffffff;
+
+    outline: none;
+
+    transition: 0.3s;
+
+}
+
+
+#parentNumber:focus {
+
+    border-color: #25D366;
+
+    box-shadow:
+        0 0 0 3px rgba(37,211,102,0.12);
+
+}
+
+
+/* =====================================
+   MESSAGE PREVIEW
+===================================== */
+
+#message {
+
+    width: 100%;
+
+    min-height: 190px;
+
+    resize: vertical;
+
+    padding: 16px;
+
+    border: 1px solid #d5dcdc;
+
+    border-radius: 12px;
+
+    background: #ffffff;
+
+    color: #333;
+
+    font-size: 15px;
+
+    line-height: 1.6;
+
+    outline: none;
+
+    transition: 0.3s;
+
+}
+
+
+#message:focus {
+
+    border-color: #25D366;
+
+    box-shadow:
+        0 0 0 3px rgba(37,211,102,0.12);
+
+}
+
+
+/* =====================================
+   SEND BUTTON
+===================================== */
+
+.send {
+
+    width: 100%;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #25D366;
+
+    color: #ffffff;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.25s;
+
+    box-shadow:
+        0 6px 15px rgba(37,211,102,0.25);
+
+}
+
+
+.send:hover {
+
+    background: #1ebe5d;
+
+    transform: translateY(-2px);
+
+}
+
+
+.send:active {
+
+    transform: scale(0.98);
+
+}
+
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media (max-width: 768px) {
+
+    .whatsapp-container {
+
+        width: 94%;
+
+        margin-top: 70px;
+
+        padding: 20px;
+
+        border-radius: 15px;
+
+    }
+
+
+    .whatsapp-container > h2 {
+
+        font-size: 24px;
+
+    }
+
+
+    .student-info {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .message-box {
+
+        padding: 16px;
+
+    }
+
+
+    #message {
+
+        min-height: 170px;
+
+        font-size: 14px;
+
+    }
+
+
+    .send {
+
+        font-size: 16px;
+
+        padding: 14px;
+
+    }
+
+}
+
+
+/* =====================================
+   SMALL MOBILE
+===================================== */
+
+@media (max-width: 420px) {
+
+    .whatsapp-container {
+
+        width: 96%;
+
+        padding: 15px;
+
+    }
+
+
+    .whatsapp-container > h2 {
+
+        font-size: 21px;
+
+    }
+
+
+    .message-box h3 {
+
+        font-size: 16px;
+
+    }
+
+
+    #studentSelect,
+    #parentNumber {
+
+        font-size: 14px;
+
+        padding: 12px;
+
+    }
+
+}
+/* =========================================================
+AI SCHOOL — WHATSAPP NOTIFICATION
+PREMIUM ADDITIONAL STYLING
+Add below your existing Whatsapp.css
+Sidebar intentionally untouched
+========================================================= */
+
+/* =========================================================
+PAGE BACKGROUND
+========================================================= */
+
+.Whatsapp-body {
+
+min-height: 100vh;
+
+margin: 0;
+
+color: #eaf4ff;
+
+font-family:
+    Inter,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+
+background:
+    radial-gradient(
+        circle at 10% 10%,
+        rgba(37, 211, 102, 0.08),
+        transparent 27%
+    ),
+    radial-gradient(
+        circle at 90% 15%,
+        rgba(56, 189, 248, 0.08),
+        transparent 28%
+    ),
+    radial-gradient(
+        circle at 50% 90%,
+        rgba(139, 92, 246, 0.07),
+        transparent 30%
+    ),
+    #07111f;
+
+overflow-x: hidden;
+
+}
+
+/* =========================================================
+MAIN CONTAINER
+========================================================= */
+
+.Whatsapp-body .whatsapp-container {
+
+width: min(100% - 50px, 1050px);
+
+margin:
+    0 auto;
+
+padding:
+    45px 0 70px;
+
+box-sizing: border-box;
+
+}
+
+/* =========================================================
+HEADER
+========================================================= */
+
+.Whatsapp-body .whatsapp-header {
+
+position: relative;
+
+padding:
+    32px 35px;
+
+margin-bottom: 25px;
+
+border-radius: 24px;
+
+overflow: hidden;
+
+background:
+    linear-gradient(
+        135deg,
+        rgba(16, 42, 55, 0.96),
+        rgba(8, 28, 42, 0.94)
+    );
+
+border:
+    1px solid rgba(37, 211, 102, 0.16);
+
+box-shadow:
+    0 25px 65px rgba(0,0,0,0.28),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+
+backdrop-filter:
+    blur(18px);
+
+-webkit-backdrop-filter:
+    blur(18px);
+
+}
+
+/* Header glow */
+
+.Whatsapp-body .whatsapp-header::before {
+
+content: "";
+
+position: absolute;
+
+width: 240px;
+height: 240px;
+
+right: -100px;
+top: -120px;
+
+border-radius: 50%;
+
+background:
+    rgba(37,211,102,0.13);
+
+filter:
+    blur(45px);
+
+pointer-events: none;
+
+}
+
+.Whatsapp-body .whatsapp-header::after {
+
+content: "";
+
+position: absolute;
+
+width: 180px;
+height: 180px;
+
+left: -100px;
+bottom: -100px;
+
+border-radius: 50%;
+
+background:
+    rgba(56,189,248,0.08);
+
+filter:
+    blur(40px);
+
+pointer-events: none;
+
+}
+
+.Whatsapp-body .whatsapp-header h2 {
+
+position: relative;
+
+z-index: 2;
+
+margin:
+    0 0 9px;
+
+font-size:
+    clamp(24px, 4vw, 34px);
+
+font-weight:
+    800;
+
+letter-spacing:
+    -0.7px;
+
+color:
+    #f4fbff;
+
+text-shadow:
+    0 0 25px rgba(37,211,102,0.10);
+
+}
+
+.Whatsapp-body .whatsapp-header p {
+
+position: relative;
+
+z-index: 2;
+
+margin:
+    0;
+
+color:
+    #91a8ba;
+
+font-size:
+    14px;
+
+line-height:
+    1.6;
+
+}
+
+/* =========================================================
+MESSAGE BOX
+========================================================= */
+
+.Whatsapp-body .message-box {
+
+position: relative;
+
+padding:
+    25px;
+
+margin-bottom:
+    18px;
+
+border-radius:
+    20px;
+
+background:
+    linear-gradient(
+        145deg,
+        rgba(16,35,53,0.94),
+        rgba(9,24,40,0.92)
+    );
+
+border:
+    1px solid rgba(148,163,184,0.13);
+
+box-shadow:
+    0 15px 45px rgba(0,0,0,0.20),
+    inset 0 1px 0 rgba(255,255,255,0.035);
+
+backdrop-filter:
+    blur(14px);
+
+-webkit-backdrop-filter:
+    blur(14px);
+
+transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+
+}
+
+.Whatsapp-body .message-box:hover {
+
+transform:
+    translateY(-2px);
+
+border-color:
+    rgba(37,211,102,0.18);
+
+box-shadow:
+    0 20px 50px rgba(0,0,0,0.25),
+    inset 0 1px 0 rgba(255,255,255,0.045);
+
+}
+
+/* =========================================================
+MESSAGE BOX HEADINGS
+========================================================= */
+
+.Whatsapp-body .message-box h3 {
+
+margin:
+    0 0 17px;
+
+color:
+    #e9f5ff;
+
+font-size:
+    16px;
+
+font-weight:
+    700;
+
+letter-spacing:
+    -0.2px;
+
+}
+
+/* =========================================================
+SELECT STUDENT
+========================================================= */
+
+.Whatsapp-body #studentSelect {
+
+width:
+    100%;
+
+min-height:
+    53px;
+
+padding:
+    0 16px;
+
+box-sizing:
+    border-box;
+
+border:
+    1px solid rgba(148,163,184,0.16);
+
+border-radius:
+    13px;
+
+outline:
+    none;
+
+background:
+    rgba(4,16,28,0.75);
+
+color:
+    #dcecff;
+
+font-size:
+    14px;
+
+cursor:
+    pointer;
+
+transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+
+}
+
+.Whatsapp-body #studentSelect:hover {
+
+border-color:
+    rgba(37,211,102,0.35);
+
+}
+
+.Whatsapp-body #studentSelect:focus {
+
+border-color:
+    rgba(37,211,102,0.65);
+
+box-shadow:
+    0 0 0 4px rgba(37,211,102,0.08);
+
+}
+
+.Whatsapp-body #studentSelect option {
+
+background:
+    #0b1c2c;
+
+color:
+    #eaf4ff;
+
+}
+
+/* =========================================================
+STUDENT DETAILS
+========================================================= */
+
+.Whatsapp-body #studentDetails {
+
+border-left:
+    3px solid #25d366;
+
+}
+
+.Whatsapp-body .student-info {
+
+display:
+    grid;
+
+grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+gap:
+    12px;
+
+}
+
+.Whatsapp-body .student-info p {
+
+margin:
+    0;
+
+padding:
+    16px;
+
+border-radius:
+    13px;
+
+background:
+    rgba(255,255,255,0.035);
+
+border:
+    1px solid rgba(148,163,184,0.08);
+
+color:
+    #8fa5b8;
+
+font-size:
+    12px;
+
+line-height:
+    1.6;
+
+}
+
+.Whatsapp-body .student-info strong {
+
+display:
+    block;
+
+margin-bottom:
+    5px;
+
+color:
+    #71899e;
+
+font-size:
+    11px;
+
+text-transform:
+    uppercase;
+
+letter-spacing:
+    0.7px;
+
+}
+
+.Whatsapp-body .student-info span {
+
+color:
+    #e8f5ff;
+
+font-size:
+    14px;
+
+font-weight:
+    700;
+
+word-break:
+    break-word;
+
+}
+
+/* =========================================================
+PHONE INPUT
+========================================================= */
+
+.Whatsapp-body #parentNumber {
+
+width:
+    100%;
+
+min-height:
+    53px;
+
+padding:
+    0 17px;
+
+box-sizing:
+    border-box;
+
+border:
+    1px solid rgba(148,163,184,0.16);
+
+border-radius:
+    13px;
+
+outline:
+    none;
+
+background:
+    rgba(4,16,28,0.75);
+
+color:
+    #e8f5ff;
+
+font-size:
+    14px;
+
+transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+
+}
+
+.Whatsapp-body #parentNumber::placeholder {
+
+color:
+    #60788d;
+
+}
+
+.Whatsapp-body #parentNumber:focus {
+
+border-color:
+    rgba(37,211,102,0.65);
+
+box-shadow:
+    0 0 0 4px rgba(37,211,102,0.08);
+
+}
+
+/* =========================================================
+MESSAGE TEXTAREA
+========================================================= */
+
+.Whatsapp-body #message {
+
+width:
+    100%;
+
+min-height:
+    220px;
+
+padding:
+    18px;
+
+box-sizing:
+    border-box;
+
+resize:
+    vertical;
+
+border:
+    1px solid rgba(148,163,184,0.16);
+
+border-radius:
+    15px;
+
+outline:
+    none;
+
+background:
+    linear-gradient(
+        135deg,
+        rgba(4,16,28,0.90),
+        rgba(7,22,36,0.82)
+    );
+
+color:
+    #dcecff;
+
+font-family:
+    Inter,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+
+font-size:
+    14px;
+
+line-height:
+    1.8;
+
+transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+
+}
+
+.Whatsapp-body #message::placeholder {
+
+color:
+    #60788d;
+
+}
+
+.Whatsapp-body #message:focus {
+
+border-color:
+    rgba(37,211,102,0.60);
+
+box-shadow:
+    0 0 0 4px rgba(37,211,102,0.07),
+    inset 0 0 25px rgba(37,211,102,0.025);
+
+}
+
+/* =========================================================
+SEND BUTTON
+========================================================= */
+
+.Whatsapp-body button.send {
+
+position:
+    relative;
+
+display:
+    flex;
+
+align-items:
+    center;
+
+justify-content:
+    center;
+
+gap:
+    9px;
+
+width:
+    100%;
+
+min-height:
+    60px;
+
+margin-top:
+    5px;
+
+padding:
+    14px 25px;
+
+border:
+    1px solid rgba(37,211,102,0.35);
+
+border-radius:
+    16px;
+
+outline:
+    none;
+
+overflow:
+    hidden;
+
+background:
+    linear-gradient(
+        135deg,
+        #25d366,
+        #16a34a
+    );
+
+color:
+    #ffffff;
+
+font-size:
+    15px;
+
+font-weight:
+    800;
+
+letter-spacing:
+    0.2px;
+
+cursor:
+    pointer;
+
+box-shadow:
+    0 12px 30px rgba(37,211,102,0.20);
+
+transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+
+}
+
+.Whatsapp-body button.send::before {
+
+content:
+    "";
+
+position:
+    absolute;
+
+top:
+    0;
+
+left:
+    -120%;
+
+width:
+    70%;
+
+height:
+    100%;
+
+background:
+    linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,0.22),
+        transparent
+    );
+
+transform:
+    skewX(-20deg);
+
+transition:
+    left 0.55s ease;
+
+}
+
+.Whatsapp-body button.send:hover {
+
+transform:
+    translateY(-3px);
+
+filter:
+    brightness(1.07);
+
+box-shadow:
+    0 18px 40px rgba(37,211,102,0.28);
+
+}
+
+.Whatsapp-body button.send:hover::before {
+
+left:
+    140%;
+
+}
+
+.Whatsapp-body button.send:active {
+
+transform:
+    scale(0.98);
+
+}
+
+/* =========================================================
+WHATSAPP BRAND ACCENT
+========================================================= */
+
+.Whatsapp-body .message-box:nth-of-type(1) {
+
+border-top:
+    2px solid rgba(37,211,102,0.35);
+
+}
+
+.Whatsapp-body .message-box:nth-of-type(3) {
+
+border-top:
+    2px solid rgba(56,189,248,0.25);
+
+}
+
+.Whatsapp-body .message-box:nth-of-type(4) {
+
+border-top:
+    2px solid rgba(139,92,246,0.25);
+
+}
+
+/* =========================================================
+INPUT SCROLLBAR
+========================================================= */
+
+.Whatsapp-body textarea::-webkit-scrollbar {
+
+width:
+    6px;
+
+}
+
+.Whatsapp-body textarea::-webkit-scrollbar-track {
+
+background:
+    transparent;
+
+}
+
+.Whatsapp-body textarea::-webkit-scrollbar-thumb {
+
+background:
+    #294257;
+
+border-radius:
+    10px;
+
+}
+
+/* =========================================================
+GENERAL SCROLLBAR
+========================================================= */
+
+.Whatsapp-body::-webkit-scrollbar {
+
+width:
+    7px;
+
+}
+
+.Whatsapp-body::-webkit-scrollbar-track {
+
+background:
+    #07111f;
+
+}
+
+.Whatsapp-body::-webkit-scrollbar-thumb {
+
+background:
+    #263e53;
+
+border-radius:
+    10px;
+
+}
+
+/* =========================================================
+FOCUS ACCESSIBILITY
+========================================================= */
+
+.Whatsapp-body input:focus-visible,
+.Whatsapp-body textarea:focus-visible,
+.Whatsapp-body select:focus-visible,
+.Whatsapp-body button:focus-visible {
+
+outline:
+    2px solid rgba(37,211,102,0.65);
+
+outline-offset:
+    2px;
+
+}
+
+/* =========================================================
+TABLET
+========================================================= */
+
+@media (max-width: 850px) {
+
+.Whatsapp-body .whatsapp-container {
+
+    width:
+        min(100% - 35px, 760px);
+
+    padding-top:
+        35px;
+}
+
+
+.Whatsapp-body .student-info {
+
+    grid-template-columns:
+        1fr 1fr;
+}
+
+
+.Whatsapp-body .student-info p:last-child {
+
+    grid-column:
+        1 / -1;
+}
+
+}
+
+/* =========================================================
+MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+.Whatsapp-body .whatsapp-container {
+
+    width:
+        calc(100% - 24px);
+
+    padding:
+        20px 0 40px;
+}
+
+
+.Whatsapp-body .whatsapp-header {
+
+    padding:
+        24px 20px;
+
+    margin-bottom:
+        16px;
+
+    border-radius:
+        19px;
+}
+
+
+.Whatsapp-body .whatsapp-header h2 {
+
+    font-size:
+        24px;
+
+    line-height:
+        1.3;
+}
+
+
+.Whatsapp-body .message-box {
+
+    padding:
+        19px;
+
+    margin-bottom:
+        13px;
+
+    border-radius:
+        17px;
+}
+
+
+.Whatsapp-body .message-box h3 {
+
+    font-size:
+        15px;
+}
+
+
+.Whatsapp-body .student-info {
+
+    grid-template-columns:
+        1fr;
+}
+
+
+.Whatsapp-body .student-info p:last-child {
+
+    grid-column:
+        auto;
+}
+
+
+.Whatsapp-body #message {
+
+    min-height:
+        200px;
+}
+
+
+.Whatsapp-body button.send {
+
+    min-height:
+        57px;
+
+    border-radius:
+        15px;
+}
+
+}
+
+/* =========================================================
+SMALL PHONE
+========================================================= */
+
+@media (max-width: 380px) {
+
+.Whatsapp-body .whatsapp-container {
+
+    width:
+        calc(100% - 18px);
+}
+
+
+.Whatsapp-body .whatsapp-header h2 {
+
+    font-size:
+        21px;
+}
+
+
+.Whatsapp-body .message-box {
+
+    padding:
+        16px;
+}
+
+
+.Whatsapp-body button.send {
+
+    font-size:
+        14px;
+}
+
+}

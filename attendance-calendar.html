@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Attendance Calendar</title>
+
+<link rel="stylesheet"
+href="sidebar.css">
+
+<link rel="stylesheet"
+href="attendance-calendar.css">
+
+</head>
+
+<body class="calendar-body">
+
+<!-- ======================
+     Sidebar
+====================== -->
+
+<button class="menu-btn"
+onclick="toggleSidebar()">
+
+☰
+
+</button>
+
+<div class="overlay"></div>
+
+<div class="sidebar"
+id="sidebar">
+
+<div class="sidebar-logo">
+
+<h2>
+🤖 AI Attendance
+</h2>
+
+<p>
+Management System
+</p>
+
+</div>
+
+<ul>
+
+<li><a href="dashboard.html">🏠 Dashboard</a></li>
+
+<li><a href="studentadmission.html">👨‍🎓 Students</a></li>
+
+<li><a href="attendance.html">📋 Attendance</a></li>
+
+<li><a href="attendancehistory.html">📅 History</a></li>
+
+<li><a href="attendanceview.html">📊 Reports</a></li>
+
+<li><a href="ai-dashboard.html">🤖 AI Analytics</a></li>
+
+<li id="teacherProfileMenu">
+<a href="teacherprofile.html">
+👤 Teacher Profile
+</a>
+</li>
+
+<li id="adminProfileMenu">
+<a href="adminprofile.html">
+👤 Admin Profile
+</a>
+</li>
+
+<li>
+<a href="#">
+🚪 Logout
+</a>
+</li>
+
+</ul>
+
+</div>
+
+<!-- ======================
+     Main Content
+====================== -->
+
+<div class="main-content">
+
+<div class="calendar-container">
+
+<h1>
+📅 Attendance Calendar
+</h1>
+
+<p class="subtitle">
+Monthly Attendance Overview
+</p>
+
+<!-- Calendar Header -->
+
+<div class="calendar-header">
+
+<button id="prevMonth">
+
+⬅ Previous
+
+</button>
+
+<h2 id="currentMonth">
+
+August 2026
+
+</h2>
+
+<button id="nextMonth">
+
+Next ➡
+
+</button>
+
+</div>
+
+<!-- Week Days -->
+
+<div class="weekdays">
+
+<div>Sun</div>
+
+<div>Mon</div>
+
+<div>Tue</div>
+
+<div>Wed</div>
+
+<div>Thu</div>
+
+<div>Fri</div>
+
+<div>Sat</div>
+
+</div>
+
+<!-- Calendar Days -->
+
+<div id="calendarDays"
+class="calendar-days">
+
+<!-- JavaScript will generate dates here -->
+
+</div>
+
+<!-- Legend -->
+
+<div class="calendar-legend">
+
+<div>
+
+<span class="green-dot"></span>
+
+High Attendance
+
+</div>
+
+<div>
+
+<span class="yellow-dot"></span>
+
+Medium Attendance
+
+</div>
+
+<div>
+
+<span class="red-dot"></span>
+
+Low Attendance
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<!-- =====================================
+     Attendance Details Popup
+===================================== -->
+
+<div id="attendancePopup" class="popup-overlay">
+
+    <div class="popup-box">
+
+        <button id="closePopup" class="popup-close">
+            ✕
+        </button>
+
+        <h2>📅 Attendance Details</h2>
+
+        <div id="popupContent">
+
+            Loading...
+
+        </div>
+
+    </div>
+
+</div>
+<script src="auth.js"></script>
+
+<script src="sidebar.js"></script>
+
+<script src="role-sidebar.js"></script>
+
+<script src="attendance-calendar.js"></script>
+
+</body>
+
+</html>

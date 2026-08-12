@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Admin Panel</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="admin.css">
+<link rel="stylesheet" href="sidebar.css">
+
+</head>
+
+
+<body class="admin-body" >
+
+<!-- Sidebar Start -->
+
+<button class="menu-btn" onclick="toggleSidebar()">
+
+☰
+
+</button>
+
+
+<div class="overlay"></div>
+
+
+
+
+<div class="sidebar" id="sidebar">
+
+
+<div class="sidebar-logo">
+
+<h2>
+🤖 AI Attendance
+</h2>
+
+<p>
+Management System
+</p>
+
+</div>
+
+
+
+
+<ul>
+
+
+<li>
+<a href="dashboard.html">
+🏠 Dashboard
+</a>
+</li>
+
+
+
+<li>
+<a href="studentadmission.html">
+👨‍🎓 Students
+</a>
+</li>
+
+
+
+<li>
+<a href="attendance.html">
+📋 Attendance
+</a>
+</li>
+
+
+
+<li>
+<a href="attendancehistory.html">
+📅 History
+</a>
+</li>
+
+
+
+<li>
+<a href="attendanceview.html">
+👁 Reports
+</a>
+</li>
+
+
+
+<li>
+<a href="ai-dashboard.html">
+🤖 AI Analytics
+</a>
+</li>
+
+
+
+<div id="teacherMenu">
+
+
+<li>
+<a href="teacherprofile.html">
+👤 Teacher Profile
+</a>
+</li>
+
+
+</div>
+
+
+
+
+<div id="adminMenu">
+
+
+<li>
+<a href="teachers.html">
+👨‍🏫 Teacher Management
+</a>
+</li>
+
+
+<li>
+<a href="classmanagement.html">
+🏫 Class Management
+</a>
+</li>
+
+
+<li>
+<a href="adminsettings.html">
+⚙ Settings
+</a>
+</li>
+
+
+</div>
+
+
+
+
+<li>
+
+<a href="#" onclick="logout()">
+
+🚪 Logout
+
+</a>
+
+</li>
+
+
+</ul>
+
+
+</div>
+
+<!-- Sidebar End -->
+
+<div class="admin-container">
+
+
+
+<h1>
+🔐 Admin Panel
+</h1>
+
+
+
+
+<div class="admin-cards">
+
+
+
+<div class="admin-card">
+
+<h2>
+👨‍🎓 Students
+</h2>
+
+<h1 id="studentCount">
+0
+</h1>
+
+</div>
+
+
+
+
+
+<div class="admin-card">
+
+<h2>
+📋 Attendance Records
+</h2>
+
+<h1 id="attendanceCount">
+0
+</h1>
+
+</div>
+
+
+
+
+
+<div class="admin-card">
+
+<h2>
+👨‍🏫 Teachers
+</h2>
+
+<h1 id="teacherCount">
+0
+</h1>
+
+</div>
+
+
+
+</div>
+
+<!-- Activity log Section -->
+
+  <div class="activity-box">
+    
+    <h2>
+     📋📜 System Activity logs
+    </h2>
+<table>
+
+<thead>
+
+<tr>
+
+<th>No</th>
+<th>User</th>
+<th>Role</th>
+<th>Action</th>
+<th>Date</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="activityList">
+
+</tbody>
+
+
+</table>
+  </div>
+
+<!-- Admin Menu -->
+
+<div class="admin-actions">
+
+
+
+<a href="teachers.html">
+
+<button>
+👨‍🏫 Teacher Management
+</button>
+
+</a>
+
+
+
+
+
+<a href="classmanagement.html">
+
+<button>
+🏫 Class Management
+</button>
+
+</a>
+
+
+
+
+
+<a href="studentadmission.html">
+
+<button>
+👨‍🎓 Student Management
+</button>
+
+</a>
+
+
+<a href="adminprofile.html">
+
+<button>
+👤 Admin Profile
+</button>
+
+</a>
+
+
+<a href="adminsetting.html">
+
+<button>
+⚙️ Settings
+</button>
+
+</a>
+
+
+
+
+
+<button onclick="logout()">
+
+🚪 Logout
+
+</button>
+
+
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+<script src="auth.js"></script>
+<script src="sidebar.js"></script>
+<script src="rolesidebar.js"></script>
+<script src="admin.js"></script>
+<script src="activity.js"></script>
+
+
+<script>
+loadActivityLogs();
+</script>
+</body>
+
+</html>

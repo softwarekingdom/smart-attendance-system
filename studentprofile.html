@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>
+Student Profile
+</title>
+
+
+<link rel="stylesheet" href="studentprofile.css">
+
+<link rel="stylesheet" href="sidebar.css">
+
+
+</head>
+
+
+<body class="student-profile-body">
+
+
+<!-- Menu Button -->
+
+<button class="menu-btn" onclick="toggleSidebar()">
+
+☰
+
+</button>
+
+
+<div class="overlay" onclick="closeSidebar()"></div>
+
+
+
+<!-- Sidebar -->
+
+<div class="sidebar" id="sidebar">
+
+
+<div class="sidebar-logo">
+
+<h2>
+🤖 AI School
+</h2>
+
+<p>
+Attendance Management System
+</p>
+
+
+</div>
+
+
+
+<ul>
+
+
+<li>
+
+<a href="dashboard.html">
+
+🏠 Dashboard
+
+</a>
+
+</li>
+
+
+
+<li>
+
+<a href="studentadmission.html">
+
+👨‍🎓 Student Admission
+
+</a>
+
+</li>
+
+
+
+<li>
+
+<a href="studentprofile.html">
+
+👤 Student Profile
+
+</a>
+
+</li>
+
+
+
+<li>
+
+<a href="attendance.html">
+
+📋 Attendance
+
+</a>
+
+</li>
+
+
+
+<li>
+
+<a href="teachers.html">
+
+👨‍🏫 Teacher Management
+
+</a>
+
+</li>
+
+
+
+<li>
+
+<a href="classmanagement.html">
+
+🏫 Class Management
+
+</a>
+
+</li>
+
+
+
+<li>
+
+<a href="#" onclick="logout()">
+
+🚪 Logout
+
+</a>
+
+</li>
+
+
+</ul>
+
+
+</div>
+
+
+
+<!-- Main Content -->
+
+
+<div class="profile-container">
+
+
+
+<div class="profile-card">
+
+
+
+<h1>
+👨‍🎓 Student Profile
+</h1>
+
+
+
+
+<div class="student-info">
+
+
+
+<div class="info-box">
+
+<h3>
+👨‍🎓 Student Name
+</h3>
+
+<p id="studentName">
+Loading...
+</p>
+
+</div>
+
+
+
+
+<div class="info-box">
+
+<h3>
+👨‍👩‍👦 Parent Name
+</h3>
+
+<p id="parentName">
+Loading...
+</p>
+
+</div>
+
+
+
+
+
+<div class="info-box">
+
+<h3>
+📱 WhatsApp Number
+</h3>
+
+<p id="whatsappNumber">
+Loading...
+</p>
+
+</div>
+
+
+
+
+
+<div class="info-box">
+
+<h3>
+🏫 School Name
+</h3>
+
+<p id="schoolName">
+Loading...
+</p>
+
+</div>
+
+
+
+
+
+<div class="info-box">
+
+<h3>
+📚 Class
+</h3>
+
+<p id="studentClass">
+Loading...
+</p>
+
+</div>
+
+
+
+
+
+<div class="info-box">
+
+<h3>
+⚧ Gender
+</h3>
+
+<p id="gender">
+Loading...
+</p>
+
+</div>
+
+
+
+
+
+<div class="info-box">
+
+<h3>
+🎂 Birth Date
+</h3>
+
+<p id="birthDate">
+Loading...
+</p>
+
+</div>
+
+
+
+
+
+<div class="info-box">
+
+<h3>
+📅 Admission Date
+</h3>
+
+<p id="admissionDate">
+Loading...
+</p>
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+<!-- Buttons -->
+
+
+<div class="button-group">
+
+
+<button onclick="history.back()">
+
+⬅ Back
+
+</button>
+
+
+
+<button onclick="openStudentWhatsApp()">
+
+💬 WhatsApp
+
+</button>
+
+
+
+<button onclick="editStudentProfile()">
+
+✏ Edit
+
+</button>
+
+
+
+<button onclick="printProfile()">
+
+🖨 Print
+
+</button>
+
+
+</div>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+<script src="auth.js"></script>
+
+<script src="sidebar.js"></script>
+
+<script src="studentprofile.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>
+AI Attendance System - History
+</title>
+
+
+<link rel="stylesheet" href="attendancehistory.css">
+
+<link rel="stylesheet" href="sidebar.css">
+
+
+</head>
+
+
+
+<body class="history-body">
+
+
+
+<!-- Sidebar Start -->
+
+<button class="menu-btn" onclick="toggleSidebar()">
+
+☰
+
+</button>
+
+
+<div class="overlay"></div>
+
+
+
+
+<div class="sidebar" id="sidebar">
+
+
+<div class="sidebar-logo">
+
+<h2>
+🤖 AI Attendance
+</h2>
+
+<p>
+Management System
+</p>
+
+</div>
+
+
+
+
+<ul>
+
+
+<li>
+<a href="dashboard.html">
+🏠 Dashboard
+</a>
+</li>
+
+
+
+<li>
+<a href="studentadmission.html">
+👨‍🎓 Students
+</a>
+</li>
+
+
+
+<li>
+<a href="attendance.html">
+📋 Attendance
+</a>
+</li>
+
+<li>
+  <a href="whatsapp.html">
+    💬📱 send whatsapp
+    <a/>
+</li>
+
+
+<li>
+<a href="attendancehistory.html">
+📅 History
+</a>
+</li>
+
+
+
+<li>
+<a href="attendanceview.html">
+👁 Reports
+</a>
+</li>
+
+
+
+<li>
+<a href="ai-dashboard.html">
+🤖 AI Analytics
+</a>
+</li>
+
+
+
+<div id="teacherMenu">
+
+
+<li>
+<a href="teacherprofile.html">
+👤 Teacher Profile
+</a>
+</li>
+
+
+</div>
+
+
+
+
+<div id="adminMenu">
+
+
+<li>
+<a href="teachers.html">
+👨‍🏫 Teacher Management
+</a>
+</li>
+
+
+<li>
+<a href="classmanagement.html">
+🏫 Class Management
+</a>
+</li>
+
+
+<li>
+<a href="adminsettings.html">
+⚙ Settings
+</a>
+</li>
+
+
+</div>
+
+
+
+
+<li>
+
+<a href="#" onclick="logout()">
+
+🚪 Logout
+
+</a>
+
+</li>
+
+
+</ul>
+
+
+</div>
+
+<!-- Sidebar End -->
+
+
+
+
+<!-- Main Content -->
+
+<div class="main-content">
+
+
+
+<header>
+
+<h1>
+
+📊 Attendance History
+
+</h1>
+
+
+</header>
+
+
+
+
+
+
+
+
+<div class="history-box">
+
+
+
+<h2>
+
+Previous Attendance Records
+
+</h2>
+
+
+
+
+<!-- Search -->
+
+
+<input 
+type="text"
+id="searchHistory"
+placeholder="🔍 Search Student">
+
+
+
+
+<div class="filter-box">
+
+<input
+type="date"
+id="filterDate">
+
+<button onclick="filterHistory()">
+🔍 Search
+</button>
+
+<button onclick="loadHistory()">
+🔄 Reset
+</button>
+
+</div>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>No</th>
+
+<th>Date</th>
+
+<th>Teacher</th>
+
+<th>Class</th>
+
+<th>Details</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="historyList">
+
+</tbody>
+
+
+</table>
+
+
+
+
+
+<tbody id="historyList">
+
+
+<!-- JavaScript Data -->
+
+
+</tbody>
+
+
+
+
+
+</table>
+
+
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<script src="auth.js"></script>
+<script src="sidebar.js"></script>
+<script src="rolesidebar.js"></script>
+<script src="attendancehistory.js"></script>
+
+
+</body>
+
+
+</html>

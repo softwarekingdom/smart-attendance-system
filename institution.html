@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+
+<head>
+
+
+<meta charset="UTF-8">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>
+Institution Settings
+</title>
+
+
+<link rel="stylesheet" href="institution.css">
+
+<link rel="stylesheet" href="sidebar.css">
+
+
+</head>
+
+
+
+
+<body class="institution-body">
+
+
+
+
+
+<!-- Menu Button -->
+
+<button 
+class="menu-btn"
+onclick="toggleSidebar()">
+
+☰
+
+</button>
+
+
+
+
+
+
+<!-- Sidebar -->
+
+<div class="overlay"></div>
+
+
+
+<div class="sidebar" id="sidebar">
+
+
+
+<div class="sidebar-logo">
+
+
+<h2>
+🤖 AI Attendance
+</h2>
+
+
+<p>
+Management System
+</p>
+
+
+</div>
+
+
+
+
+
+<ul>
+
+
+<li>
+
+<a href="dashboard.html">
+
+🏠 Dashboard
+
+</a>
+
+</li>
+
+
+
+
+<li>
+
+<a href="studentadmission.html">
+
+👨‍🎓 Students
+
+</a>
+
+</li>
+
+
+
+
+
+<li>
+
+<a href="teachers.html">
+
+👨‍🏫 Teachers
+
+</a>
+
+</li>
+
+
+
+
+
+<li>
+
+<a href="adminsettings.html">
+
+⚙ Settings
+
+</a>
+
+</li>
+
+
+
+
+
+
+<li>
+
+<a href="#" onclick="logout()">
+
+🚪 Logout
+
+</a>
+
+</li>
+
+
+
+</ul>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- Main Content -->
+
+
+<div class="institution-container">
+
+
+
+<h1>
+
+🏫 Institution Information
+
+</h1>
+
+
+
+
+
+<div class="form-card">
+
+
+
+<h2>
+
+Basic Details
+
+</h2>
+
+
+
+<form id="institutionForm">
+  <!-- Institution Name -->
+
+<div class="form-group">
+
+
+<label>
+🏫 Institution Name
+</label>
+
+
+<input 
+type="text"
+id="institutionName"
+placeholder="Enter Institution Name">
+
+
+</div>
+
+
+
+
+
+
+
+<!-- Institution Type -->
+
+<div class="form-group">
+
+
+<label>
+🏢 Institution Type
+</label>
+
+
+
+<select id="institutionType">
+
+
+<option value="">
+Select Type
+</option>
+
+
+<option value="School">
+School
+</option>
+
+
+<option value="Tuition Centre">
+Tuition Centre
+</option>
+
+
+<option value="Institute">
+Institute
+</option>
+
+
+<option value="University">
+University
+</option>
+
+
+
+</select>
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- Logo Upload -->
+
+
+<div class="form-group">
+
+
+<label>
+🖼 Institution Logo
+</label>
+
+
+<input
+
+type="file"
+
+id="institutionLogo"
+
+accept="image/*">
+
+
+<img
+
+id="logoPreview"
+
+src="images/default-logo.png"
+
+class="logo-preview">
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- Address -->
+
+
+<div class="form-group">
+
+
+<label>
+📍 Address
+</label>
+
+
+<textarea
+
+id="institutionAddress"
+
+placeholder="Enter Address">
+
+</textarea>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="form-row">
+
+
+
+<div class="form-group">
+
+
+<label>
+🌍 City
+</label>
+
+
+<input
+
+type="text"
+
+id="institutionCity"
+
+placeholder="City">
+
+
+</div>
+
+
+
+
+
+
+
+<div class="form-group">
+
+
+<label>
+📮 Postal Code
+</label>
+
+
+<input
+
+type="text"
+
+id="institutionPostal"
+
+placeholder="Postal Code">
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- Contact -->
+
+
+<div class="form-row">
+
+
+
+<div class="form-group">
+
+
+<label>
+📞 Phone
+</label>
+
+
+<input
+
+type="tel"
+
+id="institutionPhone"
+
+placeholder="Office Phone">
+
+
+</div>
+
+
+
+
+
+
+
+<div class="form-group">
+
+
+<label>
+💬 WhatsApp
+</label>
+
+
+<input
+
+type="tel"
+
+id="institutionWhatsapp"
+
+placeholder="WhatsApp Number">
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="form-group">
+
+
+<label>
+📧 Email
+</label>
+
+
+<input
+
+type="email"
+
+id="institutionEmail"
+
+placeholder="Email Address">
+
+
+</div>
+<!-- Principal Details -->
+
+
+<div class="form-group">
+
+
+<label>
+👨‍💼 Principal / Director Name
+</label>
+
+
+<input
+
+type="text"
+
+id="principalName"
+
+placeholder="Enter Name">
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- Signature Upload -->
+
+
+<div class="form-group">
+
+
+<label>
+✍ Principal Signature
+</label>
+
+
+<input
+
+type="file"
+
+id="principalSignature"
+
+accept="image/*">
+
+
+
+
+
+<img
+
+id="signaturePreview"
+
+src="images/default-signature.png"
+
+class="signature-preview">
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- Motto -->
+
+
+<div class="form-group">
+
+
+<label>
+🏷 Institution Motto / Tagline
+</label>
+
+
+<input
+
+type="text"
+
+id="institutionMotto"
+
+placeholder="Example: Excellence Through Education">
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- Save Button -->
+
+
+<button
+
+type="button"
+
+class="save-btn"
+
+onclick="saveInstitution()">
+
+
+💾 Save Institution Information
+
+
+</button>
+
+
+
+
+
+
+</form>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- JavaScript -->
+
+
+<script src="sidebar.js"></script>
+
+
+<script src="auth.js"></script>
+
+
+<script src="institution.js"></script>
+
+
+
+
+
+</body>
+
+
+</html>

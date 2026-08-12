@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Teacher Management</title>
+
+<link rel="stylesheet" href="sidebar.css">
+
+<link rel="stylesheet" href="teachers.css">
+
+</head>
+
+
+<body class="teacher-management-body">
+
+
+<!-- ===========================
+        MENU BUTTON
+============================ -->
+
+<button class="menu-btn" onclick="toggleSidebar()">
+    ☰
+</button>
+
+<div class="overlay" onclick="closeSidebar()"></div>
+
+<!-- ===========================
+        SIDEBAR
+============================ -->
+
+<div class="sidebar" id="sidebar">
+
+    <div class="sidebar-logo">
+        <h2>🤖 AI School</h2>
+        <p>Attendance Management System</p>
+    </div>
+
+    <ul>
+
+        <!-- ================= Dashboard ================= -->
+
+        <li class="sidebar-title">🏠 Dashboard</li>
+
+        <li>
+            <a href="dashboard.html">
+                📊 Dashboard
+            </a>
+        </li>
+
+
+        <!-- ================= Students ================= -->
+
+        <li class="sidebar-title">👨‍🎓 Students</li>
+
+        <li>
+            <a href="studentadmission.html">
+                ➕ Student Admission
+            </a>
+        </li>
+
+        <li>
+            <a href="studentprofile.html">
+                👤 Student Profile
+            </a>
+        </li>
+
+        <li>
+            <a href="studentidcard.html">
+                🪪 Student ID Card
+            </a>
+        </li>
+
+        <li>
+            <a href="multiple-idcard.html">
+                🪪 Multiple ID Cards
+            </a>
+        </li>
+
+
+        <!-- ================= Attendance ================= -->
+
+        <li class="sidebar-title">📋 Attendance</li>
+
+        <li>
+            <a href="attendance.html">
+                ✅ Take Attendance
+            </a>
+        </li>
+
+        <li>
+            <a href="attendance-edit.html">
+                ✏ Edit Attendance
+            </a>
+        </li>
+
+        <li>
+            <a href="attendancehistory.html">
+                📅 Attendance History
+            </a>
+        </li>
+
+        <li>
+            <a href="attendance-calender.html">
+                🗓 Attendance Calendar
+            </a>
+        </li>
+
+        <li>
+            <a href="attendanceview.html">
+                📈 Attendance Reports
+            </a>
+        </li>
+
+
+        <!-- ================= Communication ================= -->
+
+        <li class="sidebar-title">💬 Communication</li>
+
+        <li>
+            <a href="whatsapp.html">
+                📱 WhatsApp Notification
+            </a>
+        </li>
+
+
+        <!-- ================= AI ================= -->
+
+        <li class="sidebar-title">🤖 AI Analytics</li>
+
+        <li>
+            <a href="aidashboard.html">
+                🧠 AI Dashboard
+            </a>
+        </li>
+
+
+        <!-- ================= Administration ================= -->
+
+        <li class="sidebar-title">⚙ Administration</li>
+
+        <li>
+            <a href="teachers.html">
+                👨‍🏫 Teacher Management
+            </a>
+        </li>
+
+        <li>
+            <a href="classmanagement.html">
+                🏫 Class Management
+            </a>
+        </li>
+
+        <li>
+            <a href="institution.html">
+                🏢 Institution
+            </a>
+        </li>
+
+
+        <!-- ================= Profiles ================= -->
+
+        <li class="sidebar-title">👤 My Profile</li>
+
+        <li>
+            <a href="teacherprofile.html">
+                👨‍🏫 Teacher Profile
+            </a>
+        </li>
+
+        <li>
+            <a href="adminprofile.html">
+                👑 Admin Profile
+            </a>
+        </li>
+
+
+        <!-- ================= Logout ================= -->
+
+        <li class="sidebar-title">🚪 Account</li>
+
+        <li>
+            <a href="#" onclick="logout()">
+                🚪 Logout
+            </a>
+        </li>
+
+    </ul>
+
+</div>
+
+<!-- Teacher Count -->
+
+<div class="teacher-card-container">
+
+
+<div class="teacher-card">
+
+<h3>
+Total Teachers
+</h3>
+
+<h1 id="teacherCount">
+
+0
+
+</h1>
+
+</div>
+
+
+</div>
+
+
+
+
+
+<!-- Add Teacher -->
+
+<div class="teacher-form">
+
+
+<h2>
+➕ Add New Teacher
+</h2>
+
+
+<input 
+type="text"
+id="teacherName"
+placeholder="Teacher Name">
+
+
+
+<input 
+type="text"
+id="teacherUsername"
+placeholder="Username">
+
+
+
+<input 
+type="password"
+id="teacherPassword"
+placeholder="Password">
+
+
+
+<input 
+type="tel"
+id="teacherPhone"
+placeholder="Phone Number">
+
+
+
+<input 
+type="email"
+id="teacherEmail"
+placeholder="Email Address">
+
+
+
+<input 
+type="text"
+id="teacherSubject"
+placeholder="Subject (Example: Mathematics)">
+
+<button
+    type="button"
+    onclick="addTeacher()">
+
+    ➕ Add Teacher
+
+</button>
+
+</div>
+
+<!-- =====================================
+     QUICK ACTIONS
+===================================== --><div class="quick-actions"><h2>⚡ Quick Actions</h2>
+
+<div class="quick-action-grid">
+
+    <a href="classmanagement.html"
+       class="quick-action-btn">
+
+        <span class="quick-action-icon">🏫</span>
+
+        <span class="quick-action-text">
+
+            <strong>Create Class</strong>
+
+            <small>
+                Manage school classes
+            </small>
+
+        </span>
+
+        <span class="quick-action-arrow">→</span>
+
+    </a>
+
+</div>
+
+</div>
+
+<!-- Search -->
+
+
+<div class="search-box">
+
+
+<input 
+type="text"
+id="teacherSearch"
+placeholder="🔍 Search Teacher"
+onkeyup="searchTeacher()">
+
+<button type="button" onclick="updateTeacher()">
+    ✏️ Update Teacher
+</button>
+
+</div>
+
+
+
+
+
+
+<!-- Teacher List -->
+
+
+<div class="table-box">
+
+
+<h2>
+📋 Teacher List
+</h2>
+
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>No</th>
+
+<th>Name</th>
+
+<th>Username</th>
+
+<th>Subject</th>
+
+<th>Phone</th>
+
+<th>Classes</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="teacherList">
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+
+
+</div>
+
+<!-- =====================================
+     Teacher Profile Popup
+===================================== -->
+
+
+<div id="teacherProfilePopup"
+class="profile-popup">
+
+
+<div class="profile-box">
+
+
+<button 
+class="profile-close"
+onclick="closeTeacherProfile()">
+
+✕
+
+</button>
+
+
+
+<div id="teacherProfileContent">
+
+
+Loading...
+
+</div>
+
+
+
+<div id="teacherAssignedClasses">
+</div>
+
+</div>
+
+
+</div>
+<!-- =====================================
+     Teacher Class Assignment
+==========================================-->
+<!-- =====================================
+     TEACHER CLASS ASSIGNMENT
+===================================== --><div class="teacher-assignment-box"><h2>
+    🏫 Assign Classes to Teacher
+</h2>
+
+<p>
+    Select a teacher and assign one or more classes.
+</p>
+
+
+<!-- Select Teacher -->
+
+<div class="assignment-field">
+
+    <label for="assignTeacher">
+        👨‍🏫 Select Teacher
+    </label>
+
+    <select id="assignTeacher">
+
+        <option value="">
+            -- Select Teacher --
+        </option>
+
+    </select>
+
+</div>
+
+
+<!-- Available Classes -->
+
+<div class="assignment-field">
+
+    <label>
+        🏫 Select Classes
+    </label>
+
+    <div
+        id="classList"
+        class="class-list">
+
+        Loading classes...
+
+    </div>
+
+</div>
+
+
+<!-- Save Assignment -->
+
+<button
+    type="button"
+    class="assign-btn"
+    onclick="assignClasses()">
+
+    💾 Save Assignment
+
+</button>
+
+</div>
+<script src="sidebar.js"></script>
+<script src="rolesidebar.js"></script>
+<!-- Supabase Library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- Supabase Connection -->
+<script src="supabase-config.js"></script>
+
+<!-- Teacher Management -->
+<script src="teachers.js"></script>
+
+
+</body>
+
+</html>

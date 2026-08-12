@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>
+Student Admission
+</title>
+
+
+
+<link rel="stylesheet" href="sidebar.css">
+
+<link rel="stylesheet" href="studentadmission.css">
+
+
+</head>
+
+
+
+<body class="student-admission-body">
+
+
+
+<!-- Menu Button -->
+
+<button 
+class="menu-btn"
+onclick="toggleSidebar()">
+
+☰
+
+</button>
+
+
+
+<div 
+class="overlay"
+onclick="closeSidebar()">
+
+</div>
+
+
+
+
+
+<!-- Sidebar -->
+
+<div class="sidebar" id="sidebar">
+
+
+<div class="sidebar-logo">
+
+<h2>
+🤖 AI School
+</h2>
+
+<p>
+Attendance Management System
+</p>
+
+</div>
+
+
+
+<ul>
+
+
+<li>
+<a href="dashboard.html">
+🏠 Dashboard
+</a>
+</li>
+
+
+
+<li>
+<a href="studentadmission.html">
+👨‍🎓 Student Admission
+</a>
+</li>
+
+
+
+<li>
+<a href="studentprofile.html">
+👤 Student Profile
+</a>
+</li>
+
+
+
+<li>
+<a href="attendance.html">
+📋 Attendance
+</a>
+</li>
+
+
+
+<li>
+<a href="teachers.html">
+👨‍🏫 Teacher Management
+</a>
+</li>
+
+
+
+<li>
+<a href="classmanagement.html">
+🏫 Class Management
+</a>
+</li>
+
+
+
+<li>
+<a href="#" onclick="logout()">
+🚪 Logout
+</a>
+</li>
+
+
+
+</ul>
+
+
+</div>
+
+
+
+
+
+<!-- Main Content -->
+
+<div class="admission-container">
+
+
+
+
+
+<h1>
+👨‍🎓 Student Admission
+</h1>
+
+
+
+
+
+
+
+<!-- Admission Form -->
+
+<div class="admission-card">
+
+
+
+<h2>
+➕ Add New Student
+</h2>
+
+
+
+
+<input 
+type="text"
+id="studentName"
+placeholder="Student Name">
+
+
+
+
+
+<input 
+type="text"
+id="parentName"
+placeholder="Parent Name">
+
+
+
+
+
+<input 
+type="tel"
+id="parentPhone"
+placeholder="WhatsApp Number">
+
+
+
+
+
+<input 
+type="text"
+id="schoolName"
+placeholder="School Name">
+
+
+
+
+
+
+<select id="studentClass">
+
+
+<option value="">
+Select Class
+</option>
+
+
+</select>
+
+
+
+
+
+
+<select id="gender">
+
+
+<option value="">
+Select Gender
+</option>
+
+
+<option>
+Male
+</option>
+
+
+<option>
+Female
+</option>
+
+
+</select>
+
+
+
+
+
+
+
+<label>
+Birth Date
+</label>
+
+
+<input 
+type="date"
+id="birthDate">
+
+
+
+
+
+
+<label>
+Admission Date
+</label>
+
+
+<input 
+type="date"
+id="admissionDate">
+
+
+
+
+
+
+
+<button 
+onclick="addStudent()">
+
+💾 Save Student
+
+</button>
+
+
+
+
+</div>
+
+
+
+
+
+
+<!-- Student List -->
+
+<div class="student-list-card">
+
+
+
+<h2>
+📋 Student List
+</h2>
+
+
+
+
+<table>
+
+
+<thead>
+
+<tr>
+
+<th>
+No
+</th>
+
+
+<th>
+Name
+</th>
+
+
+<th>
+Class
+</th>
+
+
+<th>
+Parent
+</th>
+
+
+<th>
+Action
+</th>
+
+
+</tr>
+
+
+</thead>
+
+
+
+
+<tbody id="studentList">
+
+
+</tbody>
+
+
+
+</table>
+
+
+
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+<script src="auth.js"></script>
+
+<script src="sidebar.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="supabase-config.js"></script>
+
+<script src="studentadmission.js"></script>
+
+</body>
+
+</html>

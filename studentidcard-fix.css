@@ -1,0 +1,131 @@
+/* =====================================
+ Student ID Card Font Size Upgrade
+ Override CSS
+===================================== */
+
+
+/* Institution Name */
+
+.id-header h2{
+
+font-size:22px !important;
+
+}
+
+
+
+
+.id-header p{
+
+font-size:14px !important;
+
+}
+
+
+
+
+
+/* Student Name */
+
+.student-details h2{
+
+font-size:26px !important;
+
+}
+
+
+
+
+
+/* Student Details Text */
+
+.student-details p{
+
+font-size:17px !important;
+
+line-height:1.6;
+
+}
+
+
+
+
+
+.student-details span{
+
+font-size:16px !important;
+
+}
+
+
+
+
+
+
+
+/* Back Side Details */
+
+
+.back-details p{
+
+font-size:16px !important;
+
+line-height:1.7;
+
+}
+
+
+
+
+.back-details span{
+
+font-size:15px !important;
+
+}
+
+
+
+
+
+/* Back Header */
+
+
+.back-header h2{
+
+font-size:24px !important;
+
+}
+
+
+
+.back-header p{
+
+font-size:15px !important;
+
+}
+
+
+
+
+
+/* Institution Contact */
+
+
+.institution-contact p{
+
+font-size:15px !important;
+
+}
+
+
+
+
+
+/* Return Message */
+
+
+.return-message{
+
+font-size:14px !important;
+
+}

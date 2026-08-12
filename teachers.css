@@ -1,0 +1,1333 @@
+/* =====================================
+   Teacher Management Modern UI
+===================================== */
+
+
+*{
+
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+
+}
+
+
+
+.teacher-management-body{
+
+    background:#f4f7fb;
+
+    font-family:Arial, sans-serif;
+
+}
+
+
+
+/* Main Content */
+
+.main-content{
+
+    margin-left:260px;
+
+    padding:30px;
+
+    min-height:100vh;
+
+}
+
+
+
+.main-content h1{
+
+    color:#2563eb;
+
+    margin-bottom:25px;
+
+}
+
+
+
+
+
+/* Teacher Count Card */
+
+.teacher-card-container{
+
+    display:flex;
+
+    gap:20px;
+
+    margin-bottom:25px;
+
+}
+
+
+
+.teacher-card{
+
+    background:white;
+
+    padding:25px;
+
+    width:250px;
+
+    border-radius:18px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+    border-left:6px solid #2563eb;
+
+}
+
+
+
+.teacher-card h3{
+
+    color:#6b7280;
+
+}
+
+
+
+.teacher-card h1{
+
+    color:#2563eb;
+
+    margin-top:10px;
+
+}
+
+
+
+
+
+
+
+/* Add Teacher Form */
+
+.teacher-form{
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:18px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+    margin-bottom:25px;
+
+}
+
+
+
+.teacher-form h2{
+
+    margin-bottom:20px;
+
+    color:#111827;
+
+}
+
+
+
+.teacher-form input{
+
+    width:100%;
+
+    padding:12px;
+
+    margin:10px 0;
+
+    border:1px solid #d1d5db;
+
+    border-radius:10px;
+
+    font-size:16px;
+
+}
+
+
+
+.teacher-form button{
+
+    background:#2563eb;
+
+    color:white;
+
+    border:none;
+
+    padding:12px 25px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+}
+
+
+
+.teacher-form button:hover{
+
+    background:#1d4ed8;
+
+}
+
+
+
+
+
+
+/* Search Box */
+
+.search-box{
+
+    margin-bottom:20px;
+
+}
+
+
+
+.search-box input{
+
+    width:100%;
+
+    padding:14px;
+
+    border-radius:12px;
+
+    border:1px solid #d1d5db;
+
+    font-size:16px;
+
+}
+
+
+
+
+
+
+
+/* Table */
+
+.table-box{
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:18px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+}
+
+
+
+.table-box h2{
+
+    margin-bottom:20px;
+
+}
+
+
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+
+
+thead{
+
+    background:#2563eb;
+
+    color:white;
+
+}
+
+
+
+th,td{
+
+    padding:14px;
+
+    text-align:center;
+
+}
+
+
+
+tbody tr{
+
+    border-bottom:1px solid #e5e7eb;
+
+    transition:.3s;
+
+}
+
+
+
+tbody tr:hover{
+
+    background:#f1f5f9;
+
+}
+
+
+
+
+
+
+/* Action Button */
+
+.action-btn{
+
+    background:#ef4444;
+
+    color:white;
+
+    border:none;
+
+    padding:8px 15px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+}
+
+
+
+.action-btn:hover{
+
+    background:#dc2626;
+
+}
+
+
+
+
+
+
+/* Mobile Responsive */
+
+@media(max-width:768px){
+
+
+.main-content{
+
+    margin-left:0;
+
+    padding:15px;
+
+}
+
+
+
+.teacher-card-container{
+
+    flex-direction:column;
+
+}
+
+
+
+.teacher-card{
+
+    width:100%;
+
+}
+
+
+
+.table-box{
+
+    overflow-x:auto;
+
+}
+
+
+
+table{
+
+    min-width:600px;
+
+}
+
+
+
+}
+.view-btn{
+
+background:#16a34a;
+
+color:white;
+
+border:none;
+
+padding:8px 12px;
+
+border-radius:8px;
+
+cursor:pointer;
+
+margin:3px;
+
+}
+
+
+
+.edit-btn{
+
+background:#f59e0b;
+
+color:white;
+
+border:none;
+
+padding:8px 12px;
+
+border-radius:8px;
+
+cursor:pointer;
+
+margin:3px;
+
+}
+
+
+.view-btn:hover{
+
+opacity:.8;
+
+}
+
+
+.edit-btn:hover{
+
+opacity:.8;
+
+}
+/* =====================================
+   Teacher Profile Popup
+===================================== */
+
+
+.profile-popup{
+
+display:none;
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+height:100%;
+
+background:rgba(0,0,0,.5);
+
+align-items:center;
+
+justify-content:center;
+
+z-index:5000;
+
+}
+
+
+
+.profile-popup.active{
+
+display:flex;
+
+}
+
+
+
+.profile-box{
+
+background:white;
+
+width:400px;
+
+max-width:90%;
+
+padding:30px;
+
+border-radius:20px;
+
+box-shadow:0 10px 30px rgba(0,0,0,.2);
+
+position:relative;
+
+}
+
+
+
+.profile-close{
+
+position:absolute;
+
+right:15px;
+
+top:15px;
+
+background:#ef4444;
+
+color:white;
+
+border:none;
+
+width:35px;
+
+height:35px;
+
+border-radius:50%;
+
+cursor:pointer;
+
+}
+
+
+
+.teacher-avatar{
+
+width:90px;
+
+height:90px;
+
+border-radius:50%;
+
+background:#2563eb;
+
+color:white;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:40px;
+
+margin:auto;
+
+}
+
+
+
+.profile-box h2{
+
+text-align:center;
+
+margin:15px 0;
+
+color:#2563eb;
+
+}
+
+
+
+.profile-info{
+
+margin-top:20px;
+
+line-height:2;
+
+font-size:16px;
+
+}
+/* =====================================
+   Teacher Class Assignment UI
+===================================== */
+
+
+.assignment-box{
+
+    background:white;
+
+    margin-top:30px;
+
+    padding:30px;
+
+    border-radius:20px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,0.08);
+
+}
+
+
+
+.assignment-box h2{
+
+    color:#2563eb;
+
+    margin-bottom:20px;
+
+}
+
+
+
+.assignment-box label{
+
+    display:block;
+
+    font-weight:600;
+
+    margin-bottom:10px;
+
+    color:#374151;
+
+}
+
+
+
+#assignTeacher{
+
+    width:100%;
+
+    padding:12px;
+
+    border-radius:12px;
+
+    border:1px solid #d1d5db;
+
+    font-size:16px;
+
+    margin-bottom:25px;
+
+}
+
+
+
+
+
+.class-list{
+
+    display:grid;
+
+    grid-template-columns:
+
+    repeat(2,1fr);
+
+    gap:15px;
+
+    margin:20px 0;
+
+}
+
+
+
+
+.class-list label{
+
+    background:#f1f5f9;
+
+    padding:15px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+
+
+
+
+.class-list label:hover{
+
+    background:#dbeafe;
+
+}
+
+
+
+
+
+.class-list input{
+
+    margin-right:10px;
+
+    transform:scale(1.2);
+
+}
+
+
+
+
+
+.assign-btn{
+
+    background:#2563eb;
+
+    color:white;
+
+    border:none;
+
+    padding:14px 30px;
+
+    border-radius:12px;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+
+
+
+
+.assign-btn:hover{
+
+    background:#1d4ed8;
+
+    transform:translateY(-2px);
+
+}
+
+
+
+
+
+/* Mobile */
+
+@media(max-width:768px){
+
+
+.class-list{
+
+    grid-template-columns:1fr;
+
+}
+
+
+
+.assignment-box{
+
+    padding:20px;
+
+}
+
+
+}
+// 
+/* =====================================
+   Class Creation Design
+===================================== */
+
+
+.class-management-box{
+
+    background:white;
+
+    width:100%;
+
+    max-width:600px;
+
+    margin:30px auto;
+
+    padding:25px;
+
+    border-radius:20px;
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,0.12);
+
+}
+
+
+
+.class-header{
+
+    font-size:24px;
+
+    font-weight:700;
+
+    color:#1e293b;
+
+    margin-bottom:20px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+
+
+
+.class-input-area{
+
+    display:flex;
+
+    gap:15px;
+
+    align-items:center;
+
+}
+
+
+
+
+#newClassName{
+
+    flex:1;
+
+    padding:15px 18px;
+
+    border-radius:12px;
+
+    border:2px solid #e2e8f0;
+
+    font-size:16px;
+
+    outline:none;
+
+    transition:0.3s;
+
+}
+
+
+
+
+#newClassName:focus{
+
+    border-color:#2563eb;
+
+    box-shadow:
+    0 0 10px rgba(37,99,235,0.25);
+
+}
+
+
+
+
+
+.class-input-area button{
+
+
+    padding:15px 22px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:
+    linear-gradient(
+    135deg,
+    #2563eb,
+    #7c3aed
+    );
+
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+
+}
+
+
+
+
+
+.class-input-area button:hover{
+
+
+    transform:translateY(-3px);
+
+
+    box-shadow:
+    0 8px 20px rgba(37,99,235,0.35);
+
+
+}
+
+
+
+
+
+
+
+/* Mobile Responsive */
+
+@media(max-width:600px){
+
+
+.class-input-area{
+
+    flex-direction:column;
+
+}
+
+
+#newClassName{
+
+    width:100%;
+
+}
+
+
+.class-input-area button{
+
+    width:100%;
+
+}
+
+
+}
+/* =====================================
+TEACHER CLASS ASSIGNMENT
+===================================== */
+
+.teacher-assignment-box {
+
+width: min(92%, 900px);
+
+margin: 30px auto;
+
+padding: 28px;
+
+background: rgba(255,255,255,0.96);
+
+border-radius: 18px;
+
+box-shadow:
+    0 10px 30px rgba(0,0,0,0.08);
+
+border: 1px solid rgba(0,0,0,0.06);
+
+}
+
+.teacher-assignment-box h2 {
+
+margin: 0 0 8px;
+
+font-size: 24px;
+
+color: #172033;
+
+}
+
+.teacher-assignment-box p {
+
+margin: 0 0 25px;
+
+color: #6b7280;
+
+font-size: 14px;
+
+}
+
+/* =====================================
+ASSIGNMENT FIELD
+===================================== */
+
+.assignment-field {
+
+margin-bottom: 22px;
+
+}
+
+.assignment-field label {
+
+display: block;
+
+margin-bottom: 9px;
+
+font-size: 14px;
+
+font-weight: 600;
+
+color: #374151;
+
+}
+
+/* =====================================
+TEACHER SELECT
+===================================== */
+
+#assignTeacher {
+
+width: 100%;
+
+padding: 13px 15px;
+
+border: 1px solid #d9dee8;
+
+border-radius: 10px;
+
+background: #ffffff;
+
+font-size: 15px;
+
+color: #1f2937;
+
+outline: none;
+
+cursor: pointer;
+
+transition: 0.25s;
+
+}
+
+#assignTeacher:focus {
+
+border-color: #6366f1;
+
+box-shadow:
+    0 0 0 3px rgba(99,102,241,0.12);
+
+}
+
+/* =====================================
+CLASS LIST
+===================================== */
+
+.class-list {
+
+display: grid;
+
+grid-template-columns:
+    repeat(auto-fit, minmax(180px, 1fr));
+
+gap: 12px;
+
+padding: 15px;
+
+background: #f7f8fc;
+
+border-radius: 14px;
+
+border: 1px solid #e5e7eb;
+
+}
+
+/* =====================================
+CLASS ITEM
+===================================== */
+
+.class-list .class-item {
+
+background: #ffffff;
+
+border: 1px solid #e5e7eb;
+
+border-radius: 12px;
+
+padding: 13px 15px;
+
+transition: 0.25s;
+
+}
+
+.class-list .class-item:hover {
+
+border-color: #6366f1;
+
+transform: translateY(-2px);
+
+box-shadow:
+    0 5px 15px rgba(99,102,241,0.10);
+
+}
+
+/* =====================================
+CHECKBOX
+===================================== */
+
+.class-list input[type="checkbox"] {
+
+width: 17px;
+
+height: 17px;
+
+margin-right: 8px;
+
+accent-color: #6366f1;
+
+cursor: pointer;
+
+}
+
+.class-list label {
+
+display: flex;
+
+align-items: center;
+
+gap: 5px;
+
+margin: 0;
+
+cursor: pointer;
+
+color: #374151;
+
+font-size: 14px;
+
+font-weight: 600;
+
+}
+
+/* =====================================
+SAVE ASSIGNMENT BUTTON
+===================================== */
+
+.assign-btn {
+
+width: 100%;
+
+margin-top: 5px;
+
+padding: 14px 20px;
+
+border: none;
+
+border-radius: 11px;
+
+background:
+    linear-gradient(
+        135deg,
+        #6366f1,
+        #4f46e5
+    );
+
+color: #ffffff;
+
+font-size: 15px;
+
+font-weight: 700;
+
+cursor: pointer;
+
+transition: 0.25s;
+
+box-shadow:
+    0 7px 18px rgba(79,70,229,0.22);
+
+}
+
+.assign-btn:hover {
+
+transform: translateY(-2px);
+
+box-shadow:
+    0 10px 24px rgba(79,70,229,0.30);
+
+}
+
+.assign-btn:active {
+
+transform: scale(0.98);
+
+}
+
+/* =====================================
+MOBILE
+===================================== */
+
+@media (max-width: 600px) {
+
+.teacher-assignment-box {
+
+    width: 90%;
+
+    padding: 20px;
+
+    margin: 20px auto;
+
+}
+
+
+.teacher-assignment-box h2 {
+
+    font-size: 20px;
+
+}
+
+
+.class-list {
+
+    grid-template-columns: 1fr;
+
+    padding: 10px;
+
+}
+
+
+.assign-btn {
+
+    padding: 13px;
+
+}
+
+}
+/* =====================================
+QUICK ACTIONS
+===================================== */
+
+.quick-actions {
+
+width: min(92%, 900px);
+
+margin: 30px auto;
+
+}
+
+.quick-actions h2 {
+
+margin-bottom: 15px;
+
+color: #172033;
+
+font-size: 22px;
+
+}
+
+.quick-action-grid {
+
+display: grid;
+
+grid-template-columns:
+    repeat(auto-fit, minmax(220px, 1fr));
+
+gap: 15px;
+
+}
+
+.quick-action-btn {
+
+display: flex;
+
+align-items: center;
+
+gap: 14px;
+
+padding: 17px 18px;
+
+background: #ffffff;
+
+border: 1px solid #e5e7eb;
+
+border-radius: 15px;
+
+text-decoration: none;
+
+color: #172033;
+
+box-shadow:
+    0 7px 20px rgba(0,0,0,0.06);
+
+transition: 0.25s;
+
+}
+
+.quick-action-btn:hover {
+
+transform: translateY(-3px);
+
+border-color: #6366f1;
+
+box-shadow:
+    0 10px 25px rgba(99,102,241,0.15);
+
+}
+
+.quick-action-icon {
+
+width: 48px;
+
+height: 48px;
+
+display: flex;
+
+align-items: center;
+
+justify-content: center;
+
+border-radius: 12px;
+
+background: #eef2ff;
+
+font-size: 24px;
+
+}
+
+.quick-action-text {
+
+display: flex;
+
+flex-direction: column;
+
+gap: 4px;
+
+flex: 1;
+
+}
+
+.quick-action-text strong {
+
+font-size: 15px;
+
+}
+
+.quick-action-text small {
+
+color: #6b7280;
+
+font-size: 12px;
+
+}
+
+.quick-action-arrow {
+
+font-size: 22px;
+
+color: #6366f1;
+
+}
+
+/* =====================================
+MOBILE
+===================================== */
+
+@media (max-width: 600px) {
+
+.quick-actions {
+
+    width: 90%;
+
+}
+
+.quick-action-btn {
+
+    padding: 15px;
+
+}
+
+}

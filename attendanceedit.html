@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Edit Attendance</title>
+
+<link rel="stylesheet" href="attendanceedit.css">
+<link rel="stylesheet" href="sidebar.css">
+
+</head>
+
+<body class="edit-body">
+ <!-- Sidebar Start -->
+
+<button class="menu-btn" onclick="toggleSidebar()">
+
+☰
+
+</button>
+
+
+<div class="overlay"></div>
+
+
+
+
+<div class="sidebar" id="sidebar">
+
+
+<div class="sidebar-logo">
+
+<h2>
+🤖 AI Attendance
+</h2>
+
+<p>
+Management System
+</p>
+
+</div>
+
+
+
+
+<ul>
+
+
+<li>
+<a href="dashboard.html">
+🏠 Dashboard
+</a>
+</li>
+
+
+
+<li>
+<a href="studentadmission.html">
+👨‍🎓 Students
+</a>
+</li>
+
+
+
+<li>
+<a href="attendance.html">
+📋 Attendance
+</a>
+</li>
+
+
+
+<li>
+<a href="attendancehistory.html">
+📅 History
+</a>
+</li>
+
+
+
+<li>
+<a href="attendanceview.html">
+👁 Reports
+</a>
+</li>
+
+
+
+<li>
+<a href="ai-dashboard.html">
+🤖 AI Analytics
+</a>
+</li>
+
+
+
+<div id="teacherMenu">
+
+
+<li>
+<a href="teacherprofile.html">
+👤 Teacher Profile
+</a>
+</li>
+
+
+</div>
+
+
+
+
+<div id="adminMenu">
+
+
+<li>
+<a href="teachers.html">
+👨‍🏫 Teacher Management
+</a>
+</li>
+
+
+<li>
+<a href="classmanagement.html">
+🏫 Class Management
+</a>
+</li>
+
+
+<li>
+<a href="adminsettings.html">
+⚙ Settings
+</a>
+</li>
+
+
+</div>
+
+
+
+
+<li>
+
+<a href="#" onclick="logout()">
+
+🚪 Logout
+
+</a>
+
+</li>
+
+
+</ul>
+
+
+</div>
+
+<!-- Sidebar End --> 
+
+<div class="edit-container">
+
+<h1>
+✏️ Edit Attendance
+</h1>
+
+<div class="info-box">
+
+<p>
+<b>📅 Date :</b>
+<span id="attendanceDate">
+Loading...
+</span>
+</p>
+
+<p>
+<b>🏫 Class :</b>
+<span id="attendanceClass">
+Loading...
+</span>
+</p>
+
+<p>
+<b>👨‍🏫 Teacher :</b>
+<span id="attendanceTeacher">
+Loading...
+</span>
+</p>
+
+</div>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Student Name</th>
+
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+<tbody id="attendanceTable">
+
+</tbody>
+
+</table>
+
+<div class="button-group">
+
+<button onclick="saveEditedAttendance()">
+
+💾 Save Changes
+
+</button>
+
+<a href="attendancehistory.html">
+
+<button>
+
+⬅ Back
+
+</button>
+
+</a>
+
+</div>
+
+</div>
+
+<script src="auth.js"></script>
+<script src="sidebar.js"></script>
+<script src="rolesidebar.js"></script>
+<script src="attendanceedit.js"></script>
+
+</body>
+
+</html>

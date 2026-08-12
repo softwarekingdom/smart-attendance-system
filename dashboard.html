@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI Attendance Dashboard</title>
+
+<link rel="stylesheet" href="dashboard.css">
+<link rel="stylesheet" href="sidebar.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="dashboard-body">
+
+
+
+<!-- ===========================
+        MENU BUTTON
+============================ -->
+
+<button class="menu-btn" onclick="toggleSidebar()">
+    ☰
+</button>
+
+<div class="overlay" onclick="closeSidebar()"></div>
+
+<!-- ===========================
+        SIDEBAR
+============================ -->
+
+<div class="sidebar" id="sidebar">
+
+    <div class="sidebar-logo">
+        <h2>🤖 AI School</h2>
+        <p>Attendance Management System</p>
+    </div>
+
+    <ul>
+
+        <!-- ================= Dashboard ================= -->
+
+        <li class="sidebar-title">🏠 Dashboard</li>
+
+        <li>
+            <a href="dashboard.html">
+                📊 Dashboard
+            </a>
+        </li>
+
+
+        <!-- ================= Students ================= -->
+
+        <li class="sidebar-title">👨‍🎓 Students</li>
+
+        <li>
+            <a href="studentadmission.html">
+                ➕ Student Admission
+            </a>
+        </li>
+
+        <li>
+            <a href="studentprofile.html">
+                👤 Student Profile
+            </a>
+        </li>
+
+        <li>
+            <a href="studentidcard.html">
+                🪪 Student ID Card
+            </a>
+        </li>
+
+        <li>
+            <a href="multiple-idcard.html">
+                🪪 Multiple ID Cards
+            </a>
+        </li>
+
+
+        <!-- ================= Attendance ================= -->
+
+        <li class="sidebar-title">📋 Attendance</li>
+
+        <li>
+            <a href="attendance.html">
+                ✅ Take Attendance
+            </a>
+        </li>
+
+        <li>
+            <a href="attendance-edit.html">
+                ✏ Edit Attendance
+            </a>
+        </li>
+
+        <li>
+            <a href="attendancehistory.html">
+                📅 Attendance History
+            </a>
+        </li>
+
+        <li>
+            <a href="attendance-calender.html">
+                🗓 Attendance Calendar
+            </a>
+        </li>
+
+        <li>
+            <a href="attendanceview.html">
+                📈 Attendance Reports
+            </a>
+        </li>
+
+
+        <!-- ================= Communication ================= -->
+
+        <li class="sidebar-title">💬 Communication</li>
+
+        <li>
+            <a href="whatsapp.html">
+                📱 WhatsApp Notification
+            </a>
+        </li>
+
+
+        <!-- ================= AI ================= -->
+
+        <li class="sidebar-title">🤖 AI Analytics</li>
+
+        <li>
+            <a href="aidashboard.html">
+                🧠 AI Dashboard
+            </a>
+        </li>
+
+
+        <!-- ================= Administration ================= -->
+
+        <li class="sidebar-title">⚙ Administration</li>
+
+        <li>
+            <a href="teachers.html">
+                👨‍🏫 Teacher Management
+            </a>
+        </li>
+
+        <li>
+            <a href="classmanagement.html">
+                🏫 Class Management
+            </a>
+        </li>
+
+        <li>
+            <a href="institution.html">
+                🏢 Institution
+            </a>
+        </li>
+
+
+        <!-- ================= Profiles ================= -->
+
+        <li class="sidebar-title">👤 My Profile</li>
+
+        <li>
+            <a href="teacherprofile.html">
+                👨‍🏫 Teacher Profile
+            </a>
+        </li>
+
+        <li>
+            <a href="adminprofile.html">
+                👑 Admin Profile
+            </a>
+        </li>
+
+
+        <!-- ================= Logout ================= -->
+
+        <li class="sidebar-title">🚪 Account</li>
+
+        <li>
+            <a href="#" onclick="logout()">
+                🚪 Logout
+            </a>
+        </li>
+
+    </ul>
+
+</div>
+
+
+<!-- Main Content -->
+
+
+<div class="main-content">
+
+
+
+<header>
+
+
+<h1>
+🤖 AI Attendance Dashboard
+</h1>
+
+
+
+<h2 id="welcomeTeacher">
+
+Welcome Teacher 👨‍🏫
+
+</h2>
+
+
+
+<div class="class-box">
+
+
+<h3>
+🏫 Assigned Class
+</h3>
+
+
+<p id="assignedClass">
+
+Loading...
+
+</p>
+
+
+</div>
+
+
+
+<p id="teacherRole"></p>
+
+
+<p id="currentDate"></p>
+
+
+
+</header>
+
+
+
+
+
+<!-- AI Statistic Cards -->
+
+
+<div class="stats-grid">
+
+
+<div class="card">
+
+
+<h3>
+👨‍🎓 Total Students
+</h3>
+
+
+<h1 id="totalStudents">
+0
+</h1>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+
+<h3>
+✅ Present Today
+</h3>
+
+
+<h1 id="presentStudents">
+0
+</h1>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+
+<h3>
+❌ Absent Today
+</h3>
+
+
+<h1 id="absentStudents">
+0
+</h1>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+
+<h3>
+📈 Attendance Rate
+</h3>
+
+
+<h1 id="attendanceRate">
+0%
+</h1>
+
+
+</div>
+
+
+
+</div>
+  <!-- AI School Report -->
+
+
+<div class="ai-report">
+
+
+<h2>
+📊 AI School Report
+</h2>
+
+
+
+<div class="report-grid">
+
+
+<div class="report-item">
+
+👨‍🎓 Total Students
+
+<span id="reportStudents">
+0
+</span>
+
+</div>
+
+
+
+
+<div class="report-item">
+
+✅ Present Today
+
+<span id="reportPresent">
+0
+</span>
+
+</div>
+
+
+
+
+<div class="report-item">
+
+❌ Absent Today
+
+<span id="reportAbsent">
+0
+</span>
+
+</div>
+
+
+
+
+<div class="report-item">
+
+📈 Attendance Rate
+
+<span id="reportRate">
+0%
+</span>
+
+</div>
+
+
+
+
+<div class="report-item">
+
+🏆 Best Class
+
+<span id="bestClass">
+Loading...
+</span>
+
+</div>
+
+
+
+
+<div class="report-item">
+
+⚠️ Students At Risk
+
+<span id="riskStudents">
+0
+</span>
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<!-- AI Summary -->
+
+
+<div class="summary-box">
+
+
+<h2>
+🤖 AI Attendance Summary
+</h2>
+
+
+
+<pre id="aiSummary">
+
+Loading AI Analysis...
+
+</pre>
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- AI Recommendation -->
+
+
+<div class="prediction-box">
+
+
+<h2>
+🤖 AI Prediction & Recommendation
+</h2>
+
+
+
+<p id="prediction">
+
+Analyzing Attendance Data...
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- Recent Activity -->
+
+
+<div class="recent-box">
+
+
+<h2>
+📝 Recent Attendance Activity
+</h2>
+
+
+
+<ul id="recentActivity">
+
+
+<li>
+No Recent Activity
+</li>
+
+
+</ul>
+
+
+</div>
+  <!-- Dashboard Analytics Section -->
+
+
+<div class="dashboard-grid">
+
+
+<!-- Weekly Chart -->
+
+
+<div class="analytics-card">
+
+
+<h2>
+📈 Weekly Attendance Trend
+</h2>
+
+
+
+<canvas id="attendanceLineChart">
+
+</canvas>
+
+
+
+</div>
+
+
+
+
+
+
+<!-- Present Absent Chart -->
+
+
+<div class="analytics-card">
+
+
+<h2>
+🥧 Present vs Absent
+</h2>
+
+
+
+<canvas id="attendancePieChart">
+
+</canvas>
+
+
+
+</div>
+
+
+
+
+</div>
+  <!-- Quick Actions -->
+
+
+<div class="quick-actions">
+
+
+<a href="studentadmission.html">
+
+<button>
+
+👨‍🎓 Student Management
+
+</button>
+
+</a>
+
+
+
+<a href="attendance.html">
+
+<button>
+
+📋 Take Attendance
+
+</button>
+
+</a>
+
+
+
+
+<a href="attendancehistory.html">
+
+<button>
+
+📊 Attendance History
+
+</button>
+
+</a>
+
+
+
+
+<a href="whatsapp.html">
+
+<button>
+
+💬 WhatsApp
+
+</button>
+
+</a>
+
+
+</div>
+<!-- =====================================
+     AI Prediction Card
+===================================== -->
+<div class="ai-prediction">
+
+
+<h2>
+🤖 AI Attendance Prediction
+</h2>
+
+
+<p id="aiPrediction">
+
+Loading AI Analysis...
+
+</p>
+
+
+</div>
+
+    <p>
+
+        📈 Expected Attendance Tomorrow :
+        <strong id="expectedAttendance">
+            Loading...
+        </strong>
+
+        <br><br>
+
+        ⚠️ Students at Risk :
+        <strong id="riskCount">
+            Loading...
+        </strong>
+
+        <br><br>
+
+        💡 Recommendation :
+
+        <span id="aiRecommendation">
+
+            Loading AI Analysis...
+
+        </span>
+
+    </p>
+
+</div>
+</div>
+<div class="chart-box">
+<!-- =====================================
+     AI Trend Analysis
+===================================== -->
+
+<div class="analytics-card">
+
+    <h2>
+        🤖 AI Trend Analysis
+    </h2>
+
+    <div id="aiTrend">
+
+        Loading AI Analysis...
+
+    </div>
+
+</div>
+  <!-- =====================================
+     Attendance Ranking
+===================================== -->
+
+<div class="ranking-grid">
+
+    <div class="analytics-card">
+
+        <h2>🏆 Top 5 Best Attendance</h2>
+
+        <div id="topStudents">
+
+            Loading...
+
+        </div>
+
+    </div>
+
+
+    <div class="analytics-card">
+
+        <h2>⚠️ Low Attendance Students</h2>
+
+        <div id="lowStudents">
+
+            Loading...
+
+        </div>
+
+    </div>
+
+</div>
+<!-- Weekly Attendance Card -->
+
+<div class="analytics-card">
+
+    <h2>📊 Weekly Attendance</h2>
+
+    <div id="weeklyAttendance">
+
+        <p>Loading Weekly Attendance...</p>
+
+    </div>
+
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+
+<script src="sidebar.js"></script>
+<script src="rolesidebar.js"></script>
+<script src="dashboard.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,4428 @@
+// =====================================
+// AI SCHOOL
+// Dashboard System
+// Supabase Version 2.0
+// PART 1 + PART 2
+// Core Dashboard + Today's Attendance
+// =====================================
+
+
+// =====================================
+// PAGE LOAD
+// =====================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        loadTeacherInfo();
+
+        showDate();
+
+        loadAssignedClass();
+
+        loadStudentCount();
+
+        loadTodayAttendance();
+
+      loadAttendanceAnalytics();
+
+    }
+);
+
+
+// =====================================
+// CHECK SUPABASE
+// =====================================
+
+function checkSupabase() {
+
+    if (
+        typeof supabaseClient ===
+        "undefined"
+    ) {
+
+        console.error(
+            "❌ supabaseClient is not defined."
+        );
+
+        return false;
+
+    }
+
+    return true;
+
+}
+
+
+// =====================================
+// LOAD TEACHER INFORMATION
+// =====================================
+
+function loadTeacherInfo() {
+
+    const teacherData =
+        localStorage.getItem(
+            "currentUser"
+        );
+
+
+    if (!teacherData) {
+
+        console.warn(
+            "❌ No logged-in teacher found."
+        );
+
+        return;
+
+    }
+
+
+    let teacher;
+
+
+    try {
+
+        teacher =
+            JSON.parse(
+                teacherData
+            );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Teacher Data Error:",
+            error
+        );
+
+        return;
+
+    }
+
+
+    const nameBox =
+        document.getElementById(
+            "welcomeTeacher"
+        );
+
+
+    if (nameBox) {
+
+        nameBox.innerText =
+            "Welcome " +
+            (teacher.name || "Teacher") +
+            " 👨‍🏫";
+
+    }
+
+
+    const roleBox =
+        document.getElementById(
+            "teacherRole"
+        );
+
+
+    if (roleBox) {
+
+        roleBox.innerText =
+            "Role : " +
+            (teacher.role || "Teacher");
+
+    }
+
+}
+
+
+// =====================================
+// SHOW CURRENT DATE
+// =====================================
+
+function showDate() {
+
+    const dateBox =
+        document.getElementById(
+            "currentDate"
+        );
+
+
+    if (!dateBox) {
+
+        return;
+
+    }
+
+
+    const today =
+        new Date();
+
+
+    dateBox.innerText =
+        "📅 " +
+        today.toDateString();
+
+}
+
+
+// =====================================
+// LOAD ASSIGNED CLASSES
+// =====================================
+
+async function loadAssignedClass() {
+
+    const box =
+        document.getElementById(
+            "assignedClass"
+        );
+
+
+    if (!box) {
+
+        console.error(
+            "❌ assignedClass element not found."
+        );
+
+        return;
+
+    }
+
+
+    box.innerHTML =
+        "Loading...";
+
+
+    if (!checkSupabase()) {
+
+        box.innerHTML =
+            "❌ Supabase Connection Error";
+
+        return;
+
+    }
+
+
+    const currentUserData =
+        localStorage.getItem(
+            "currentUser"
+        );
+
+
+    if (!currentUserData) {
+
+        box.innerHTML =
+            "❌ No Logged In Teacher";
+
+        return;
+
+    }
+
+
+    let currentUser;
+
+
+    try {
+
+        currentUser =
+            JSON.parse(
+                currentUserData
+            );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Current User Error:",
+            error
+        );
+
+        box.innerHTML =
+            "❌ Invalid Teacher Data";
+
+        return;
+
+    }
+
+
+    const username =
+        currentUser.username;
+
+
+    if (!username) {
+
+        box.innerHTML =
+            "❌ Username Not Found";
+
+        return;
+
+    }
+
+
+    try {
+
+        const {
+            data: teacher,
+            error
+        } =
+            await supabaseClient
+                .from("teachers")
+                .select(
+                    "id,name,username,classes"
+                )
+                .eq(
+                    "username",
+                    username
+                )
+                .maybeSingle();
+
+
+        if (error) {
+
+            console.error(
+                "Assigned Class Error:",
+                error
+            );
+
+            box.innerHTML =
+                "❌ Unable to load classes";
+
+            return;
+
+        }
+
+
+        if (!teacher) {
+
+            box.innerHTML =
+                "❌ Teacher Not Found";
+
+            return;
+
+        }
+
+
+        const classes =
+            Array.isArray(
+                teacher.classes
+            )
+                ? teacher.classes
+                : [];
+
+
+        if (
+            classes.length === 0
+        ) {
+
+            box.innerHTML =
+                "No Assigned Class";
+
+            return;
+
+        }
+
+
+        box.innerHTML =
+            classes
+                .map(
+                    function (className) {
+
+                        return (
+                            "🏫 " +
+                            escapeHTML(
+                                className
+                            )
+                        );
+
+                    }
+                )
+                .join("<br>");
+
+
+        currentUser.classes =
+            classes;
+
+
+        localStorage.setItem(
+            "currentUser",
+            JSON.stringify(
+                currentUser
+            )
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Unexpected Class Error:",
+            error
+        );
+
+        box.innerHTML =
+            "❌ Unable to load classes";
+
+    }
+
+}
+
+
+// =====================================
+// LOAD TOTAL STUDENT COUNT
+// =====================================
+
+async function loadStudentCount() {
+
+    const countBox =
+        document.getElementById(
+            "totalStudents"
+        );
+
+
+    const reportBox =
+        document.getElementById(
+            "reportStudents"
+        );
+
+
+    if (!checkSupabase()) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const {
+            count,
+            error
+        } =
+            await supabaseClient
+                .from("students")
+                .select(
+                    "*",
+                    {
+                        count: "exact",
+                        head: true
+                    }
+                );
+
+
+        if (error) {
+
+            console.error(
+                "Student Count Error:",
+                error
+            );
+
+            return;
+
+        }
+
+
+        const total =
+            count || 0;
+
+
+        if (countBox) {
+
+            countBox.innerText =
+                total;
+
+        }
+
+
+        if (reportBox) {
+
+            reportBox.innerText =
+                total;
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Unexpected Student Count Error:",
+            error
+        );
+
+    }
+
+}
+
+
+// =====================================
+// PART 2
+// TODAY'S ATTENDANCE ANALYTICS
+// =====================================
+// =====================================
+// TODAY'S ATTENDANCE
+// Supabase Version
+// =====================================
+
+async function loadTodayAttendance() {
+
+    const presentBox =
+        document.getElementById("presentStudents");
+
+    const absentBox =
+        document.getElementById("absentStudents");
+
+    const rateBox =
+        document.getElementById("attendanceRate");
+
+    const reportPresent =
+        document.getElementById("reportPresent");
+
+    const reportAbsent =
+        document.getElementById("reportAbsent");
+
+    const reportRate =
+        document.getElementById("reportRate");
+
+
+    // =================================
+    // DEFAULT
+    // =================================
+
+    if (presentBox) presentBox.innerText = "0";
+    if (absentBox) absentBox.innerText = "0";
+    if (rateBox) rateBox.innerText = "0%";
+
+    if (reportPresent) reportPresent.innerText = "0";
+    if (reportAbsent) reportAbsent.innerText = "0";
+    if (reportRate) reportRate.innerText = "0%";
+
+
+    // =================================
+    // CHECK SUPABASE
+    // =================================
+
+    if (!checkSupabase()) {
+        return;
+    }
+
+
+    // =================================
+    // TODAY DATE
+    // =================================
+
+    const today = new Date();
+
+    const year =
+        today.getFullYear();
+
+    const month =
+        String(today.getMonth() + 1)
+        .padStart(2, "0");
+
+    const day =
+        String(today.getDate())
+        .padStart(2, "0");
+
+    const todayDate =
+        `${year}-${month}-${day}`;
+
+
+    console.log(
+        "📅 Dashboard Attendance Date:",
+        todayDate
+    );
+
+
+    try {
+
+        // =================================
+        // GET TODAY'S ATTENDANCE
+        // =================================
+
+        const {
+            data: attendance,
+            error: attendanceError
+        } =
+            await supabaseClient
+                .from("attendance")
+                .select("*")
+                .eq(
+                    "attendance_date",
+                    todayDate
+                );
+
+
+        if (attendanceError) {
+
+            console.error(
+                "❌ Attendance Error:",
+                attendanceError
+            );
+
+            return;
+        }
+
+
+        const records =
+            attendance || [];
+
+
+        console.log(
+            "📋 Today's Attendance:",
+            records
+        );
+
+
+        // =================================
+        // COUNT
+        // =================================
+
+        let present = 0;
+        let absent = 0;
+
+
+        records.forEach(
+            function(record) {
+
+                const status =
+                    String(
+                        record.status || ""
+                    )
+                    .toLowerCase()
+                    .trim();
+
+
+                if (status === "present") {
+
+                    present++;
+
+                }
+
+
+                if (status === "absent") {
+
+                    absent++;
+
+                }
+
+            }
+        );
+
+
+        // =================================
+        // GET TOTAL STUDENTS
+        // =================================
+
+        const {
+            count: totalStudents,
+            error: studentError
+        } =
+            await supabaseClient
+                .from("students")
+                .select(
+                    "*",
+                    {
+                        count: "exact",
+                        head: true
+                    }
+                );
+
+
+        if (studentError) {
+
+            console.error(
+                "❌ Student Count Error:",
+                studentError
+            );
+
+            return;
+        }
+
+
+        const total =
+            totalStudents || 0;
+
+
+        // =================================
+        // ATTENDANCE RATE
+        // =================================
+
+        let rate = 0;
+
+
+        if (total > 0) {
+
+            rate =
+                Math.round(
+                    (present / total) * 100
+                );
+
+        }
+
+
+        // =================================
+        // UPDATE DASHBOARD
+        // =================================
+
+        if (presentBox) {
+
+            presentBox.innerText =
+                present;
+
+        }
+
+
+        if (absentBox) {
+
+            absentBox.innerText =
+                absent;
+
+        }
+
+
+        if (rateBox) {
+
+            rateBox.innerText =
+                rate + "%";
+
+        }
+
+
+        // =================================
+        // UPDATE AI REPORT
+        // =================================
+
+        if (reportPresent) {
+
+            reportPresent.innerText =
+                present;
+
+        }
+
+
+        if (reportAbsent) {
+
+            reportAbsent.innerText =
+                absent;
+
+        }
+
+
+        if (reportRate) {
+
+            reportRate.innerText =
+                rate + "%";
+
+        }
+
+
+        // =================================
+        // DEBUG
+        // =================================
+
+        console.log(
+            "👨‍🎓 Total Students:",
+            total
+        );
+
+        console.log(
+            "✅ Present Today:",
+            present
+        );
+
+        console.log(
+            "❌ Absent Today:",
+            absent
+        );
+
+        console.log(
+            "📈 Attendance Rate:",
+            rate + "%"
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "❌ Unexpected Attendance Error:",
+            error
+        );
+
+    }
+
+}
+// =====================================
+// HTML SECURITY
+// =====================================
+function escapeHTML(value) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+
+        return "";
+
+    }
+
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+// =====================================
+// AUTO REFRESH
+// Every 30 Seconds
+// =====================================
+
+setInterval(
+    function () {
+
+        loadStudentCount();
+
+        loadTodayAttendance();
+
+        loadAssignedClass();
+
+    },
+    30000
+);
+// =====================================
+// AI SCHOOL
+// Dashboard System
+// PART 3
+// AI Prediction & Recommendation
+// =====================================
+
+
+// =====================================
+// PAGE LOAD
+// =====================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        loadAIPrediction();
+
+    }
+);
+
+
+// =====================================
+// LOAD AI PREDICTION
+// =====================================
+
+async function loadAIPrediction() {
+
+    const predictionBox =
+        document.getElementById(
+            "prediction"
+        );
+
+    const aiPredictionBox =
+        document.getElementById(
+            "aiPrediction"
+        );
+
+    const expectedBox =
+        document.getElementById(
+            "expectedAttendance"
+        );
+
+    const riskBox =
+        document.getElementById(
+            "riskCount"
+        );
+
+    const recommendationBox =
+        document.getElementById(
+            "aiRecommendation"
+        );
+
+    const riskStudentsBox =
+        document.getElementById(
+            "riskStudents"
+        );
+
+
+    // =================================
+    // CHECK SUPABASE
+    // =================================
+
+    if (!checkSupabase()) {
+
+        return;
+
+    }
+
+
+    // =================================
+    // GET TODAY
+    // =================================
+
+    const today =
+        new Date();
+
+    const year =
+        today.getFullYear();
+
+    const month =
+        String(
+            today.getMonth() + 1
+        ).padStart(
+            2,
+            "0"
+        );
+
+    const day =
+        String(
+            today.getDate()
+        ).padStart(
+            2,
+            "0"
+        );
+
+    const todayDate =
+        `${year}-${month}-${day}`;
+
+
+    try {
+
+        // =================================
+        // GET STUDENTS
+        // =================================
+
+        const {
+            data: students,
+            error: studentError
+        } =
+            await supabaseClient
+                .from("students")
+                .select("*");
+
+
+        if (studentError) {
+
+            console.error(
+                "AI Student Error:",
+                studentError
+            );
+
+            return;
+
+        }
+
+
+        const studentList =
+            students || [];
+
+
+        // =================================
+        // GET TODAY ATTENDANCE
+        // =================================
+console.log("🔥 STEP 1 - Query starting");
+
+const result =
+    await supabaseClient
+        .from("attendance")
+        .select("*")
+        .eq(
+            "attendance_date",
+            todayDate
+        );
+
+console.log("🔥 STEP 2 - Query finished");
+
+console.log(
+    "🔥 ATTENDANCE RESULT:",
+    result
+);
+
+const attendanceList =
+    result.data || [];
+
+const attendanceError =
+    result.error;
+
+console.log(
+    "🔥 ATTENDANCE DATA:",
+    attendanceList
+);
+
+console.log(
+    "🔥 ATTENDANCE ERROR:",
+    attendanceError
+);
+        // =================================
+        // COUNT PRESENT
+        // =================================
+
+        let present = 0;
+
+        let absent = 0;
+
+
+        attendanceList.forEach(
+            function (record) {
+
+                const status =
+                    String(
+                        record.status || ""
+                    )
+                    .toLowerCase()
+                    .trim();
+
+
+                if (
+                    status === "present"
+                ) {
+
+                    present++;
+
+                }
+
+
+                if (
+                    status === "absent"
+                ) {
+
+                    absent++;
+
+                }
+
+            }
+        );
+
+
+        // =================================
+        // EXPECTED ATTENDANCE
+        // =================================
+
+        let expected = 0;
+
+
+        if (
+            studentList.length > 0
+        ) {
+
+            expected =
+                Math.round(
+                    (
+                        present /
+                        studentList.length
+                    ) * 100
+                );
+
+        }
+
+
+        // =================================
+        // FIND RISK STUDENTS
+        // =================================
+
+        const riskStudents = [];
+
+
+        attendanceList.forEach(
+            function (record) {
+
+                const status =
+                    String(
+                        record.status || ""
+                    )
+                    .toLowerCase()
+                    .trim();
+
+
+                if (
+                    status !== "absent"
+                ) {
+
+                    return;
+
+                }
+
+
+                const studentId =
+                    record.student_id ||
+                    record.studentId;
+
+
+                const student =
+                    studentList.find(
+                        function (item) {
+
+                            return String(
+                                item.id
+                            ) === String(
+                                studentId
+                            );
+
+                        }
+                    );
+
+
+                if (student) {
+
+                    riskStudents.push(
+                        student
+                    );
+
+                }
+
+            }
+        );
+
+
+        // =================================
+        // AI RECOMMENDATION
+        // =================================
+
+        let recommendation = "";
+
+
+        if (expected >= 90) {
+
+            recommendation =
+                "🌟 Excellent attendance. Keep maintaining this level.";
+
+        }
+
+        else if (expected >= 75) {
+
+            recommendation =
+                "👍 Good attendance. Monitor students who were absent today.";
+
+        }
+
+        else if (expected > 0) {
+
+            recommendation =
+                "⚠️ Attendance is low. Contact absent students and their parents.";
+
+        }
+
+        else {
+
+            recommendation =
+                "📊 Not enough attendance data for prediction.";
+
+        }
+
+
+        // =================================
+        // UPDATE PREDICTION BOX
+        // =================================
+
+        if (predictionBox) {
+
+            predictionBox.innerHTML = `
+
+                📈 Expected Attendance Tomorrow:
+                <strong>
+                    ${expected}%
+                </strong>
+
+                <br><br>
+
+                ⚠️ Students At Risk:
+                <strong>
+                    ${riskStudents.length}
+                </strong>
+
+                <br><br>
+
+                💡 Recommendation:
+                <br>
+                ${recommendation}
+
+            `;
+
+        }
+
+
+        // =================================
+        // UPDATE AI PREDICTION CARD
+        // =================================
+
+        if (aiPredictionBox) {
+
+            aiPredictionBox.innerHTML =
+
+                "🤖 AI predicts " +
+                expected +
+                "% attendance tomorrow.";
+
+        }
+
+
+        // =================================
+        // EXPECTED ATTENDANCE
+        // =================================
+
+        if (expectedBox) {
+
+            expectedBox.innerText =
+                expected + "%";
+
+        }
+
+
+        // =================================
+        // RISK COUNT
+        // =================================
+
+        if (riskBox) {
+
+            riskBox.innerText =
+                riskStudents.length;
+
+        }
+
+
+        // =================================
+        // RECOMMENDATION
+        // =================================
+
+        if (recommendationBox) {
+
+            recommendationBox.innerText =
+                recommendation;
+
+        }
+
+
+        // =================================
+        // SCHOOL REPORT RISK
+        // =================================
+
+        if (riskStudentsBox) {
+
+            riskStudentsBox.innerText =
+                riskStudents.length;
+
+        }
+
+
+        console.log(
+            "🤖 AI Prediction:",
+            expected + "%"
+        );
+
+
+        console.log(
+            "⚠️ Risk Students:",
+            riskStudents.length
+        );
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Unexpected AI Prediction Error:",
+            error
+        );
+
+    }
+
+}
+
+
+// =====================================
+// AUTO REFRESH AI PREDICTION
+// =====================================
+
+setInterval(
+    function () {
+
+        loadAIPrediction();
+
+    },
+    30000
+);
+// =====================================
+// AI SCHOOL
+// Dashboard System
+// PART 4
+// Attendance Charts
+// Supabase Version
+// =====================================
+
+
+// =====================================
+// CHART VARIABLES
+// =====================================
+
+let attendanceLineChart = null;
+let attendancePieChart = null;
+
+
+// =====================================
+// PAGE LOAD
+// =====================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        loadAttendanceCharts();
+
+    }
+);
+
+
+// =====================================
+// LOAD ATTENDANCE CHARTS
+// =====================================
+
+async function loadAttendanceCharts() {
+
+    if (!checkSupabase()) {
+
+        return;
+
+    }
+
+
+    try {
+
+        // =================================
+        // GET ATTENDANCE DATA
+        // =================================
+
+        const {
+            data: attendance,
+            error
+        } =
+            await supabaseClient
+                .from("attendance")
+                .select("*");
+
+
+        if (error) {
+
+            console.error(
+                "Chart Attendance Error:",
+                error
+            );
+
+            return;
+
+        }
+
+
+        const records =
+            attendance || [];
+
+
+        // =================================
+        // CREATE WEEK DATA
+        // =================================
+
+        const days = [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+        ];
+
+
+        const presentData = [
+            0,
+            0,
+            0,
+            0,
+            0
+        ];
+
+
+        const absentData = [
+            0,
+            0,
+            0,
+            0,
+            0
+        ];
+
+
+        // =================================
+        // PROCESS ATTENDANCE
+        // =================================
+
+        records.forEach(
+            function (record) {
+
+                if (!record.date) {
+
+                    return;
+
+                }
+
+
+                const date =
+                    new Date(
+                        record.date
+                    );
+
+
+                if (
+                    isNaN(
+                        date.getTime()
+                    )
+                ) {
+
+                    return;
+
+                }
+
+
+                const day =
+                    date.getDay();
+
+
+                // Sunday = 0
+                // Monday = 1
+                // Friday = 5
+
+                if (
+                    day < 1 ||
+                    day > 5
+                ) {
+
+                    return;
+
+                }
+
+
+                const index =
+                    day - 1;
+
+
+                const status =
+                    String(
+                        record.status || ""
+                    )
+                    .toLowerCase()
+                    .trim();
+
+
+                if (
+                    status === "present"
+                ) {
+
+                    presentData[index]++;
+
+                }
+
+
+                else if (
+                    status === "absent"
+                ) {
+
+                    absentData[index]++;
+
+                }
+
+            }
+        );
+
+
+        // =================================
+        // LINE CHART
+        // =================================
+
+        createAttendanceLineChart(
+            days,
+            presentData
+        );
+
+
+        // =================================
+        // PIE CHART
+        // =================================
+
+        createAttendancePieChart(
+            presentData,
+            absentData
+        );
+
+
+        console.log(
+            "📊 Attendance Charts Loaded"
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Unexpected Chart Error:",
+            error
+        );
+
+    }
+
+}
+
+
+// =====================================
+// CREATE LINE CHART
+// =====================================
+
+function createAttendanceLineChart(
+    labels,
+    data
+) {
+
+    const canvas =
+        document.getElementById(
+            "attendanceLineChart"
+        );
+
+
+    if (!canvas) {
+
+        console.warn(
+            "❌ attendanceLineChart not found."
+        );
+
+        return;
+
+    }
+
+
+    // =================================
+    // DESTROY OLD CHART
+    // =================================
+
+    if (attendanceLineChart) {
+
+        attendanceLineChart.destroy();
+
+    }
+
+
+    // =================================
+    // CREATE NEW CHART
+    // =================================
+
+    attendanceLineChart =
+        new Chart(
+            canvas,
+            {
+
+                type: "line",
+
+                data: {
+
+                    labels: labels,
+
+                    datasets: [
+
+                        {
+
+                            label:
+                                "Present Students",
+
+                            data: data,
+
+                            borderWidth: 3,
+
+                            tension: 0.4,
+
+                            fill: false
+
+                        }
+
+                    ]
+
+                },
+
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    plugins: {
+
+                        legend: {
+
+                            display: true
+
+                        }
+
+                    },
+
+
+                    scales: {
+
+                        y: {
+
+                            beginAtZero: true,
+
+                            ticks: {
+
+                                precision: 0
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+        );
+
+}
+
+
+// =====================================
+// CREATE PIE CHART
+// =====================================
+
+function createAttendancePieChart(
+    presentData,
+    absentData
+) {
+
+    const canvas =
+        document.getElementById(
+            "attendancePieChart"
+        );
+
+
+    if (!canvas) {
+
+        console.warn(
+            "❌ attendancePieChart not found."
+        );
+
+        return;
+
+    }
+
+
+    // =================================
+    // TOTAL PRESENT
+    // =================================
+
+    const present =
+        presentData.reduce(
+            function (
+                total,
+                value
+            ) {
+
+                return total + value;
+
+            },
+            0
+        );
+
+
+    // =================================
+    // TOTAL ABSENT
+    // =================================
+
+    const absent =
+        absentData.reduce(
+            function (
+                total,
+                value
+            ) {
+
+                return total + value;
+
+            },
+            0
+        );
+
+
+    // =================================
+    // DESTROY OLD CHART
+    // =================================
+
+    if (attendancePieChart) {
+
+        attendancePieChart.destroy();
+
+    }
+
+
+    // =================================
+    // CREATE PIE CHART
+    // =================================
+
+    attendancePieChart =
+        new Chart(
+            canvas,
+            {
+
+                type: "pie",
+
+                data: {
+
+                    labels: [
+
+                        "Present",
+
+                        "Absent"
+
+                    ],
+
+                    datasets: [
+
+                        {
+
+                            data: [
+
+                                present,
+
+                                absent
+
+                            ],
+
+                            borderWidth: 1
+
+                        }
+
+                    ]
+
+                },
+
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    plugins: {
+
+                        legend: {
+
+                            display: true,
+
+                            position: "bottom"
+
+                        }
+
+                    }
+
+                }
+
+            }
+        );
+
+}
+
+
+// =====================================
+// AUTO REFRESH CHARTS
+// =====================================
+
+setInterval(
+    function () {
+
+        loadAttendanceCharts();
+
+    },
+    30000
+);
+// =====================================
+// AI SCHOOL
+// Dashboard System
+// PART 5
+// Recent Activity + AI Trend
+// Supabase Version
+// =====================================
+
+
+// =====================================
+// PAGE LOAD
+// =====================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        loadRecentAttendance();
+
+        loadAITrend();
+
+    }
+);
+
+
+// =====================================
+// RECENT ATTENDANCE ACTIVITY
+// =====================================
+
+async function loadRecentAttendance() {
+
+    const box =
+        document.getElementById(
+            "recentActivity"
+        );
+
+
+    if (!box) {
+
+        return;
+
+    }
+
+
+    if (!checkSupabase()) {
+
+        box.innerHTML =
+            "<li>Supabase connection error.</li>";
+
+        return;
+
+    }
+
+
+    try {
+
+        // =================================
+        // GET RECENT ATTENDANCE
+        // =================================
+
+        const {
+            data: attendance,
+            error
+        } =
+            await supabaseClient
+                .from("attendance")
+                .select("*")
+                .order(
+                    "date",
+                    {
+                        ascending: false
+                    }
+                )
+                .limit(10);
+
+
+        if (error) {
+
+            console.error(
+                "Recent Attendance Error:",
+                error
+            );
+
+            box.innerHTML =
+                "<li>Unable to load activity.</li>";
+
+            return;
+
+        }
+
+
+        const records =
+            attendance || [];
+
+
+        if (records.length === 0) {
+
+            box.innerHTML =
+                "<li>No Recent Activity</li>";
+
+            return;
+
+        }
+
+
+        // =================================
+        // GET STUDENTS
+        // =================================
+
+        const {
+            data: students,
+            error: studentError
+        } =
+            await supabaseClient
+                .from("students")
+                .select(
+                    "id,name"
+                );
+
+
+        if (studentError) {
+
+            console.error(
+                "Student Activity Error:",
+                studentError
+            );
+
+        }
+
+
+        const studentList =
+            students || [];
+
+
+        // =================================
+        // CREATE ACTIVITY
+        // =================================
+
+        box.innerHTML = "";
+
+
+        records.forEach(
+            function (record) {
+
+                const studentId =
+                    record.student_id ||
+                    record.studentId;
+
+
+                const student =
+                    studentList.find(
+                        function (item) {
+
+                            return String(
+                                item.id
+                            ) === String(
+                                studentId
+                            );
+
+                        }
+                    );
+
+
+                const studentName =
+                    student
+                        ? student.name
+                        : "Student";
+
+
+                const status =
+                    String(
+                        record.status || ""
+                    )
+                    .trim();
+
+
+                let icon =
+                    "📝";
+
+
+                if (
+                    status.toLowerCase()
+                    === "present"
+                ) {
+
+                    icon = "✅";
+
+                }
+
+                else if (
+                    status.toLowerCase()
+                    === "absent"
+                ) {
+
+                    icon = "❌";
+
+                }
+
+
+                const li =
+                    document.createElement(
+                        "li"
+                    );
+
+
+                li.innerHTML = `
+
+                    ${icon}
+                    <strong>
+                        ${escapeHTML(studentName)}
+                    </strong>
+
+                    -
+                    ${escapeHTML(status)}
+
+                    <small>
+                        ${escapeHTML(
+                            record.date || ""
+                        )}
+                    </small>
+
+                `;
+
+
+                box.appendChild(li);
+
+            }
+        );
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Unexpected Recent Activity Error:",
+            error
+        );
+
+
+        box.innerHTML =
+            "<li>Unable to load activity.</li>";
+
+    }
+
+}
+
+
+// =====================================
+// AI TREND ANALYSIS
+// =====================================
+
+async function loadAITrend() {
+
+    const box =
+        document.getElementById(
+            "aiTrend"
+        );
+
+
+    if (!box) {
+
+        return;
+
+    }
+
+
+    if (!checkSupabase()) {
+
+        box.innerHTML =
+            "❌ Supabase connection error.";
+
+        return;
+
+    }
+
+
+    try {
+
+        // =================================
+        // GET ATTENDANCE DATA
+        // =================================
+
+        const {
+            data: attendance,
+            error
+        } =
+            await supabaseClient
+                .from("attendance")
+                .select("*");
+
+
+        if (error) {
+
+            console.error(
+                "AI Trend Error:",
+                error
+            );
+
+            box.innerHTML =
+                "❌ Unable to analyse attendance.";
+
+            return;
+
+        }
+
+
+        const records =
+            attendance || [];
+
+
+        if (records.length === 0) {
+
+            box.innerHTML =
+                "<p>📊 No attendance data available yet.</p>";
+
+            return;
+
+        }
+
+
+        // =================================
+        // PRESENT / TOTAL
+        // =================================
+
+        let present = 0;
+
+
+        records.forEach(
+            function (record) {
+
+                if (
+                    String(
+                        record.status || ""
+                    )
+                    .toLowerCase()
+                    .trim()
+                    === "present"
+                ) {
+
+                    present++;
+
+                }
+
+            }
+        );
+
+
+        const total =
+            records.length;
+
+
+        const percentage =
+            Math.round(
+                (
+                    present /
+                    total
+                ) * 100
+            );
+
+
+        // =================================
+        // AI MESSAGE
+        // =================================
+
+        let message = "";
+
+
+        if (
+            percentage >= 90
+        ) {
+
+            message =
+                "🌟 Attendance trend is excellent. Students are maintaining a very good attendance level.";
+
+        }
+
+        else if (
+            percentage >= 75
+        ) {
+
+            message =
+                "👍 Attendance trend is stable. A few students may need monitoring.";
+
+        }
+
+        else if (
+            percentage >= 50
+        ) {
+
+            message =
+                "⚠️ Attendance trend needs attention. Consider contacting frequently absent students.";
+
+        }
+
+        else {
+
+            message =
+                "🚨 Attendance trend is very low. Immediate action is recommended.";
+
+        }
+
+
+        // =================================
+        // DISPLAY
+        // =================================
+
+        box.innerHTML = `
+
+            <h3>
+                📊 Current Attendance Trend:
+                ${percentage}%
+            </h3>
+
+            <p>
+                ${message}
+            </p>
+
+            <p>
+                📚 Attendance Records:
+                <strong>
+                    ${total}
+                </strong>
+            </p>
+
+        `;
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Unexpected AI Trend Error:",
+            error
+        );
+
+
+        box.innerHTML =
+            "❌ Unable to load AI trend.";
+
+    }
+
+}
+
+
+// =====================================
+// AUTO REFRESH
+// =====================================
+
+setInterval(
+    function () {
+
+        loadRecentAttendance();
+
+        loadAITrend();
+
+    },
+    30000
+);
+// =====================================
+// AI SCHOOL
+// Dashboard System
+// PART 6
+// Attendance Ranking
+// Supabase Version
+// =====================================
+
+
+// =====================================
+// PAGE LOAD
+// =====================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        loadAttendanceRanking();
+
+    }
+);
+
+
+// =====================================
+// LOAD ATTENDANCE RANKING
+// =====================================
+
+async function loadAttendanceRanking() {
+
+    const topBox =
+        document.getElementById(
+            "topStudents"
+        );
+
+    const lowBox =
+        document.getElementById(
+            "lowStudents"
+        );
+
+
+    if (
+        !topBox &&
+        !lowBox
+    ) {
+
+        return;
+
+    }
+
+
+    if (!checkSupabase()) {
+
+        if (topBox) {
+            topBox.innerHTML =
+                "❌ Supabase connection error.";
+        }
+
+        if (lowBox) {
+            lowBox.innerHTML =
+                "❌ Supabase connection error.";
+        }
+
+        return;
+
+    }
+
+
+    try {
+
+        // =================================
+        // GET STUDENTS
+        // =================================
+
+        const {
+            data: students,
+            error: studentError
+        } =
+            await supabaseClient
+                .from("students")
+                .select("*");
+
+
+        if (studentError) {
+
+            console.error(
+                "Ranking Student Error:",
+                studentError
+            );
+
+            return;
+
+        }
+
+
+        const studentList =
+            students || [];
+
+
+        // =================================
+        // GET ATTENDANCE
+        // =================================
+
+        const {
+            data: attendance,
+            error: attendanceError
+        } =
+            await supabaseClient
+                .from("attendance")
+                .select("*");
+
+
+        if (attendanceError) {
+
+            console.error(
+                "Ranking Attendance Error:",
+                attendanceError
+            );
+
+            return;
+
+        }
+
+
+        const attendanceList =
+            attendance || [];
+
+
+        // =================================
+        // NO STUDENTS
+        // =================================
+
+        if (
+            studentList.length === 0
+        ) {
+
+            if (topBox) {
+
+                topBox.innerHTML =
+                    "<p>No students available.</p>";
+
+            }
+
+            if (lowBox) {
+
+                lowBox.innerHTML =
+                    "<p>No students available.</p>";
+
+            }
+
+            return;
+
+        }
+
+
+        // =================================
+        // CALCULATE EACH STUDENT
+        // =================================
+
+        const reports = [];
+
+
+        studentList.forEach(
+            function (student) {
+
+                const studentId =
+                    student.id;
+
+
+                const records =
+                    attendanceList.filter(
+                        function (record) {
+
+                            const recordStudentId =
+                                record.student_id ||
+                                record.studentId;
+
+                            return String(
+                                recordStudentId
+                            ) === String(
+                                studentId
+                            );
+
+                        }
+                    );
+
+
+                let present = 0;
+
+                let absent = 0;
+
+
+                records.forEach(
+                    function (record) {
+
+                        const status =
+                            String(
+                                record.status || ""
+                            )
+                            .toLowerCase()
+                            .trim();
+
+
+                        if (
+                            status === "present"
+                        ) {
+
+                            present++;
+
+                        }
+
+                        else if (
+                            status === "absent"
+                        ) {
+
+                            absent++;
+
+                        }
+
+                    }
+                );
+
+
+                const total =
+                    present + absent;
+
+
+                let rate = 0;
+
+
+                if (total > 0) {
+
+                    rate =
+                        Math.round(
+                            (
+                                present /
+                                total
+                            ) * 100
+                        );
+
+                }
+
+
+                reports.push({
+
+                    id:
+                        student.id,
+
+                    name:
+                        student.name ||
+                        "Student",
+
+                    present:
+                        present,
+
+                    absent:
+                        absent,
+
+                    total:
+                        total,
+
+                    rate:
+                        rate
+
+                });
+
+            }
+        );
+
+
+        // =================================
+        // SORT BY ATTENDANCE RATE
+        // =================================
+
+        reports.sort(
+            function (a, b) {
+
+                return (
+                    b.rate -
+                    a.rate
+                );
+
+            }
+        );
+
+
+        // =================================
+        // TOP 5
+        // =================================
+
+        if (topBox) {
+
+            topBox.innerHTML = "";
+
+
+            const topStudents =
+                reports
+                    .filter(
+                        function (student) {
+
+                            return (
+                                student.total > 0
+                            );
+
+                        }
+                    )
+                    .slice(0, 5);
+
+
+            if (
+                topStudents.length === 0
+            ) {
+
+                topBox.innerHTML =
+                    "<p>No attendance data available.</p>";
+
+            }
+
+            else {
+
+                topStudents.forEach(
+                    function (
+                        student,
+                        index
+                    ) {
+
+                        const item =
+                            document.createElement(
+                                "div"
+                            );
+
+
+                        item.className =
+                            "ranking-item";
+
+
+                        item.innerHTML = `
+
+                            <strong>
+                                🏅 ${index + 1}.
+                                ${escapeHTML(
+                                    student.name
+                                )}
+                            </strong>
+
+                            <span>
+                                ${student.rate}%
+                            </span>
+
+                        `;
+
+
+                        topBox.appendChild(
+                            item
+                        );
+
+                    }
+                );
+
+            }
+
+        }
+
+
+        // =================================
+        // LOW ATTENDANCE
+        // =================================
+
+        if (lowBox) {
+
+            lowBox.innerHTML = "";
+
+
+            const lowStudents =
+                reports.filter(
+                    function (student) {
+
+                        return (
+                            student.total > 0 &&
+                            student.rate < 75
+                        );
+
+                    }
+                );
+
+
+            if (
+                lowStudents.length === 0
+            ) {
+
+                lowBox.innerHTML =
+
+                    "<p>🎉 No students with low attendance.</p>";
+
+            }
+
+            else {
+
+                lowStudents.forEach(
+                    function (student) {
+
+                        const item =
+                            document.createElement(
+                                "div"
+                            );
+
+
+                        item.className =
+                            "ranking-item low";
+
+
+                        item.innerHTML = `
+
+                            <strong>
+                                ⚠️
+                                ${escapeHTML(
+                                    student.name
+                                )}
+                            </strong>
+
+                            <span>
+                                ${student.rate}%
+                            </span>
+
+                        `;
+
+
+                        lowBox.appendChild(
+                            item
+                        );
+
+                    }
+                );
+
+            }
+
+        }
+
+
+        console.log(
+            "🏆 Attendance Ranking Loaded"
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Unexpected Ranking Error:",
+            error
+        );
+
+
+        if (topBox) {
+
+            topBox.innerHTML =
+                "<p>❌ Unable to load ranking.</p>";
+
+        }
+
+
+        if (lowBox) {
+
+            lowBox.innerHTML =
+                "<p>❌ Unable to load ranking.</p>";
+
+        }
+
+    }
+
+}
+
+
+// =====================================
+// AUTO REFRESH
+// =====================================
+
+setInterval(
+    function () {
+
+        loadAttendanceRanking();
+
+    },
+    30000
+);
+// =====================================
+// AI SCHOOL
+// Dashboard System
+// PART 7
+// Weekly Attendance Analysis
+// Supabase Version
+// =====================================
+
+
+// =====================================
+// PAGE LOAD
+// =====================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        loadWeeklyAttendance();
+
+    }
+);
+
+
+// =====================================
+// LOAD WEEKLY ATTENDANCE
+// =====================================
+
+async function loadWeeklyAttendance() {
+
+    const box =
+        document.getElementById(
+            "weeklyAttendance"
+        );
+
+
+    if (!box) {
+
+        return;
+
+    }
+
+
+    if (!checkSupabase()) {
+
+        box.innerHTML =
+            "<p>❌ Supabase connection error.</p>";
+
+        return;
+
+    }
+
+
+    try {
+
+        // =================================
+        // GET ATTENDANCE
+        // =================================
+
+        const {
+            data: attendance,
+            error
+        } =
+            await supabaseClient
+                .from("attendance")
+                .select("*");
+
+
+        if (error) {
+
+            console.error(
+                "Weekly Attendance Error:",
+                error
+            );
+
+            box.innerHTML =
+                "<p>❌ Unable to load attendance.</p>";
+
+            return;
+
+        }
+
+
+        const records =
+            attendance || [];
+
+
+        // =================================
+        // DAYS
+        // =================================
+
+        const days = [
+
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+
+        ];
+
+
+        // =================================
+        // CREATE DATA
+        // =================================
+
+        const weeklyData = {
+
+            Monday: {
+                present: 0,
+                absent: 0
+            },
+
+            Tuesday: {
+                present: 0,
+                absent: 0
+            },
+
+            Wednesday: {
+                present: 0,
+                absent: 0
+            },
+
+            Thursday: {
+                present: 0,
+                absent: 0
+            },
+
+            Friday: {
+                present: 0,
+                absent: 0
+            }
+
+        };
+
+
+        // =================================
+        // PROCESS RECORDS
+        // =================================
+
+        records.forEach(
+            function (record) {
+
+                if (!record.date) {
+
+                    return;
+
+                }
+
+
+                const date =
+                    new Date(
+                        record.date
+                    );
+
+
+                if (
+                    isNaN(
+                        date.getTime()
+                    )
+                ) {
+
+                    return;
+
+                }
+
+
+                const dayIndex =
+                    date.getDay();
+
+
+                // Sunday = 0
+                // Monday = 1
+                // Friday = 5
+
+                if (
+                    dayIndex < 1 ||
+                    dayIndex > 5
+                ) {
+
+                    return;
+
+                }
+
+
+                const dayName =
+                    days[
+                        dayIndex - 1
+                    ];
+
+
+                const status =
+                    String(
+                        record.status || ""
+                    )
+                    .toLowerCase()
+                    .trim();
+
+
+                if (
+                    status === "present"
+                ) {
+
+                    weeklyData[
+                        dayName
+                    ].present++;
+
+                }
+
+                else if (
+                    status === "absent"
+                ) {
+
+                    weeklyData[
+                        dayName
+                    ].absent++;
+
+                }
+
+            }
+        );
+
+
+        // =================================
+        // BUILD HTML
+        // =================================
+
+        let output = "";
+
+
+        days.forEach(
+            function (day) {
+
+                const present =
+                    weeklyData[
+                        day
+                    ].present;
+
+
+                const absent =
+                    weeklyData[
+                        day
+                    ].absent;
+
+
+                const total =
+                    present +
+                    absent;
+
+
+                let percentage = 0;
+
+
+                if (total > 0) {
+
+                    percentage =
+                        Math.round(
+                            (
+                                present /
+                                total
+                            ) * 100
+                        );
+
+                }
+
+
+                output += `
+
+                    <div class="weekly-row">
+
+                        <div class="weekly-day">
+
+                            <strong>
+                                ${day}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="weekly-progress">
+
+                            <div
+                                class="weekly-progress-fill"
+                                style="
+                                    width:${percentage}%;
+                                "
+                            ></div>
+
+                        </div>
+
+
+                        <div class="weekly-percent">
+
+                            <strong>
+                                ${percentage}%
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+        );
+
+
+        // =================================
+        // DISPLAY
+        // =================================
+
+        box.innerHTML =
+            output;
+
+
+        console.log(
+            "📊 Weekly Attendance Loaded"
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Unexpected Weekly Attendance Error:",
+            error
+        );
+
+
+        box.innerHTML =
+            "<p>❌ Unable to load weekly attendance.</p>";
+
+    }
+
+}
+
+
+// =====================================
+// AUTO REFRESH
+// =====================================
+
+setInterval(
+    function () {
+
+        loadWeeklyAttendance();
+
+    },
+    30000
+);
+// =====================================
+// AI SCHOOL
+// Dashboard System
+// PART 8
+// AI Summary + Best Class + Risk Students
+// Supabase Version
+// =====================================
+
+
+// =====================================
+// PAGE LOAD
+// =====================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        loadAISchoolSummary();
+
+    }
+);
+
+
+// =====================================
+// LOAD AI SCHOOL SUMMARY
+// =====================================
+
+async function loadAISchoolSummary() {
+
+    const summaryBox =
+        document.getElementById(
+            "aiSummary"
+        );
+
+    const bestClassBox =
+        document.getElementById(
+            "bestClass"
+        );
+
+    const riskBox =
+        document.getElementById(
+            "riskStudents"
+        );
+
+
+    if (!checkSupabase()) {
+
+        return;
+
+    }
+
+
+    try {
+
+        // =================================
+        // GET STUDENTS
+        // =================================
+
+        const {
+            data: students,
+            error: studentError
+        } =
+            await supabaseClient
+                .from("students")
+                .select("*");
+
+
+        if (studentError) {
+
+            console.error(
+                "AI Summary Student Error:",
+                studentError
+            );
+
+            return;
+
+        }
+
+
+        const studentList =
+            students || [];
+
+
+        // =================================
+        // GET ATTENDANCE
+        // =================================
+
+        const {
+            data: attendance,
+            error: attendanceError
+        } =
+            await supabaseClient
+                .from("attendance")
+                .select("*");
+
+
+        if (attendanceError) {
+
+            console.error(
+                "AI Summary Attendance Error:",
+                attendanceError
+            );
+
+            return;
+
+        }
+
+
+        const attendanceList =
+            attendance || [];
+
+
+        // =================================
+        // TOTAL STUDENTS
+        // =================================
+
+        const totalStudents =
+            studentList.length;
+
+
+        // =================================
+        // TODAY DATE
+        // =================================
+
+        const today =
+            new Date();
+
+        const todayString =
+            today.toISOString()
+                .split("T")[0];
+
+
+        // =================================
+        // TODAY ATTENDANCE
+        // =================================
+
+        const todayAttendance =
+            attendanceList.filter(
+                function (record) {
+
+                    return String(
+                        record.date || ""
+                    ).startsWith(
+                        todayString
+                    );
+
+                }
+            );
+
+
+        let presentToday = 0;
+
+        let absentToday = 0;
+
+
+        todayAttendance.forEach(
+            function (record) {
+
+                const status =
+                    String(
+                        record.status || ""
+                    )
+                    .toLowerCase()
+                    .trim();
+
+
+                if (
+                    status === "present"
+                ) {
+
+                    presentToday++;
+
+                }
+
+
+                else if (
+                    status === "absent"
+                ) {
+
+                    absentToday++;
+
+                }
+
+            }
+        );
+
+
+        // =================================
+        // ATTENDANCE RATE
+        // =================================
+
+        let attendanceRate = 0;
+
+
+        if (
+            totalStudents > 0
+        ) {
+
+            attendanceRate =
+                Math.round(
+                    (
+                        presentToday /
+                        totalStudents
+                    ) * 100
+                );
+
+        }
+
+
+        // =================================
+        // RISK STUDENTS
+        // =================================
+
+        const riskStudents = [];
+
+
+        studentList.forEach(
+            function (student) {
+
+                const records =
+                    attendanceList.filter(
+                        function (record) {
+
+                            const id =
+                                record.student_id ||
+                                record.studentId;
+
+
+                            return String(id)
+                                === String(
+                                    student.id
+                                );
+
+                        }
+                    );
+
+
+                let present = 0;
+
+                let total = 0;
+
+
+                records.forEach(
+                    function (record) {
+
+                        const status =
+                            String(
+                                record.status || ""
+                            )
+                            .toLowerCase()
+                            .trim();
+
+
+                        if (
+                            status === "present" ||
+                            status === "absent"
+                        ) {
+
+                            total++;
+
+                        }
+
+
+                        if (
+                            status === "present"
+                        ) {
+
+                            present++;
+
+                        }
+
+                    }
+                );
+
+
+                if (
+                    total > 0
+                ) {
+
+                    const rate =
+                        Math.round(
+                            (
+                                present /
+                                total
+                            ) * 100
+                        );
+
+
+                    if (
+                        rate < 75
+                    ) {
+
+                        riskStudents.push({
+                            name:
+                                student.name ||
+                                "Student",
+
+                            rate:
+                                rate
+
+                        });
+
+                    }
+
+                }
+
+            }
+        );
+
+
+        // =================================
+        // BEST CLASS
+        // =================================
+
+        const classStats = {};
+
+
+        studentList.forEach(
+            function (student) {
+
+                const className =
+                    student.class_name ||
+                    student.className ||
+                    "Unknown";
+
+
+                if (
+                    !classStats[
+                        className
+                    ]
+                ) {
+
+                    classStats[
+                        className
+                    ] = {
+
+                        present: 0,
+
+                        total: 0
+
+                    };
+
+                }
+
+
+                const records =
+                    attendanceList.filter(
+                        function (record) {
+
+                            const id =
+                                record.student_id ||
+                                record.studentId;
+
+
+                            return String(id)
+                                === String(
+                                    student.id
+                                );
+
+                        }
+                    );
+
+
+                records.forEach(
+                    function (record) {
+
+                        const status =
+                            String(
+                                record.status || ""
+                            )
+                            .toLowerCase()
+                            .trim();
+
+
+                        if (
+                            status === "present" ||
+                            status === "absent"
+                        ) {
+
+                            classStats[
+                                className
+                            ].total++;
+
+                        }
+
+
+                        if (
+                            status === "present"
+                        ) {
+
+                            classStats[
+                                className
+                            ].present++;
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+
+        let bestClass =
+            "No Data";
+
+        let bestRate = -1;
+
+
+        Object.keys(
+            classStats
+        ).forEach(
+            function (className) {
+
+                const stats =
+                    classStats[
+                        className
+                    ];
+
+
+                if (
+                    stats.total === 0
+                ) {
+
+                    return;
+
+                }
+
+
+                const rate =
+                    Math.round(
+                        (
+                            stats.present /
+                            stats.total
+                        ) * 100
+                    );
+
+
+                if (
+                    rate > bestRate
+                ) {
+
+                    bestRate =
+                        rate;
+
+                    bestClass =
+                        className +
+                        " (" +
+                        rate +
+                        "%)";
+
+                }
+
+            }
+        );
+
+
+        // =================================
+        // UPDATE BEST CLASS
+        // =================================
+
+        if (bestClassBox) {
+
+            bestClassBox.innerText =
+                bestClass;
+
+        }
+
+
+        // =================================
+        // UPDATE RISK COUNT
+        // =================================
+
+        if (riskBox) {
+
+            riskBox.innerText =
+                riskStudents.length;
+
+        }
+
+
+        // =================================
+        // AI SUMMARY MESSAGE
+        // =================================
+
+        let message = "";
+
+
+        if (
+            attendanceRate >= 90
+        ) {
+
+            message =
+                "🌟 Excellent attendance today. The school is maintaining a very strong attendance level.";
+
+        }
+
+        else if (
+            attendanceRate >= 75
+        ) {
+
+            message =
+                "👍 Attendance is good today. A few students may require monitoring.";
+
+        }
+
+        else if (
+            attendanceRate > 0
+        ) {
+
+            message =
+                "⚠️ Attendance is below the expected level. Teachers should follow up with absent students.";
+
+        }
+
+        else {
+
+            message =
+                "📊 Attendance data is not available for today yet.";
+
+        }
+
+
+        // =================================
+        // DISPLAY AI SUMMARY
+        // =================================
+
+        if (summaryBox) {
+
+            summaryBox.innerText =
+
+                "AI SCHOOL ANALYSIS\n\n" +
+
+                "👨‍🎓 Total Students : " +
+                totalStudents +
+
+                "\n\n" +
+
+                "✅ Present Today : " +
+                presentToday +
+
+                "\n\n" +
+
+                "❌ Absent Today : " +
+                absentToday +
+
+                "\n\n" +
+
+                "📈 Attendance Rate : " +
+                attendanceRate +
+                "%\n\n" +
+
+                "🏆 Best Class : " +
+                bestClass +
+
+                "\n\n" +
+
+                "⚠️ Students At Risk : " +
+                riskStudents.length +
+
+                "\n\n" +
+
+                "🤖 AI Recommendation\n" +
+                message;
+
+        }
+
+
+        console.log(
+            "🤖 AI School Summary Loaded"
+        );
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Unexpected AI Summary Error:",
+            error
+        );
+
+
+    }
+
+}
+
+
+// =====================================
+// AUTO REFRESH
+// =====================================
+
+setInterval(
+    function () {
+
+        loadAISchoolSummary();
+
+    },
+    30000
+);
+// =====================================
+// AI SCHOOL
+// Dashboard System
+// Supabase Version 1.0
+// PART 4
+// AI Attendance Summary
+// =====================================
+
+
+// =====================================
+// PAGE LOAD
+// =====================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        loadTodayAttendance();
+
+    }
+);
+
+
+// =====================================
+// LOAD TODAY ATTENDANCE
+// =====================================
+
+async function loadTodayAttendance() {
+
+    if (!checkSupabase()) {
+
+        return;
+
+    }
+
+
+    const presentBox =
+        document.getElementById("presentStudents");
+
+    const absentBox =
+        document.getElementById("absentStudents");
+
+    const rateBox =
+        document.getElementById("attendanceRate");
+
+    const reportPresent =
+        document.getElementById("reportPresent");
+
+    const reportAbsent =
+        document.getElementById("reportAbsent");
+
+    const reportRate =
+        document.getElementById("reportRate");
+
+    const summaryBox =
+        document.getElementById("aiSummary");
+
+    const predictionBox =
+        document.getElementById("prediction");
+
+    const riskBox =
+        document.getElementById("riskStudents");
+
+
+    try {
+
+        // =================================
+        // TODAY
+        // =================================
+
+        const today =
+            new Date()
+                .toISOString()
+                .split("T")[0];
+
+
+        console.log(
+            "📅 Dashboard Date:",
+            today
+        );
+
+
+        // =================================
+        // GET ATTENDANCE
+        // =================================
+
+        const {
+            data: attendance,
+            error
+        } =
+            await supabaseClient
+                .from("attendance")
+                .select("*")
+                .eq("date", today);
+
+
+        if (error) {
+
+            console.error(
+                "Attendance Error:",
+                error
+            );
+
+            return;
+
+        }
+
+
+        const records =
+            attendance || [];
+
+
+        // =================================
+        // COUNT PRESENT / ABSENT
+        // =================================
+
+        let present = 0;
+
+        let absent = 0;
+
+
+        records.forEach(function (record) {
+
+            if (
+                String(record.status)
+                    .toLowerCase() ===
+                "present"
+            ) {
+
+                present++;
+
+            }
+
+
+            if (
+                String(record.status)
+                    .toLowerCase() ===
+                "absent"
+            ) {
+
+                absent++;
+
+            }
+
+        });
+
+
+        // =================================
+        // TOTAL STUDENTS
+        // =================================
+
+        const {
+            count: totalStudents,
+            error: studentError
+        } =
+            await supabaseClient
+                .from("students")
+                .select(
+                    "id",
+                    {
+                        count: "exact",
+                        head: true
+                    }
+                );
+
+
+        if (studentError) {
+
+            console.error(
+                "Student Count Error:",
+                studentError
+            );
+
+            return;
+
+        }
+
+
+        const total =
+            totalStudents || 0;
+
+
+        // =================================
+        // ATTENDANCE RATE
+        // =================================
+
+        let rate = 0;
+
+
+        if (total > 0) {
+
+            rate =
+                Math.round(
+                    (present / total) * 100
+                );
+
+        }
+
+
+        // =================================
+        // UPDATE DASHBOARD
+        // =================================
+
+        if (presentBox) {
+
+            presentBox.innerText =
+                present;
+
+        }
+
+
+        if (absentBox) {
+
+            absentBox.innerText =
+                absent;
+
+        }
+
+
+        if (rateBox) {
+
+            rateBox.innerText =
+                rate + "%";
+
+        }
+
+
+        // =================================
+        // UPDATE AI REPORT
+        // =================================
+
+        if (reportPresent) {
+
+            reportPresent.innerText =
+                present;
+
+        }
+
+
+        if (reportAbsent) {
+
+            reportAbsent.innerText =
+                absent;
+
+        }
+
+
+        if (reportRate) {
+
+            reportRate.innerText =
+                rate + "%";
+
+        }
+
+
+        // =================================
+        // RISK STUDENTS
+        // =================================
+
+        if (riskBox) {
+
+            riskBox.innerText =
+                absent;
+
+        }
+
+
+        // =================================
+        // AI SUMMARY
+        // =================================
+
+        let summary;
+
+
+        if (total === 0) {
+
+            summary =
+                "No student data available.";
+
+        }
+
+        else if (records.length === 0) {
+
+            summary =
+                "📊 Attendance has not been recorded today.";
+
+        }
+
+        else if (rate >= 90) {
+
+            summary =
+                "🟢 Excellent attendance today. " +
+                "Students are maintaining a very high attendance level.";
+
+        }
+
+        else if (rate >= 75) {
+
+            summary =
+                "🟡 Good attendance today. " +
+                "However, some absent students should be monitored.";
+
+        }
+
+        else {
+
+            summary =
+                "🔴 Attendance is low today. " +
+                "Immediate attention is recommended for absent students.";
+
+        }
+
+
+        if (summaryBox) {
+
+            summaryBox.innerText =
+                summary;
+
+        }
+
+
+        // =================================
+        // AI PREDICTION
+        // =================================
+
+        let prediction;
+
+
+        if (total === 0) {
+
+            prediction =
+                "No student data available for prediction.";
+
+        }
+
+        else if (rate >= 90) {
+
+            prediction =
+                "🤖 AI predicts excellent attendance tomorrow.";
+
+        }
+
+        else if (rate >= 75) {
+
+            prediction =
+                "🤖 AI predicts stable attendance tomorrow.";
+
+        }
+
+        else {
+
+            prediction =
+                "⚠️ AI predicts a possible low-attendance risk tomorrow.";
+
+        }
+
+
+        if (predictionBox) {
+
+            predictionBox.innerText =
+                prediction;
+
+        }
+
+
+        console.log(
+            "✅ Attendance Analytics Loaded",
+            {
+                total,
+                present,
+                absent,
+                rate
+            }
+        );
+
+    }
+
+
+    catch (error) {
+
+        console.error(
+            "Unexpected Attendance Error:",
+            error
+        );
+
+    }
+
+}
+// =====================================
+// AI SCHOOL
+// Dashboard System
+// Supabase Version 1.0
+// PART 9
+// Today's Attendance Analytics
+// =====================================
+
+
+// =====================================
+// LOAD TODAY'S ATTENDANCE
+// =====================================
+
+async function loadTodayAttendance() {
+
+    console.log("📊 Part 9: Loading Today's Attendance...");
+
+
+    // =================================
+    // CHECK SUPABASE
+    // =================================
+
+    if (!checkSupabase()) {
+
+        console.error(
+            "❌ Supabase connection not available."
+        );
+
+        return;
+
+    }
+
+
+    // =================================
+    // GET CURRENT USER
+    // =================================
+
+    const currentUserData =
+        localStorage.getItem("currentUser");
+
+
+    if (!currentUserData) {
+
+        console.warn(
+            "⚠️ No logged-in user."
+        );
+
+        return;
+
+    }
+
+
+    let currentUser;
+
+
+    try {
+
+        currentUser =
+            JSON.parse(currentUserData);
+
+    }
+    catch (error) {
+
+        console.error(
+            "❌ Current User JSON Error:",
+            error
+        );
+
+        return;
+
+    }
+
+
+    // =================================
+    // TODAY
+    // =================================
+
+    const today =
+        new Date()
+            .toISOString()
+            .split("T")[0];
+
+
+    console.log(
+        "📅 Today:",
+        today
+    );
+
+
+    // =================================
+    // GET ATTENDANCE TABLE
+    // =================================
+
+    try {
+
+        const {
+            data: attendance,
+            error
+        } =
+            await supabaseClient
+                .from("attendance")
+                .select("*")
+                .eq("date", today);
+
+
+        // =================================
+        // ERROR
+        // =================================
+
+        if (error) {
+
+            console.error(
+                "❌ Attendance Query Error:",
+                error
+            );
+
+            updateTodayAttendanceUI(
+                0,
+                0,
+                0
+            );
+
+            return;
+
+        }
+
+
+        console.log(
+            "📊 Today's Attendance:",
+            attendance
+        );
+
+
+        // =================================
+        // NO DATA
+        // =================================
+
+        if (
+            !attendance ||
+            attendance.length === 0
+        ) {
+
+            console.log(
+                "ℹ️ No attendance recorded today."
+            );
+
+            updateTodayAttendanceUI(
+                0,
+                0,
+                0
+            );
+
+            return;
+
+        }
+
+
+        // =================================
+        // COUNT PRESENT
+        // =================================
+
+        let present = 0;
+
+        let absent = 0;
+
+
+        attendance.forEach(function(record) {
+
+            const status =
+                String(
+                    record.status || ""
+                ).toLowerCase();
+
+
+            if (
+                status === "present"
+            ) {
+
+                present++;
+
+            }
+
+
+            else if (
+                status === "absent"
+            ) {
+
+                absent++;
+
+            }
+
+        });
+
+
+        // =================================
+        // TOTAL
+        // =================================
+
+        const total =
+            present + absent;
+
+
+        // =================================
+        // ATTENDANCE RATE
+        // =================================
+
+        let rate = 0;
+
+
+        if (total > 0) {
+
+            rate =
+                Math.round(
+                    (present / total) * 100
+                );
+
+        }
+
+
+        console.log(
+            "✅ Present:",
+            present
+        );
+
+        console.log(
+            "❌ Absent:",
+            absent
+        );
+
+        console.log(
+            "📈 Rate:",
+            rate + "%"
+        );
+
+
+        // =================================
+        // UPDATE DASHBOARD
+        // =================================
+
+        updateTodayAttendanceUI(
+            present,
+            absent,
+            rate
+        );
+
+
+    }
+    catch (error) {
+
+        console.error(
+            "❌ Unexpected Attendance Error:",
+            error
+        );
+
+    }
+
+}
+
+
+// =====================================
+// UPDATE ATTENDANCE UI
+// =====================================
+
+function updateTodayAttendanceUI(
+    present,
+    absent,
+    rate
+) {
+
+
+    // =================================
+    // PRESENT
+    // =================================
+
+    const presentBox =
+        document.getElementById(
+            "presentStudents"
+        );
+
+
+    if (presentBox) {
+
+        presentBox.innerText =
+            present;
+
+    }
+
+
+    // =================================
+    // ABSENT
+    // =================================
+
+    const absentBox =
+        document.getElementById(
+            "absentStudents"
+        );
+
+
+    if (absentBox) {
+
+        absentBox.innerText =
+            absent;
+
+    }
+
+
+    // =================================
+    // ATTENDANCE RATE
+    // =================================
+
+    const rateBox =
+        document.getElementById(
+            "attendanceRate"
+        );
+
+
+    if (rateBox) {
+
+        rateBox.innerText =
+            rate + "%";
+
+    }
+
+
+    // =================================
+    // AI SCHOOL REPORT
+    // =================================
+
+    const reportPresent =
+        document.getElementById(
+            "reportPresent"
+        );
+
+
+    if (reportPresent) {
+
+        reportPresent.innerText =
+            present;
+
+    }
+
+
+    const reportAbsent =
+        document.getElementById(
+            "reportAbsent"
+        );
+
+
+    if (reportAbsent) {
+
+        reportAbsent.innerText =
+            absent;
+
+    }
+
+
+    const reportRate =
+        document.getElementById(
+            "reportRate"
+        );
+
+
+    if (reportRate) {
+
+        reportRate.innerText =
+            rate + "%";
+
+    }
+
+}
+
+
+// =====================================
+// START PART 9
+// =====================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        loadTodayAttendance();
+
+    }
+);
