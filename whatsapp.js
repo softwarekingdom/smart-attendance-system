@@ -87,7 +87,7 @@ async function loadAbsentStudents() {
                 )
                 .eq(
                     "status",
-                    "absent"
+                    "Absent"
                 );
 
 
