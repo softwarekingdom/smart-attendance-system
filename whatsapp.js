@@ -601,6 +601,9 @@ if (messageError) {
 }
   else {
     alert("✅ WhatsApp message status saved successfully!");
+
+    // Refresh WhatsApp status table
+    await loadWhatsAppStatus();
   }
     // =================================
     // OPEN WHATSAPP
