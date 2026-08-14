@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -9,286 +10,220 @@
 
 
 <title>
-AI Attendance System - History
+Attendance History
 </title>
 
 
-<link rel="stylesheet" href="attendancehistory.css">
-
 <link rel="stylesheet" href="sidebar.css">
+
+<link rel="stylesheet" href="attendancehistory.css">
 
 
 </head>
 
 
 
-<body class="history-body">
+<body class="attendance-history-body">
 
 
-
-<!-- Sidebar Start -->
-
-<button class="menu-btn" onclick="toggleSidebar()">
+<button 
+class="menu-btn"
+onclick="toggleSidebar()">
 
 ☰
 
 </button>
 
 
-<div class="overlay"></div>
 
-
-
-
-<div class="sidebar" id="sidebar">
-
-
-<div class="sidebar-logo">
-
-<h2>
-🤖 AI Attendance
-</h2>
-
-<p>
-Management System
-</p>
+<div class="overlay"
+onclick="closeSidebar()">
 
 </div>
 
 
 
 
-<ul>
+<div class="container">
 
 
-<li>
-<a href="dashboard.html">
-🏠 Dashboard
-</a>
-</li>
-
-
-
-<li>
-<a href="studentadmission.html">
-👨‍🎓 Students
-</a>
-</li>
-
-
-
-<li>
-<a href="attendance.html">
-📋 Attendance
-</a>
-</li>
-
-<li>
-  <a href="whatsapp.html">
-    💬📱 send whatsapp
-    <a/>
-</li>
-
-
-<li>
-<a href="attendancehistory.html">
-📅 History
-</a>
-</li>
-
-
-
-<li>
-<a href="attendanceview.html">
-👁 Reports
-</a>
-</li>
-
-
-
-<li>
-<a href="ai-dashboard.html">
-🤖 AI Analytics
-</a>
-</li>
-
-
-
-<div id="teacherMenu">
-
-
-<li>
-<a href="teacherprofile.html">
-👤 Teacher Profile
-</a>
-</li>
-
-
-</div>
-
-
-
-
-<div id="adminMenu">
-
-
-<li>
-<a href="teachers.html">
-👨‍🏫 Teacher Management
-</a>
-</li>
-
-
-<li>
-<a href="classmanagement.html">
-🏫 Class Management
-</a>
-</li>
-
-
-<li>
-<a href="adminsettings.html">
-⚙ Settings
-</a>
-</li>
-
-
-</div>
-
-
-
-
-<li>
-
-<a href="#" onclick="logout()">
-
-🚪 Logout
-
-</a>
-
-</li>
-
-
-</ul>
-
-
-</div>
-
-<!-- Sidebar End -->
-
-
-
-
-<!-- Main Content -->
-
-<div class="main-content">
-
-
-
-<header>
 
 <h1>
-
-📊 Attendance History
-
+📅 Attendance History
 </h1>
 
-
-</header>
-
-
-
-
-
-
-
-
-<div class="history-box">
-
-
-
-<h2>
-
-Previous Attendance Records
-
-</h2>
-
-
-
-
-<!-- Search -->
-
-
-<input 
-type="text"
-id="searchHistory"
-placeholder="🔍 Search Student">
 
 
 
 
 <div class="filter-box">
 
-<input
+
+
+<select id="historyClass"
+onchange="loadHistory()">
+
+<option value="">
+All Classes
+</option>
+
+
+</select>
+
+
+
+
+
+<input 
 type="date"
-id="filterDate">
+id="historyDate"
+onchange="loadHistory()">
 
-<button onclick="filterHistory()">
-🔍 Search
+
+
+
+
+<button onclick="clearFilters()">
+
+Clear
+
 </button>
 
-<button onclick="loadHistory()">
-🔄 Reset
-</button>
+
 
 </div>
 
+
+
+
+
+
+
+
+<div class="summary-box">
+
+
+
+<div class="summary-card">
+
+<h3>
+✅ Present
+</h3>
+
+<h1 id="presentTotal">
+0
+</h1>
+
+</div>
+
+
+
+
+
+<div class="summary-card">
+
+<h3>
+❌ Absent
+</h3>
+
+<h1 id="absentTotal">
+0
+</h1>
+
+</div>
+
+
+
+
+
+
+<div class="summary-card">
+
+<h3>
+👨‍🎓 Total
+</h3>
+
+<h1 id="studentTotal">
+0
+</h1>
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="history-card">
+
+
+
+<h2>
+📋 Attendance Report
+</h2>
+
+
+
 <table>
+
 
 <thead>
 
+
 <tr>
 
-<th>No</th>
 
-<th>Date</th>
+<th>
+Date
+</th>
 
-<th>Teacher</th>
 
-<th>Class</th>
+<th>
+Class
+</th>
 
-<th>Details</th>
+
+<th>
+Student
+</th>
+
+
+<th>
+Status
+</th>
+
+
+<th>
+Action
+</th>
+
 
 </tr>
+
 
 </thead>
 
 
-<tbody id="historyList">
-
-</tbody>
-
-
-</table>
-
-
-
 
 
 <tbody id="historyList">
-
-
-<!-- JavaScript Data -->
 
 
 </tbody>
 
 
 
-
-
 </table>
 
+
+
+</div>
 
 
 
@@ -299,18 +234,12 @@ id="filterDate">
 
 
 
-</div>
-
-
-
-
-
-
-
-
-<script src="auth.js"></script>
 <script src="sidebar.js"></script>
-<script src="rolesidebar.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="supabase-config.js"></script>
+
 <script src="attendancehistory.js"></script>
 
 
