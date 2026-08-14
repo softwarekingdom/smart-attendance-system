@@ -217,6 +217,56 @@ async function loadAIData() {
         attendanceRecords.length
     );
 
+
+    // ========================================================
+    // AI BACKEND ANALYSIS
+    // ========================================================
+
+    try {
+
+        const response =
+            await fetch(
+                "http://127.0.0.1:8000/ai-analysis"
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "AI backend returned HTTP " +
+                response.status
+            );
+
+        }
+
+
+        const result =
+            await response.json();
+
+
+        window.aiBackendAnalysis =
+            result;
+
+
+        console.log(
+            "🤖 AI Backend analysis:",
+            result
+        );
+
+    }
+    catch (error) {
+
+        console.warn(
+            "⚠️ AI backend unavailable. Using local analytics:",
+            error
+        );
+
+
+        window.aiBackendAnalysis =
+            null;
+
+    }
+
 }
 
 
@@ -1306,6 +1356,100 @@ function updateElement(
 // ============================================================
 // RISK STUDENTS
 // ============================================================
+
+function renderBackendAIRiskStudents() {
+
+    const el =
+        document.getElementById("riskStudents");
+
+    const result =
+        window.aiBackendAnalysis;
+
+    if (!el || !result || !Array.isArray(result.analysis)) {
+        return false;
+    }
+
+    if (!result.analysis.length) {
+        el.innerHTML = `
+            <div class="risk-empty">
+                🟢 No AI risk analysis available.
+            </div>
+        `;
+        return true;
+    }
+
+    el.innerHTML =
+        result.analysis.map(function (student) {
+
+            const percentage =
+                Number(student.attendance_percentage || 0);
+
+            const risk =
+                String(student.risk || "UNKNOWN")
+                    .toUpperCase();
+
+            let riskClass = "risk-medium";
+            let riskLabel = "⚠️ Needs Attention";
+
+            if (risk === "HIGH" || percentage < 50) {
+                riskClass = "risk-high";
+                riskLabel = "🔴 High Risk";
+            }
+            else if (risk === "MEDIUM" || percentage < 75) {
+                riskClass = "risk-medium";
+                riskLabel = "⚠️ Needs Attention";
+            }
+            else {
+                riskClass = "risk-low";
+                riskLabel = "🟢 Healthy";
+            }
+
+            return `
+                <div class="risk-student ${riskClass}">
+
+                    <div class="risk-student-info">
+
+                        <strong>
+                            ${escapeAIHTML(
+                                student.student_name || "Unknown Student"
+                            )}
+                        </strong>
+
+                        <small>
+                            Class:
+                            ${escapeAIHTML(
+                                student.class_name || "Not Assigned"
+                            )}
+                            |
+                            Present:
+                            ${Number(student.present || 0)}
+                            |
+                            Absent:
+                            ${Number(student.absent || 0)}
+                        </small>
+
+                    </div>
+
+                    <div class="risk-score">
+
+                        <strong>
+                            ${percentage}%
+                        </strong>
+
+                        <small>
+                            ${riskLabel}
+                        </small>
+
+                    </div>
+
+                </div>
+            `;
+
+        }).join("");
+
+    return true;
+}
+
 
 function renderRiskStudents() {
 
@@ -2444,7 +2588,9 @@ function renderAIDashboard() {
 
     renderAdvancedAnalytics();
 
-    renderRiskStudents();
+    if (!renderBackendAIRiskStudents()) {
+        renderRiskStudents();
+    }
 
     renderTopPerformers();
 
