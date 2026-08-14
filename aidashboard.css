@@ -1,428 +1,1766 @@
-/* =====================================
-   AI Attendance System
-   AI Analytics Dashboard CSS
-===================================== */
+/* =========================================================
+   AI ATTENDANCE ANALYTICS DASHBOARD
+   MODERN UI
+   PART 1 / 4
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body.ai-body {
+    margin: 0;
+    min-height: 100vh;
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+    background:
+        linear-gradient(
+            135deg,
+            #f8fafc 0%,
+            #eef4ff 50%,
+            #f8fafc 100%
+        );
+    color: #1e293b;
+}
 
 
-*{
+/* =========================================================
+   MAIN CONTAINER
+========================================================= */
 
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial, Helvetica, sans-serif;
+.ai-container {
+    width: calc(100% - 260px);
+    margin-left: 260px;
+    min-height: 100vh;
+    padding: 32px;
+    transition:
+        margin-left 0.3s ease,
+        width 0.3s ease;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.ai-page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+
+    margin-bottom: 28px;
+    padding: 28px 30px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+
+    box-shadow:
+        0 10px 30px
+        rgba(15, 23, 42, 0.07);
+}
+
+
+.ai-page-header h1 {
+    margin: 10px 0 8px;
+
+    font-size: 30px;
+    line-height: 1.2;
+    font-weight: 800;
+
+    color: #0f172a;
+}
+
+
+.ai-page-header p {
+    margin: 0;
+
+    max-width: 720px;
+
+    color: #64748b;
+
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   AI BADGE
+========================================================= */
+
+.ai-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 7px 13px;
+
+    border-radius: 999px;
+
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+
+    color: #2563eb;
+
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+
+/* =========================================================
+   SYSTEM STATUS
+========================================================= */
+
+.ai-header-status {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    flex-shrink: 0;
+
+    padding: 10px 15px;
+
+    border-radius: 999px;
+
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+
+    color: #475569;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+
+    display: inline-block;
+
+    border-radius: 50%;
+
+    background: #f59e0b;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(245, 158, 11, 0.12);
+}
+
+
+.status-dot.online {
+    background: #22c55e;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(34, 197, 94, 0.13);
+}
+
+
+.status-dot.offline {
+    background: #ef4444;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(239, 68, 68, 0.13);
+}
+
+
+/* =========================================================
+   KPI GRID
+========================================================= */
+
+.ai-kpi-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 18px;
+
+    margin-bottom: 20px;
+}
+
+
+/* =========================================================
+   KPI CARD
+========================================================= */
+
+.ai-kpi-card {
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+
+    min-width: 0;
+
+    padding: 22px;
+
+    background: #ffffff;
+
+    border:
+        1px solid #e2e8f0;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 8px 24px
+        rgba(15, 23, 42, 0.06);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.ai-kpi-card:hover {
+    transform: translateY(-3px);
+
+    border-color: #bfdbfe;
+
+    box-shadow:
+        0 14px 32px
+        rgba(15, 23, 42, 0.10);
+}
+
+
+/* =========================================================
+   KPI ICON
+========================================================= */
+
+.kpi-icon {
+    width: 52px;
+    height: 52px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eff6ff,
+            #dbeafe
+        );
+
+    font-size: 24px;
+}
+
+
+.ai-kpi-card:nth-child(2)
+.kpi-icon {
+    background:
+        linear-gradient(
+            135deg,
+            #f0fdf4,
+            #dcfce7
+        );
+}
+
+
+.ai-kpi-card:nth-child(3)
+.kpi-icon {
+    background:
+        linear-gradient(
+            135deg,
+            #fefce8,
+            #fef3c7
+        );
+}
+
+
+.ai-kpi-card:nth-child(4)
+.kpi-icon {
+    background:
+        linear-gradient(
+            135deg,
+            #faf5ff,
+            #f3e8ff
+        );
+}
+
+
+/* =========================================================
+   KPI TEXT
+========================================================= */
+
+.ai-kpi-card span {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #64748b;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+
+.ai-kpi-card strong {
+    display: block;
+
+    color: #0f172a;
+
+    font-size: 27px;
+    line-height: 1;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   GENERAL SECTION HEADING
+========================================================= */
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 20px;
+}
+
+
+.section-heading > div {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    min-width: 0;
+}
+
+
+.section-icon {
+    width: 43px;
+    height: 43px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: #eff6ff;
+
+    font-size: 20px;
+}
+
+
+.section-heading h2 {
+    margin: 0 0 4px;
+
+    color: #0f172a;
+
+    font-size: 19px;
+    line-height: 1.25;
+    font-weight: 800;
+}
+
+
+.section-heading p {
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.ai-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 100px;
+
+    color: #64748b;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   COMMON PANEL
+========================================================= */
+
+.ai-panel,
+.ai-analysis-card,
+.ai-recommendation-card {
+    width: 100%;
+
+    padding: 24px;
+
+    background: #ffffff;
+
+    border:
+        1px solid #e2e8f0;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(15, 23, 42, 0.06);
+}
+
+
+/* =========================================================
+   RESPONSIVE BASE
+========================================================= */
+
+@media (max-width: 1200px) {
+
+    .ai-container {
+        padding: 25px;
+    }
+
+    .ai-kpi-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
 
 }
 
 
+@media (max-width: 900px) {
 
+    .ai-container {
+        width: 100%;
+        margin-left: 0;
+        padding: 20px;
+    }
 
-body.ai-body{
-
-
-min-height:100vh;
-
-background:linear-gradient(
-135deg,
-#0f172a,
-#2563eb,
-#06b6d4
-);
-
-padding:30px;
-
+    .ai-page-header {
+        padding: 23px;
+    }
 
 }
 
 
+@media (max-width: 600px) {
 
+    .ai-container {
+        padding: 12px;
+    }
 
+    .ai-page-header {
+        flex-direction: column;
+        align-items: flex-start;
 
-.ai-container{
+        padding: 20px;
 
+        border-radius: 15px;
+    }
 
-max-width:1200px;
+    .ai-page-header h1 {
+        font-size: 23px;
+    }
 
-margin:auto;
+    .ai-page-header p {
+        font-size: 13px;
+    }
 
-background:rgba(255,255,255,0.95);
+    .ai-header-status {
+        width: 100%;
+        justify-content: center;
+    }
 
-padding:35px;
+    .ai-kpi-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
 
-border-radius:25px;
-
-box-shadow:
-
-0 20px 50px rgba(0,0,0,0.25);
-
-
-}
-
-
-
-
-
-.ai-container h1{
-
-
-text-align:center;
-
-color:#1e3a8a;
-
-font-size:32px;
-
-margin-bottom:35px;
-
+    .ai-kpi-card {
+        padding: 18px;
+    }
 
 }
 
 
+/* =========================================================
+   AI ANALYTICS DASHBOARD
+   PART 1 / 4 — BASE + HEADER + KPI
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+.ai-body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f7fb;
+    color: #172033;
+}
+
+.ai-container {
+    margin-left: 260px;
+    padding: 32px;
+    max-width: 1500px;
+    transition: margin-left 0.3s ease;
+}
+
+/* ================= HEADER ================= */
+
+.ai-page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    margin-bottom: 28px;
+}
+
+.ai-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 12px;
+    border-radius: 20px;
+    background: #eef2ff;
+    color: #4f46e5;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.ai-page-header h1 {
+    margin: 10px 0 6px;
+    font-size: 32px;
+    font-weight: 800;
+    color: #111827;
+}
+
+.ai-page-header p {
+    margin: 0;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.ai-header-status {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    font-size: 13px;
+    font-weight: 700;
+    color: #475569;
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #f59e0b;
+}
+
+.status-dot.online {
+    background: #22c55e;
+    box-shadow: 0 0 0 4px #dcfce7;
+}
+
+.status-dot.offline {
+    background: #ef4444;
+    box-shadow: 0 0 0 4px #fee2e2;
+}
+
+/* ================= KPI GRID ================= */
+
+.ai-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 20px;
+}
+
+.ai-kpi-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 22px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.05);
+    transition: 0.2s ease;
+}
+
+.ai-kpi-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.09);
+}
+
+.kpi-icon {
+    width: 52px;
+    height: 52px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: #eef2ff;
+    font-size: 25px;
+}
+
+.ai-kpi-card span {
+    display: block;
+    margin-bottom: 7px;
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.ai-kpi-card strong {
+    display: block;
+    color: #111827;
+    font-size: 27px;
+    font-weight: 800;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .ai-kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .ai-container {
+        margin-left: 0;
+    }
+}
+/* =========================================================
+   AI ANALYTICS DASHBOARD
+   PART 2 / 4 — STATS + ANALYSIS + PANELS
+========================================================= */
+
+/* ================= PRESENT / ABSENT STATS ================= */
+
+.ai-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 22px;
+}
+
+.ai-stat-card {
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.05);
+    transition: 0.2s ease;
+}
+
+.ai-stat-card:hover {
+    transform: translateY(-2px);
+}
+
+.ai-stat-card > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.ai-stat-card span {
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.ai-stat-card strong {
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.ai-stat-card small {
+    display: block;
+    margin-top: 10px;
+    color: #64748b;
+    font-size: 11px;
+}
+
+.ai-stat-card.present {
+    background: linear-gradient(135deg, #f0fdf4, #ffffff);
+    border-color: #bbf7d0;
+}
+
+.ai-stat-card.present span,
+.ai-stat-card.present strong {
+    color: #15803d;
+}
+
+.ai-stat-card.absent {
+    background: linear-gradient(135deg, #fef2f2, #ffffff);
+    border-color: #fecaca;
+}
+
+.ai-stat-card.absent span,
+.ai-stat-card.absent strong {
+    color: #dc2626;
+}
+
+.ai-stat-card.today {
+    background: linear-gradient(135deg, #eff6ff, #ffffff);
+    border-color: #bfdbfe;
+}
+
+.ai-stat-card.today span,
+.ai-stat-card.today strong {
+    color: #2563eb;
+}
+
+.ai-stat-card.month {
+    background: linear-gradient(135deg, #faf5ff, #ffffff);
+    border-color: #ddd6fe;
+}
+
+.ai-stat-card.month span,
+.ai-stat-card.month strong {
+    color: #7c3aed;
+}
 
 
+/* ================= COMMON PANELS ================= */
 
-/* Analytics Cards */
+.ai-analysis-card,
+.ai-panel,
+.ai-recommendation-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    padding: 24px;
+    margin-bottom: 22px;
+    box-shadow: 0 7px 24px rgba(15, 23, 42, 0.05);
+}
 
 
-.analytics-cards{
+/* ================= SECTION HEADING ================= */
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.section-heading > div {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.section-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 13px;
+    background: #eef2ff;
+    font-size: 21px;
+}
+
+.section-heading h2 {
+    margin: 0 0 4px;
+    color: #111827;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.section-heading p {
+    margin: 0;
+    color: #64748b;
+    font-size: 12px;
+}
 
 
-display:grid;
+/* ================= AI HEALTH ================= */
 
-grid-template-columns:
+.ai-health-badge {
+    padding: 7px 12px;
+    border-radius: 20px;
+    background: #f1f5f9;
+    color: #475569;
+    font-size: 11px;
+    font-weight: 800;
+}
 
-repeat(4,1fr);
+.ai-health-badge.good {
+    background: #dcfce7;
+    color: #15803d;
+}
 
-gap:20px;
+.ai-health-badge.warning {
+    background: #fef3c7;
+    color: #a16207;
+}
 
-margin-bottom:35px;
+.ai-health-badge.danger {
+    background: #fee2e2;
+    color: #b91c1c;
+}
 
+
+/* ================= AI ANALYSIS CONTENT ================= */
+
+.ai-analysis-content {
+    min-height: 100px;
+    padding: 18px;
+    border-radius: 13px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #334155;
+    line-height: 1.7;
+    font-size: 14px;
+}
+
+.ai-analysis-content strong {
+    color: #111827;
+}
+
+.ai-analysis-content p {
+    margin: 0 0 10px;
+}
+
+.ai-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 90px;
+    color: #64748b;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+}
+
+
+/* ================= TREND ================= */
+
+.attendance-trend {
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.trend-row {
+    display: grid;
+    grid-template-columns: 90px 1fr 60px;
+    align-items: center;
+    gap: 12px;
+}
+
+.trend-label {
+    color: #475569;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.trend-bar {
+    height: 10px;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #e2e8f0;
+}
+
+.trend-fill {
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(
+        90deg,
+        #2563eb,
+        #60a5fa
+    );
+}
+
+.trend-value {
+    text-align: right;
+    color: #1e293b;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+
+/* ================= CLASS PERFORMANCE ================= */
+
+.class-performance {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.class-row {
+    padding: 14px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    background: #f8fafc;
+}
+
+.class-row-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 9px;
+}
+
+.class-name {
+    color: #1e293b;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.class-percentage {
+    color: #2563eb;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.class-progress {
+    height: 8px;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #e2e8f0;
+}
+
+.class-progress-fill {
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(
+        90deg,
+        #4f46e5,
+        #818cf8
+    );
+}
+
+
+/* ================= TABLET ================= */
+
+@media (max-width: 1100px) {
+
+    .ai-stat-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 
 }
 
 
+/* ================= MOBILE ================= */
+
+@media (max-width: 600px) {
+
+    .ai-stat-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .ai-analysis-card,
+    .ai-panel,
+    .ai-recommendation-card {
+        padding: 18px;
+        border-radius: 15px;
+    }
+
+    .section-heading {
+        align-items: flex-start;
+    }
+
+    .section-heading h2 {
+        font-size: 16px;
+    }
+
+    .section-heading p {
+        font-size: 11px;
+    }
+
+    .trend-row {
+        grid-template-columns: 65px 1fr 45px;
+        gap: 7px;
+    }
+
+}
+/* =========================================================
+   AI ANALYTICS DASHBOARD
+   PART 3 / 4 — STUDENT INSIGHTS
+========================================================= */
 
 
-.analytics-card{
+/* =========================================================
+   TWO COLUMN LAYOUT
+========================================================= */
+
+.ai-two-column {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 22px;
+
+    margin-bottom: 22px;
+}
 
 
-background:linear-gradient(
+/* =========================================================
+   STUDENT INSIGHT LIST
+========================================================= */
 
-135deg,
+.student-insight-list {
+    display: flex;
+    flex-direction: column;
 
-#eff6ff,
+    gap: 10px;
 
-#dbeafe
+    min-height: 80px;
+}
 
-);
+
+/* =========================================================
+   STUDENT INSIGHT ITEM
+========================================================= */
+
+.student-insight-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 14px;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 13px;
+
+    background: #f8fafc;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
 
 
-padding:25px;
+.student-insight-item:hover {
+    transform: translateY(-2px);
 
-border-radius:20px;
+    border-color: #cbd5e1;
 
-text-align:center;
+    box-shadow:
+        0 6px 16px
+        rgba(15, 23, 42, 0.07);
+}
 
-box-shadow:
 
-0 8px 20px rgba(0,0,0,.12);
+/* =========================================================
+   STUDENT INFORMATION
+========================================================= */
 
-transition:.3s;
+.student-insight-info {
+    display: flex;
+    align-items: center;
 
+    gap: 11px;
+
+    min-width: 0;
+}
+
+
+.student-avatar {
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #dbeafe,
+            #eef2ff
+        );
+
+    color: #2563eb;
+
+    font-size: 17px;
+    font-weight: 800;
+}
+
+
+.student-details {
+    min-width: 0;
+}
+
+
+.student-details strong {
+    display: block;
+
+    overflow: hidden;
+
+    color: #1e293b;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.student-details small {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #64748b;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   ATTENDANCE SCORE
+========================================================= */
+
+.student-score {
+    flex-shrink: 0;
+
+    min-width: 58px;
+
+    padding: 6px 9px;
+
+    border-radius: 20px;
+
+    text-align: center;
+
+    background: #dcfce7;
+
+    color: #15803d;
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+
+.student-score.medium {
+    background: #fef3c7;
+    color: #a16207;
+}
+
+
+.student-score.low {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+
+/* =========================================================
+   TOP STUDENT PANEL
+========================================================= */
+
+.ai-two-column
+.ai-panel:first-child
+.student-insight-item {
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #f8fafc
+        );
+}
+
+
+/* =========================================================
+   RISK PANEL
+========================================================= */
+
+.risk-panel {
+    border-color: #fecaca;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #fffafa
+        );
+}
+
+
+.risk-panel .section-icon {
+    background: #fee2e2;
+}
+
+
+.risk-panel .student-insight-item {
+    border-color: #fecaca;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff7f7,
+            #ffffff
+        );
+}
+
+
+.risk-panel .student-avatar {
+    background: #fee2e2;
+
+    color: #dc2626;
+}
+
+
+/* =========================================================
+   RISK LEVEL
+========================================================= */
+
+.risk-level {
+    flex-shrink: 0;
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+}
+
+
+.risk-level.high {
+    background: #fee2e2;
+
+    color: #b91c1c;
+}
+
+
+.risk-level.medium {
+    background: #fef3c7;
+
+    color: #a16207;
+}
+
+
+.risk-level.low {
+    background: #dcfce7;
+
+    color: #15803d;
+}
+
+
+/* =========================================================
+   EMPTY STUDENT STATE
+========================================================= */
+
+.student-empty {
+    padding: 30px 15px;
+
+    border:
+        1px dashed #cbd5e1;
+
+    border-radius: 13px;
+
+    text-align: center;
+
+    background: #f8fafc;
+}
+
+
+.student-empty-icon {
+    margin-bottom: 8px;
+
+    font-size: 30px;
+}
+
+
+.student-empty strong {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #334155;
+
+    font-size: 14px;
+}
+
+
+.student-empty p {
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   RISK EMPTY STATE
+========================================================= */
+
+.risk-panel .student-empty {
+    border-color: #fecaca;
+
+    background: #fff7f7;
+}
+
+
+.risk-panel .student-empty-icon {
+    color: #16a34a;
+}
+
+
+/* =========================================================
+   RANK BADGE
+========================================================= */
+
+.student-rank {
+    width: 28px;
+    height: 28px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #eef2ff;
+
+    color: #4f46e5;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+
+.student-rank.first {
+    background: #fef3c7;
+    color: #a16207;
+}
+
+
+.student-rank.second {
+    background: #e2e8f0;
+    color: #475569;
+}
+
+
+.student-rank.third {
+    background: #ffedd5;
+    color: #c2410c;
+}
+
+
+/* =========================================================
+   STUDENT INSIGHT RESPONSIVE
+========================================================= */
+
+@media (max-width: 850px) {
+
+    .ai-two-column {
+        grid-template-columns: 1fr;
+    }
 
 }
 
 
+@media (max-width: 600px) {
+
+    .student-insight-item {
+        padding: 12px;
+
+        gap: 8px;
+    }
+
+    .student-avatar {
+        width: 36px;
+        height: 36px;
+
+        font-size: 15px;
+    }
+
+    .student-details strong {
+        font-size: 12px;
+    }
+
+    .student-details small {
+        font-size: 10px;
+    }
+
+    .student-score {
+        min-width: 52px;
+
+        padding: 5px 7px;
+
+        font-size: 10px;
+    }
+
+    .risk-level {
+        padding: 5px 7px;
+
+        font-size: 9px;
+    }
+
+}
+/* =========================================================
+   AI ANALYTICS DASHBOARD
+   PART 4 / 4 — RECOMMENDATIONS + ACTIONS + RESPONSIVE
+========================================================= */
 
 
-.analytics-card:hover{
+/* =========================================================
+   RECOMMENDATIONS
+========================================================= */
+
+.recommendation-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.recommendation-item {
+    padding: 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    background: #f8fafc;
+    transition: 0.2s ease;
+}
+
+.recommendation-item:hover {
+    transform: translateY(-2px);
+    border-color: #c7d2fe;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.07);
+}
+
+.recommendation-icon {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    border-radius: 11px;
+    background: #eef2ff;
+    font-size: 18px;
+}
+
+.recommendation-item strong {
+    display: block;
+    margin-bottom: 6px;
+    color: #1e293b;
+    font-size: 13px;
+}
+
+.recommendation-item p {
+    margin: 0;
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.6;
+}
 
 
-transform:translateY(-8px);
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
 
+.ai-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 28px 0 10px;
+}
+
+.ai-actions button {
+    border: none;
+    border-radius: 11px;
+    padding: 11px 18px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 800;
+    transition: 0.2s ease;
+}
+
+.ai-refresh-button {
+    background: #2563eb;
+    color: #ffffff;
+}
+
+.ai-refresh-button:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+.ai-back-button {
+    background: #e2e8f0;
+    color: #334155;
+}
+
+.ai-back-button:hover {
+    background: #cbd5e1;
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   EMPTY / ERROR STATES
+========================================================= */
+
+.ai-empty {
+    padding: 28px 15px;
+    border: 1px dashed #cbd5e1;
+    border-radius: 13px;
+    background: #f8fafc;
+    text-align: center;
+}
+
+.ai-empty-icon {
+    margin-bottom: 8px;
+    font-size: 30px;
+}
+
+.ai-empty strong {
+    display: block;
+    margin-bottom: 5px;
+    color: #334155;
+    font-size: 14px;
+}
+
+.ai-empty p {
+    margin: 0;
+    color: #64748b;
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+.ai-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.ai-body::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+.ai-body::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 20px;
+}
+
+.ai-body::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+
+/* =========================================================
+   LARGE TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .ai-container {
+        margin-left: 0;
+        padding: 25px;
+    }
+
+    .ai-kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .recommendation-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
 
 }
 
 
+/* =========================================================
+   TABLET
+========================================================= */
 
+@media (max-width: 800px) {
 
+    .ai-container {
+        padding: 18px;
+    }
 
-.analytics-card h2{
+    .ai-page-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
 
+    .ai-header-status {
+        width: 100%;
+    }
 
-font-size:18px;
-
-color:#334155;
-
-margin-bottom:15px;
-
-
-}
-
-
-
-
-
-.analytics-card h1{
-
-
-font-size:40px;
-
-color:#2563eb;
-
-margin:0;
-
+    .ai-two-column {
+        grid-template-columns: 1fr;
+    }
 
 }
 
 
+/* =========================================================
+   MOBILE
+========================================================= */
 
+@media (max-width: 600px) {
 
+    .ai-container {
+        padding: 12px;
+    }
 
+    .ai-page-header {
+        margin-bottom: 18px;
+    }
 
-/* AI Report */
+    .ai-page-header h1 {
+        font-size: 23px;
+    }
 
+    .ai-page-header p {
+        font-size: 12px;
+        line-height: 1.5;
+    }
 
-.ai-report{
+    .ai-kpi-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
 
+    .ai-kpi-card {
+        padding: 17px;
+    }
 
-background:linear-gradient(
+    .kpi-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 21px;
+    }
 
-135deg,
+    .ai-kpi-card strong {
+        font-size: 23px;
+    }
 
-#ede9fe,
+    .ai-stat-card {
+        padding: 16px;
+    }
 
-#dbeafe
+    .ai-analysis-card,
+    .ai-panel,
+    .ai-recommendation-card {
+        padding: 16px;
+        margin-bottom: 14px;
+    }
 
-);
+    .section-heading {
+        gap: 8px;
+    }
 
+    .section-heading > div {
+        gap: 9px;
+    }
 
-padding:30px;
+    .section-icon {
+        width: 38px;
+        height: 38px;
+        font-size: 18px;
+    }
 
-border-radius:20px;
+    .ai-health-badge {
+        padding: 5px 8px;
+        font-size: 9px;
+    }
 
-margin-bottom:25px;
+    .recommendation-list {
+        grid-template-columns: 1fr;
+    }
 
-border-left:6px solid #7c3aed;
+    .recommendation-item {
+        padding: 14px;
+    }
 
+    .ai-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .ai-actions a,
+    .ai-actions button {
+        width: 100%;
+    }
 
 }
 
 
-
-
-
-.ai-report h2{
-
-
-color:#5b21b6;
-
-margin-bottom:15px;
-
-
-}
-
-
-
-
-
-#aiPrediction{
-
-
-font-size:18px;
-
-line-height:1.8;
-
-color:#334155;
-
-
-}
-
-
-
-
-
-
-/* Risk Section */
-
-
-.ai-risk{
-
-
-background:#fff7ed;
-
-padding:30px;
-
-border-radius:20px;
-
-border-left:6px solid #ea580c;
-
-margin-bottom:30px;
-
-
-}
-
-
-
-
-
-.ai-risk h2{
-
-
-color:#c2410c;
-
-margin-bottom:15px;
-
-
-}
-
-
-
-
-#riskStudents{
-
-
-font-size:17px;
-
-line-height:2;
-
-color:#444;
-
-
-}
-
-
-
-
-
-
-
-/* Button */
-
-
-button{
-
-
-padding:14px 30px;
-
-border:none;
-
-border-radius:12px;
-
-background:#2563eb;
-
-color:white;
-
-font-size:16px;
-
-cursor:pointer;
-
-transition:.3s;
-
-
-}
-
-
-
-
-button:hover{
-
-
-background:#1d4ed8;
-
-
-}
-
-
-
-
-a{
-
-text-decoration:none;
-
-}
-
-
-
-
-
-/* Mobile Responsive */
-
-
-@media(max-width:900px){
-
-
-.analytics-cards{
-
-
-grid-template-columns:
-
-repeat(2,1fr);
-
-
-}
-
-
-}
-
-
-
-
-
-
-@media(max-width:600px){
-
-
-body.ai-body{
-
-
-padding:15px;
-
-
-}
-
-
-
-.ai-container{
-
-
-padding:20px;
-
-border-radius:18px;
-
-
-}
-
-
-
-
-.ai-container h1{
-
-
-font-size:24px;
-
-
-}
-
-
-
-.analytics-cards{
-
-
-grid-template-columns:
-
-1fr;
-
-
-}
-
-
-
-.analytics-card h1{
-
-
-font-size:32px;
-
-
-}
-
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .ai-page-header h1 {
+        font-size: 20px;
+    }
+
+    .ai-kpi-card strong {
+        font-size: 21px;
+    }
+
+    .ai-stat-card strong {
+        font-size: 21px;
+    }
+
+    .section-heading h2 {
+        font-size: 14px;
+    }
+
+    .section-heading p {
+        font-size: 10px;
+    }
 
 }

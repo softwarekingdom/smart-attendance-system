@@ -5,44 +5,77 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
 <title>AI Analytics Dashboard</title>
 
-<link rel="stylesheet" href="aidashboard.css">
-<link rel="stylesheet" href="sidebar.css">
+<link
+    rel="stylesheet"
+    href="sidebar.css"
+>
+
+<link
+    rel="stylesheet"
+    href="aidashboard.css"
+>
+
 </head>
 
 
 <body class="ai-body">
 
-  
-<!-- ===========================
-        MENU BUTTON
-============================ -->
 
-<button class="menu-btn" onclick="toggleSidebar()">
+<!-- =====================================================
+     MENU BUTTON
+===================================================== -->
+
+<button
+    class="menu-btn"
+    onclick="toggleSidebar()"
+    aria-label="Open menu"
+>
     ☰
 </button>
 
-<div class="overlay" onclick="closeSidebar()"></div>
 
-<!-- ===========================
-        SIDEBAR
-============================ -->
+<div
+    class="overlay"
+    onclick="closeSidebar()"
+></div>
 
-<div class="sidebar" id="sidebar">
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<div
+    class="sidebar"
+    id="sidebar"
+>
 
     <div class="sidebar-logo">
-        <h2>🤖 AI School</h2>
-        <p>Attendance Management System</p>
+
+        <h2>
+            🤖 AI School
+        </h2>
+
+        <p>
+            Attendance Management System
+        </p>
+
     </div>
+
 
     <ul>
 
-        <!-- ================= Dashboard ================= -->
+        <!-- Dashboard -->
 
-        <li class="sidebar-title">🏠 Dashboard</li>
+        <li class="sidebar-title">
+            🏠 Dashboard
+        </li>
 
         <li>
             <a href="dashboard.html">
@@ -51,9 +84,11 @@
         </li>
 
 
-        <!-- ================= Students ================= -->
+        <!-- Students -->
 
-        <li class="sidebar-title">👨‍🎓 Students</li>
+        <li class="sidebar-title">
+            👨‍🎓 Students
+        </li>
 
         <li>
             <a href="studentadmission.html">
@@ -80,9 +115,11 @@
         </li>
 
 
-        <!-- ================= Attendance ================= -->
+        <!-- Attendance -->
 
-        <li class="sidebar-title">📋 Attendance</li>
+        <li class="sidebar-title">
+            📋 Attendance
+        </li>
 
         <li>
             <a href="attendance.html">
@@ -115,9 +152,11 @@
         </li>
 
 
-        <!-- ================= Communication ================= -->
+        <!-- Communication -->
 
-        <li class="sidebar-title">💬 Communication</li>
+        <li class="sidebar-title">
+            💬 Communication
+        </li>
 
         <li>
             <a href="whatsapp.html">
@@ -126,9 +165,11 @@
         </li>
 
 
-        <!-- ================= AI ================= -->
+        <!-- AI -->
 
-        <li class="sidebar-title">🤖 AI Analytics</li>
+        <li class="sidebar-title">
+            🤖 AI Analytics
+        </li>
 
         <li>
             <a href="aidashboard.html">
@@ -137,9 +178,11 @@
         </li>
 
 
-        <!-- ================= Administration ================= -->
+        <!-- Administration -->
 
-        <li class="sidebar-title">⚙ Administration</li>
+        <li class="sidebar-title">
+            ⚙ Administration
+        </li>
 
         <li>
             <a href="teachers.html">
@@ -160,9 +203,11 @@
         </li>
 
 
-        <!-- ================= Profiles ================= -->
+        <!-- Profiles -->
 
-        <li class="sidebar-title">👤 My Profile</li>
+        <li class="sidebar-title">
+            👤 My Profile
+        </li>
 
         <li>
             <a href="teacherprofile.html">
@@ -177,12 +222,17 @@
         </li>
 
 
-        <!-- ================= Logout ================= -->
+        <!-- Account -->
 
-        <li class="sidebar-title">🚪 Account</li>
+        <li class="sidebar-title">
+            🚪 Account
+        </li>
 
         <li>
-            <a href="#" onclick="logout()">
+            <a
+                href="#"
+                onclick="logout()"
+            >
                 🚪 Logout
             </a>
         </li>
@@ -190,146 +240,591 @@
     </ul>
 
 </div>
-<div class="ai-container">
 
 
-<h1>
-🤖 AI Analytics Dashboard
-</h1>
+<!-- =====================================================
+     MAIN AI DASHBOARD
+===================================================== -->
 
+<main class="ai-container">
 
 
-<div class="analytics-cards">
+    <!-- =================================================
+         HEADER
+    ================================================= -->
 
+    <section class="ai-page-header">
 
-<div class="analytics-card">
+        <div>
 
-<h2>
-👨‍🎓 Total Students
-</h2>
+            <span class="ai-badge">
+                🤖 AI POWERED
+            </span>
 
-<h1 id="aiStudents">
-0
-</h1>
+            <h1>
+                AI Analytics Dashboard
+            </h1>
 
-</div>
+            <p>
+                Intelligent attendance monitoring,
+                student risk detection and performance insights.
+            </p>
 
+        </div>
 
 
+        <div class="ai-header-status">
 
-<div class="analytics-card">
+            <span
+                id="aiSystemStatus"
+                class="status-dot"
+            ></span>
 
-<h2>
-📋 Total Classes
-</h2>
+            <span id="aiSystemStatusText">
+                Connecting...
+            </span>
 
-<h1 id="aiClasses">
-0
-</h1>
+        </div>
 
-</div>
+    </section>
 
 
 
+    <!-- =================================================
+         MAIN KPI CARDS
+    ================================================= -->
 
-<div class="analytics-card">
+    <section class="ai-kpi-grid">
 
-<h2>
-✅ Present
-</h2>
 
-<h1 id="aiPresent">
-0
-</h1>
+        <article class="ai-kpi-card">
 
-</div>
+            <div class="kpi-icon">
+                👨‍🎓
+            </div>
 
+            <div>
 
+                <span>
+                    Total Students
+                </span>
 
+                <strong id="aiStudents">
+                    0
+                </strong>
 
-<div class="analytics-card">
+            </div>
 
-<h2>
-❌ Absent
-</h2>
+        </article>
 
-<h1 id="aiAbsent">
-0
-</h1>
 
-</div>
 
+        <article class="ai-kpi-card">
 
+            <div class="kpi-icon">
+                🏫
+            </div>
 
-</div>
+            <div>
 
+                <span>
+                    Total Classes
+                </span>
 
+                <strong id="aiClasses">
+                    0
+                </strong>
 
+            </div>
 
+        </article>
 
-<div class="ai-report">
 
 
-<h2>
-🤖 AI Attendance Analysis
-</h2>
+        <article class="ai-kpi-card">
 
+            <div class="kpi-icon">
+                📋
+            </div>
 
-<p id="aiPrediction">
+            <div>
 
-Loading AI Analysis...
+                <span>
+                    Attendance Records
+                </span>
 
-</p>
+                <strong id="aiTotalRecords">
+                    0
+                </strong>
 
+            </div>
 
+        </article>
 
-</div>
 
 
+        <article class="ai-kpi-card">
 
+            <div class="kpi-icon">
+                📊
+            </div>
 
+            <div>
 
-<div class="ai-risk">
+                <span>
+                    Overall Attendance
+                </span>
 
+                <strong id="aiOverallPercentage">
+                    0%
+                </strong>
 
-<h2>
-⚠️ Students At Risk
-</h2>
+            </div>
 
+        </article>
 
-<div id="riskStudents">
 
-Checking...
+    </section>
 
-</div>
 
 
-</div>
+    <!-- =================================================
+         PRESENT / ABSENT
+    ================================================= -->
 
+    <section class="ai-stat-grid">
 
 
+        <article class="ai-stat-card present">
 
-<a href="dashboard.html">
+            <div>
 
-<button>
+                <span>
+                    ✅ Present
+                </span>
 
-⬅ Back To Dashboard
+                <strong id="aiPresent">
+                    0
+                </strong>
 
-</button>
+            </div>
 
-</a>
+            <small>
+                Attendance marked present
+            </small>
 
+        </article>
 
 
-</div>
 
+        <article class="ai-stat-card absent">
 
+            <div>
 
+                <span>
+                    ❌ Absent
+                </span>
 
+                <strong id="aiAbsent">
+                    0
+                </strong>
+
+            </div>
+
+            <small>
+                Attendance marked absent
+            </small>
+
+        </article>
+
+
+
+        <article class="ai-stat-card today">
+
+            <div>
+
+                <span>
+                    📅 Today
+                </span>
+
+                <strong id="aiTodayPercentage">
+                    0%
+                </strong>
+
+            </div>
+
+            <small id="aiTodaySummary">
+                No attendance data
+            </small>
+
+        </article>
+
+
+
+        <article class="ai-stat-card month">
+
+            <div>
+
+                <span>
+                    🗓 This Month
+                </span>
+
+                <strong id="aiMonthPercentage">
+                    0%
+                </strong>
+
+            </div>
+
+            <small id="aiMonthSummary">
+                No attendance data
+            </small>
+
+        </article>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         AI ANALYSIS
+    ================================================= -->
+
+    <section class="ai-analysis-card">
+
+        <div class="section-heading">
+
+            <div>
+
+                <span class="section-icon">
+                    🧠
+                </span>
+
+                <div>
+
+                    <h2>
+                        AI Attendance Analysis
+                    </h2>
+
+                    <p>
+                        Automated interpretation of attendance patterns.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <span
+                id="aiHealthBadge"
+                class="ai-health-badge"
+            >
+                Analysing...
+            </span>
+
+        </div>
+
+
+        <div
+            id="aiPrediction"
+            class="ai-analysis-content"
+        >
+
+            <div class="ai-loading">
+                🤖 Analysing attendance data...
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         ATTENDANCE TREND
+    ================================================= -->
+
+    <section class="ai-panel">
+
+        <div class="section-heading">
+
+            <div>
+
+                <span class="section-icon">
+                    📈
+                </span>
+
+                <div>
+
+                    <h2>
+                        Attendance Trend
+                    </h2>
+
+                    <p>
+                        Recent attendance performance.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="attendanceTrend"
+            class="attendance-trend"
+        >
+
+            <div class="ai-loading">
+                Loading attendance trend...
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         CLASS PERFORMANCE
+    ================================================= -->
+
+    <section class="ai-panel">
+
+        <div class="section-heading">
+
+            <div>
+
+                <span class="section-icon">
+                    🏫
+                </span>
+
+                <div>
+
+                    <h2>
+                        Class Performance
+                    </h2>
+
+                    <p>
+                        Attendance performance by class.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="classPerformance"
+            class="class-performance"
+        >
+
+            <div class="ai-loading">
+                Loading class performance...
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         TOP STUDENTS
+    ================================================= -->
+
+    <section class="ai-two-column">
+
+
+        <div class="ai-panel">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="section-icon">
+                        🏆
+                    </span>
+
+                    <div>
+
+                        <h2>
+                            Top Attendance
+                        </h2>
+
+                        <p>
+                            Students with strong attendance.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="topStudents"
+                class="student-insight-list"
+            >
+
+                <div class="ai-loading">
+                    Loading students...
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             AT RISK STUDENTS
+        ================================================= -->
+
+        <div class="ai-panel risk-panel">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="section-icon">
+                        ⚠️
+                    </span>
+
+                    <div>
+
+                        <h2>
+                            Students At Risk
+                        </h2>
+
+                        <p>
+                            Students requiring attention.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="riskStudents"
+                class="student-insight-list"
+            >
+
+                <div class="ai-loading">
+                    Checking risk levels...
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         AI RECOMMENDATIONS
+    ================================================= -->
+
+    <section class="ai-recommendation-card">
+
+        <div class="section-heading">
+
+            <div>
+
+                <span class="section-icon">
+                    💡
+                </span>
+
+                <div>
+
+                    <h2>
+                        AI Recommendations
+                    </h2>
+
+                    <p>
+                        Suggested actions based on attendance data.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="aiRecommendations"
+            class="recommendation-list"
+        >
+
+            <div class="ai-loading">
+                Generating recommendations...
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         REFRESH / BACK
+    ================================================= -->
+
+    <div class="ai-actions">
+
+        <button
+            type="button"
+            id="refreshAI"
+            class="ai-refresh-button"
+        >
+            🔄 Refresh Analytics
+        </button>
+
+
+        <a href="dashboard.html">
+
+            <button
+                type="button"
+                class="ai-back-button"
+            >
+                ⬅ Back To Dashboard
+            </button>
+
+        </a>
+
+    </div>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     SCRIPTS
+===================================================== -->
 
 <script src="sidebar.js"></script>
-<script src="rolesidebar.js"></script>
+
+<script src="role-sidebar.js"></script>
+
+<script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+></script>
+
+<script src="supabase-config.js"></script>
+
 <script src="aidashboard.js"></script>
+
+<script src="ai-insights.js"></script>
 
 
 </body>

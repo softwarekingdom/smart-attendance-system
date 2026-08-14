@@ -1,0 +1,11 @@
+ai-backend/.env
+ai-backend/venv/
+ai-backend/__pycache__/
+ai-backend/*.log
+ai-backend/*-test.json
+ai-backend/*.backup
+ai-backend/*.before-*
+*.pyc
+*.save
+*.save.*
+*.backup
