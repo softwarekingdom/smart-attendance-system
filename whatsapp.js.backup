@@ -5,19 +5,95 @@
 // =====================================
 
 let students = [];
-
+let allAbsentStudents = [];
 
 // =====================================
 // PAGE LOAD
 // =====================================
-
 window.addEventListener("load", function () {
 
     loadAbsentStudents();
+    loadClasses();
 
 });
+// =====================================
+// LOAD CLASSES
+// =====================================
 
+async function loadClasses() {
 
+    const classSelect =
+        document.getElementById("classSelect");
+
+    if (!classSelect) return;
+
+    try {
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+                .from("students")
+                .select("class_name");
+
+        if (error) {
+
+            console.error(
+                "❌ Class Loading Error:",
+                error
+            );
+
+            classSelect.innerHTML = `
+                <option value="">
+                    Unable to load classes
+                </option>
+            `;
+
+            return;
+
+        }
+
+        const classes = [
+            ...new Set(
+                (data || [])
+                    .map(student => student.class_name)
+                    .filter(Boolean)
+            )
+        ].sort();
+
+        classSelect.innerHTML = `
+            <option value="">
+                Select Class
+            </option>
+        `;
+
+        classes.forEach(function (className) {
+
+            classSelect.innerHTML += `
+                <option value="${className}">
+                    ${className}
+                </option>
+            `;
+
+        });
+
+        console.log(
+            "🏫 Classes Loaded:",
+            classes
+        );
+
+    }
+    catch (error) {
+
+        console.error(
+            "❌ Unexpected Class Error:",
+            error
+        );
+
+    }
+
+}
 // =====================================
 // LOAD TODAY'S ABSENT STUDENTS
 // =====================================
@@ -87,7 +163,7 @@ async function loadAbsentStudents() {
                 )
                 .eq(
                     "status",
-                    "absent"
+                    "Absent"
                 );
 
 
@@ -198,7 +274,8 @@ async function loadAbsentStudents() {
 
         students =
             studentData || [];
-
+allAbsentStudents =
+    studentData || [];
 
         // =================================
         // BUILD DROPDOWN
@@ -275,6 +352,21 @@ function loadStudentPhone() {
             "message"
         );
 
+    const previewName =
+        document.getElementById(
+            "previewStudentName"
+        );
+
+    const previewClass =
+        document.getElementById(
+            "previewClass"
+        );
+
+    const previewPhone =
+        document.getElementById(
+            "previewPhone"
+        );
+
 
     if (!select) return;
 
@@ -313,6 +405,34 @@ function loadStudentPhone() {
 
 
     // =================================
+    // UPDATE STUDENT DETAILS
+    // =================================
+
+    if (previewName) {
+
+        previewName.innerText =
+            student.name || "-";
+
+    }
+
+
+    if (previewClass) {
+
+        previewClass.innerText =
+            student.class_name || "-";
+
+    }
+
+
+    if (previewPhone) {
+
+        previewPhone.innerText =
+            student.parentPhone || "-";
+
+    }
+
+
+    // =================================
     // ABSENT MESSAGE
     // =================================
 
@@ -329,7 +449,7 @@ Class: ${student.class_name || ""}
 
 Your child was marked ABSENT today.
 
-Please contact the school if necessary.
+Please contact me if necessary.
 
 Thank you.`;
 
@@ -342,7 +462,7 @@ Thank you.`;
 // SEND WHATSAPP
 // =====================================
 
-function sendWhatsApp() {
+async function sendWhatsApp() {
 
     const number =
         document
@@ -434,7 +554,54 @@ function sendWhatsApp() {
 
     }
 
+// =================================
+// SAVE WHATSAPP MESSAGE STATUS
+// =================================
 
+const selectedStudent =
+    document.getElementById("studentSelect").value;
+
+if (!selectedStudent) {
+
+    alert("Please select an absent student.");
+
+    return;
+
+}
+
+
+const {
+    error: messageError
+} = await supabaseClient
+    .from("whatsapp_messages")
+    .insert({
+
+        student_id: selectedStudent,
+
+        attendance_date:
+            new Date()
+                .toISOString()
+                .split("T")[0],
+
+        sent: true,
+
+        sent_at:
+            new Date().toISOString()
+
+    });
+
+
+if (messageError) {
+
+    console.error(
+        "❌ WhatsApp Tracking Error:",
+        messageError
+    );
+
+}
+  else {
+    alert("✅ WhatsApp message status saved successfully!");
+  }
     // =================================
     // OPEN WHATSAPP
     // =================================
@@ -450,5 +617,363 @@ function sendWhatsApp() {
 
     window.location.href =
         whatsappURL;
+
+}
+// =====================================
+// FILTER ABSENT STUDENTS BY CLASS
+// =====================================
+
+function filterStudentsByClass() {
+
+    const classSelect =
+        document.getElementById("classSelect");
+
+    const studentSelect =
+        document.getElementById("studentSelect");
+
+    if (!classSelect || !studentSelect) return;
+
+
+    const selectedClass =
+        classSelect.value;
+
+
+    // No class selected
+    if (selectedClass === "") {
+
+        studentSelect.innerHTML = `
+            <option value="">
+                Select Absent Student
+            </option>
+        `;
+
+        return;
+
+    }
+
+
+    // Filter today's absent students
+    const filteredStudents =
+        allAbsentStudents.filter(
+            student =>
+                student.class_name ===
+                selectedClass
+        );
+
+
+    // No absent students in this class
+    if (filteredStudents.length === 0) {
+
+        studentSelect.innerHTML = `
+            <option value="">
+                No absent students in this class
+            </option>
+        `;
+
+        return;
+
+    }
+
+
+    // Update global students
+    students =
+        filteredStudents;
+
+
+    // Build student dropdown
+    studentSelect.innerHTML = `
+        <option value="">
+            Select Absent Student
+        </option>
+    `;
+
+
+    filteredStudents.forEach(
+        function (student) {
+
+            studentSelect.innerHTML += `
+
+                <option value="${student.id}">
+
+                    ${student.name || "Unknown"}
+
+                </option>
+
+            `;
+
+        }
+    );
+
+
+    console.log(
+        "🏫 Selected Class:",
+        selectedClass
+    );
+
+    console.log(
+        "❌ Absent Students:",
+        filteredStudents
+    );
+loadWhatsAppStatus();
+}
+// =====================================
+// LOAD WHATSAPP MESSAGE STATUS
+// =====================================
+
+async function loadWhatsAppStatus() {
+
+    const classSelect =
+        document.getElementById("classSelect");
+
+    const tableContainer =
+        document.getElementById(
+            "whatsappStatusTable"
+        );
+
+    if (!classSelect || !tableContainer)
+        return;
+
+
+    const selectedClass =
+        classSelect.value;
+
+
+    if (!selectedClass) {
+
+        tableContainer.innerHTML = `
+            <p>
+                Select a class to view message status.
+            </p>
+        `;
+
+        return;
+
+    }
+
+
+    tableContainer.innerHTML = `
+        <p>
+            Loading message status...
+        </p>
+    `;
+
+
+    const today =
+        new Date()
+            .toISOString()
+            .split("T")[0];
+
+
+    try {
+
+        // =================================
+        // GET ABSENT STUDENTS IN CLASS
+        // =================================
+
+        const classStudents =
+            allAbsentStudents.filter(
+                student =>
+                    student.class_name ===
+                    selectedClass
+            );
+
+
+        if (classStudents.length === 0) {
+
+            tableContainer.innerHTML = `
+                <p>
+                    No absent students in this class.
+                </p>
+            `;
+
+            return;
+
+        }
+
+
+        const studentIds =
+            classStudents.map(
+                student =>
+                    String(student.id)
+            );
+
+
+        // =================================
+        // GET WHATSAPP STATUS
+        // =================================
+
+        const {
+            data: messages,
+            error
+        } =
+            await supabaseClient
+                .from("whatsapp_messages")
+                .select(
+                    "student_id,attendance_date,sent,sent_at"
+                )
+                .eq(
+                    "attendance_date",
+                    today
+                )
+                .in(
+                    "student_id",
+                    studentIds
+                );
+
+
+        if (error) {
+
+            console.error(
+                "❌ WhatsApp Status Error:",
+                error
+            );
+
+            tableContainer.innerHTML = `
+                <p>
+                    Unable to load message status.
+                </p>
+            `;
+
+            return;
+
+        }
+
+
+        // =================================
+        // BUILD TABLE
+        // =================================
+
+        let html = `
+
+            <table class="whatsapp-status-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Student
+                        </th>
+
+                        <th>
+                            Class
+                        </th>
+
+                        <th>
+                            WhatsApp
+                        </th>
+
+                        <th>
+                            Time
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+        `;
+
+
+        classStudents.forEach(
+            function (student) {
+
+                const record =
+                    (messages || []).find(
+                        message =>
+                            String(
+                                message.student_id
+                            ) ===
+                            String(
+                                student.id
+                            )
+                    );
+
+
+                const sent =
+                    record &&
+                    record.sent === true;
+
+
+                const status =
+    sent
+        ? `<span class="whatsapp-status sent">
+            ✅ Sent
+           </span>`
+        : `<span class="whatsapp-status pending">
+            ⏳ Pending
+           </span>`;
+
+                const sentTime =
+                    sent &&
+                    record.sent_at
+                        ? new Date(
+                            record.sent_at
+                        ).toLocaleTimeString()
+                        : "-";
+
+
+                html += `
+
+                    <tr>
+
+                        <td>
+                            ${student.name || "-"}
+                        </td>
+
+                        <td>
+                            ${student.class_name || "-"}
+                        </td>
+
+                        <td>
+                            ${status}
+                        </td>
+
+                        <td>
+                            ${sentTime}
+                        </td>
+
+                    </tr>
+
+                `;
+
+            }
+        );
+
+
+        html += `
+
+                </tbody>
+
+            </table>
+
+        `;
+
+
+        tableContainer.innerHTML =
+            html;
+
+
+        console.log(
+            "📋 WhatsApp Status Loaded:",
+            messages
+        );
+
+    }
+    catch (error) {
+
+        console.error(
+            "❌ Unexpected WhatsApp Status Error:",
+            error
+        );
+
+        tableContainer.innerHTML = `
+            <p>
+                Unable to load message status.
+            </p>
+        `;
+
+    }
 
 }

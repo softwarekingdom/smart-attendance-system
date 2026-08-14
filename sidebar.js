@@ -1,30 +1,97 @@
-// =====================================
-// Sidebar Toggle System
-// =====================================
+// ===============================
+// Sidebar Elements
+// ===============================
 
+const sidebar = document.getElementById("sidebar");
+const overlay = document.querySelector(".overlay");
 
-function toggleSidebar(){
+// ===============================
+// Open / Close Sidebar
+// ===============================
 
+function toggleSidebar() {
 
-let sidebar =
-document.getElementById("sidebar");
+    sidebar.classList.toggle("active");
+    overlay.classList.toggle("active");
 
+}
 
-let overlay =
-document.querySelector(".overlay");
+function closeSidebar() {
 
+    sidebar.classList.remove("active");
+    overlay.classList.remove("active");
 
+}
 
-sidebar.classList.toggle(
-"active"
-);
+// ===============================
+// Close when overlay clicked
+// ===============================
 
+if (overlay) {
 
+    overlay.addEventListener("click", closeSidebar);
 
-overlay.classList.toggle(
-"active"
-);
+}
 
+// ===============================
+// Close when ESC key pressed
+// ===============================
 
+document.addEventListener("keydown", function(e){
+
+    if(e.key === "Escape"){
+
+        closeSidebar();
+
+    }
+
+});
+
+// ===============================
+// Close after clicking a menu
+// ===============================
+
+document.querySelectorAll(".sidebar a").forEach(link => {
+
+    link.addEventListener("click", function(){
+
+        closeSidebar();
+
+    });
+
+});
+
+// ===============================
+// Active Page Highlight
+// ===============================
+
+const currentPage = window.location.pathname.split("/").pop();
+
+document.querySelectorAll(".sidebar a").forEach(link => {
+
+    const file = link.getAttribute("href");
+
+    if(file === currentPage){
+
+        link.classList.add("active");
+
+    }
+
+});
+
+// ===============================
+// Logout
+// ===============================
+
+function logout(){
+
+    if(confirm("Are you sure you want to logout?")){
+
+        localStorage.removeItem("currentUser");
+        localStorage.removeItem("userRole");
+
+        window.location.href = "index.html";
+
+    }
 
 }

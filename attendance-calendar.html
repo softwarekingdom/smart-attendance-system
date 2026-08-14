@@ -20,67 +20,179 @@ href="attendance-calendar.css">
 
 <body class="calendar-body">
 
-<!-- ======================
-     Sidebar
-====================== -->
 
-<button class="menu-btn"
-onclick="toggleSidebar()">
 
-☰
+<!-- ===========================
+        MENU BUTTON
+============================ -->
 
+<button class="menu-btn" onclick="toggleSidebar()">
+    ☰
 </button>
 
-<div class="overlay"></div>
+<div class="overlay" onclick="closeSidebar()"></div>
 
-<div class="sidebar"
-id="sidebar">
+<!-- ===========================
+        SIDEBAR
+============================ -->
 
-<div class="sidebar-logo">
+<div class="sidebar" id="sidebar">
 
-<h2>
-🤖 AI Attendance
-</h2>
+    <div class="sidebar-logo">
+        <h2>🤖 AI School</h2>
+        <p>Attendance Management System</p>
+    </div>
 
-<p>
-Management System
-</p>
+    <ul>
 
-</div>
+        <!-- ================= Dashboard ================= -->
 
-<ul>
+        <li class="sidebar-title">🏠 Dashboard</li>
 
-<li><a href="dashboard.html">🏠 Dashboard</a></li>
+        <li>
+            <a href="dashboard.html">
+                📊 Dashboard
+            </a>
+        </li>
 
-<li><a href="studentadmission.html">👨‍🎓 Students</a></li>
 
-<li><a href="attendance.html">📋 Attendance</a></li>
+        <!-- ================= Students ================= -->
 
-<li><a href="attendancehistory.html">📅 History</a></li>
+        <li class="sidebar-title">👨‍🎓 Students</li>
 
-<li><a href="attendanceview.html">📊 Reports</a></li>
+        <li>
+            <a href="studentadmission.html">
+                ➕ Student Admission
+            </a>
+        </li>
 
-<li><a href="ai-dashboard.html">🤖 AI Analytics</a></li>
+        <li>
+            <a href="studentprofile.html">
+                👤 Student Profile
+            </a>
+        </li>
 
-<li id="teacherProfileMenu">
-<a href="teacherprofile.html">
-👤 Teacher Profile
-</a>
-</li>
+        <li>
+            <a href="studentidcard.html">
+                🪪 Student ID Card
+            </a>
+        </li>
 
-<li id="adminProfileMenu">
-<a href="adminprofile.html">
-👤 Admin Profile
-</a>
-</li>
+        <li>
+            <a href="multiple-idcard.html">
+                🪪 Multiple ID Cards
+            </a>
+        </li>
 
-<li>
-<a href="#">
-🚪 Logout
-</a>
-</li>
 
-</ul>
+        <!-- ================= Attendance ================= -->
+
+        <li class="sidebar-title">📋 Attendance</li>
+
+        <li>
+            <a href="attendance.html">
+                ✅ Take Attendance
+            </a>
+        </li>
+
+        <li>
+            <a href="attendance-edit.html">
+                ✏ Edit Attendance
+            </a>
+        </li>
+
+        <li>
+            <a href="attendancehistory.html">
+                📅 Attendance History
+            </a>
+        </li>
+
+        <li>
+            <a href="attendance-calendar.html">
+                🗓 Attendance Calendar
+            </a>
+        </li>
+
+        <li>
+            <a href="attendanceview.html">
+                📈 Attendance Reports
+            </a>
+        </li>
+
+
+        <!-- ================= Communication ================= -->
+
+        <li class="sidebar-title">💬 Communication</li>
+
+        <li>
+            <a href="whatsapp.html">
+                📱 WhatsApp Notification
+            </a>
+        </li>
+
+
+        <!-- ================= AI ================= -->
+
+        <li class="sidebar-title">🤖 AI Analytics</li>
+
+        <li>
+            <a href="aidashboard.html">
+                🧠 AI Dashboard
+            </a>
+        </li>
+
+
+        <!-- ================= Administration ================= -->
+
+        <li class="sidebar-title">⚙ Administration</li>
+
+        <li>
+            <a href="teachers.html">
+                👨‍🏫 Teacher Management
+            </a>
+        </li>
+
+        <li>
+            <a href="classmanagement.html">
+                🏫 Class Management
+            </a>
+        </li>
+
+        <li>
+            <a href="institution.html">
+                🏢 Institution
+            </a>
+        </li>
+
+
+        <!-- ================= Profiles ================= -->
+
+        <li class="sidebar-title">👤 My Profile</li>
+
+        <li>
+            <a href="teacherprofile.html">
+                👨‍🏫 Teacher Profile
+            </a>
+        </li>
+
+        <li>
+            <a href="adminprofile.html">
+                👑 Admin Profile
+            </a>
+        </li>
+
+
+        <!-- ================= Logout ================= -->
+
+        <li class="sidebar-title">🚪 Account</li>
+
+        <li>
+            <a href="#" onclick="logout()">
+                🚪 Logout
+            </a>
+        </li>
+
+    </ul>
 
 </div>
 
@@ -209,11 +321,15 @@ Low Attendance
     </div>
 
 </div>
-<script src="auth.js"></script>
+
 
 <script src="sidebar.js"></script>
 
 <script src="role-sidebar.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="supabase-config.js"></script>
 
 <script src="attendance-calendar.js"></script>
 
