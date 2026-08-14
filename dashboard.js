@@ -1375,13 +1375,53 @@ async function loadAttendanceCharts() {
 
 
         // =================================
+        // CURRENT WEEK RANGE
+        // =================================
+
+        const today =
+            new Date();
+
+        const currentDay =
+            today.getDay();
+
+        const monday =
+            new Date(today);
+
+        monday.setDate(
+            today.getDate() -
+            (currentDay === 0 ? 6 : currentDay - 1)
+        );
+
+        monday.setHours(
+            0,
+            0,
+            0,
+            0
+        );
+
+        const friday =
+            new Date(monday);
+
+        friday.setDate(
+            monday.getDate() + 4
+        );
+
+        friday.setHours(
+            23,
+            59,
+            59,
+            999
+        );
+
+
+        // =================================
         // PROCESS ATTENDANCE
         // =================================
 
         records.forEach(
             function (record) {
 
-                if (!record.date) {
+                if (!record.attendance_date) {
 
                     return;
 
@@ -1390,7 +1430,7 @@ async function loadAttendanceCharts() {
 
                 const date =
                     new Date(
-                        record.date
+                        record.attendance_date
                     );
 
 
@@ -1398,6 +1438,17 @@ async function loadAttendanceCharts() {
                     isNaN(
                         date.getTime()
                     )
+                ) {
+
+                    return;
+
+                }
+
+
+                // Only current Monday-Friday
+                if (
+                    date < monday ||
+                    date > friday
                 ) {
 
                     return;
@@ -1979,7 +2030,7 @@ async function loadRecentAttendance() {
 
                     <small>
                         ${escapeHTML(
-                            record.date || ""
+                            record.attendance_date || ""
                         )}
                     </small>
 
@@ -3195,7 +3246,7 @@ async function loadAISchoolSummary() {
                 function (record) {
 
                     return String(
-                        record.date || ""
+                        record.attendance_date || ""
                     ).startsWith(
                         todayString
                     );
