@@ -438,23 +438,22 @@ function loadStudentPhone() {
 
     if (messageBox) {
 
-        messageBox.value =
+    const today = new Date();
 
-`Dear Parent,
+    const todayDate = today.toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric"
+    });
 
-This is a notification from ${student.schoolName || "School"}.
+    messageBox.value = `Student Name: ${student.name || ""}
+was absent from today's English class (${todayDate}).
 
-Student Name: ${student.name || ""}
-Class: ${student.class_name || ""}
+Please let me know the reason for missing class.
 
-Your child was marked ABSENT today.
-
-Please contact me if necessary.
-
-Thank you.`;
-
+Thank you,
+${student.schoolName || "School"}.`;
     }
-
 }
 
 
