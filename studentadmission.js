@@ -1,19 +1,12 @@
 // =====================================
 // AI SCHOOL
 // Student Admission System
-// Version 6.1
-// Supabase Database Version
-// =====================================
-
-
-// =====================================
-// PAGE LOAD
+// Supabase Version
 // =====================================
 
 window.addEventListener("load", function () {
 
     loadStudentClasses();
-
     loadStudents();
 
 });
@@ -25,9 +18,22 @@ window.addEventListener("load", function () {
 
 function getSchoolClasses() {
 
-    return JSON.parse(
-        localStorage.getItem("schoolClasses")
-    ) || [];
+    try {
+
+        return JSON.parse(
+            localStorage.getItem("schoolClasses")
+        ) || [];
+
+    } catch (error) {
+
+        console.error(
+            "Class Load Error:",
+            error
+        );
+
+        return [];
+
+    }
 
 }
 
@@ -39,145 +45,88 @@ function getSchoolClasses() {
 function loadStudentClasses() {
 
     const select =
-        document.getElementById(
-            "studentClass"
-        );
-
+        document.getElementById("studentClass");
 
     if (!select) {
-
         return;
-
     }
 
-
     select.innerHTML = `
-
         <option value="">
             Select Class
         </option>
-
     `;
-
 
     const classes =
         getSchoolClasses();
 
-
     if (classes.length === 0) {
 
         const option =
-            document.createElement(
-                "option"
-            );
-
+            document.createElement("option");
 
         option.value = "";
-
         option.textContent =
             "No Classes Created";
-
         option.disabled = true;
 
-
-        select.appendChild(
-            option
-        );
+        select.appendChild(option);
 
         return;
-
     }
 
+    classes.forEach(function (className) {
 
-    classes.forEach(
-        function (className) {
+        const cleanClass =
+            String(className).trim();
 
-            const option =
-                document.createElement(
-                    "option"
-                );
-
-
-            option.value =
-                String(
-                    className
-                ).trim();
-
-
-            option.textContent =
-                String(
-                    className
-                ).trim();
-
-
-            select.appendChild(
-                option
-            );
-
+        if (cleanClass === "") {
+            return;
         }
-    );
+
+        const option =
+            document.createElement("option");
+
+        option.value = cleanClass;
+        option.textContent = cleanClass;
+
+        select.appendChild(option);
+
+    });
 
 }
 
 
 // =====================================
 // ADD STUDENT
-// SUPABASE
 // =====================================
 
 async function addStudent() {
 
     const name =
-        document.getElementById(
-            "studentName"
-        ).value.trim();
-
-
-    const parentName =
-        document.getElementById(
-            "parentName"
-        ).value.trim();
-
+        document
+            .getElementById("studentName")
+            .value
+            .trim();
 
     const parentPhone =
-        document.getElementById(
-            "parentPhone"
-        ).value.trim();
-
+        document
+            .getElementById("parentPhone")
+            .value
+            .trim();
 
     const schoolName =
-        document.getElementById(
-            "schoolName"
-        ).value.trim();
-
+        document
+            .getElementById("schoolName")
+            .value
+            .trim();
 
     const className =
-        document.getElementById(
-            "studentClass"
-        ).value.trim();
+        document
+            .getElementById("studentClass")
+            .value
+            .trim();
 
-
-    const gender =
-        document.getElementById(
-            "gender"
-        ).value;
-
-
-    const birthDate =
-        document.getElementById(
-            "birthDate"
-        ).value;
-
-
-    const admissionDate =
-        document.getElementById(
-            "admissionDate"
-        ).value;
-
-
-    // =================================
-    // VALIDATION
-    // =================================
 
     if (name === "") {
 
@@ -186,18 +135,6 @@ async function addStudent() {
         );
 
         return;
-
-    }
-
-
-    if (parentName === "") {
-
-        alert(
-            "Please enter parent name."
-        );
-
-        return;
-
     }
 
 
@@ -208,7 +145,6 @@ async function addStudent() {
         );
 
         return;
-
     }
 
 
@@ -219,100 +155,41 @@ async function addStudent() {
         );
 
         return;
-
     }
 
-
-    if (gender === "") {
-
-        alert(
-            "Please select gender."
-        );
-
-        return;
-
-    }
-
-
-    // =================================
-    // SAVE TO SUPABASE
-    // =================================
 
     try {
 
-        const { data, error } =
+        const result =
             await supabaseClient
                 .from("students")
-                .insert([
-                    {
-
-                        name:
-                            name,
-
-                        parentName:
-                            parentName,
-
-                        parentPhone:
-                            parentPhone,
-
-                        schoolName:
-                            schoolName,
-
-                        class_name:
-                            className,
-
-                        gender:
-                            gender,
-
-                        birthDate:
-                            birthDate,
-
-                        admissionDate:
-                            admissionDate
-
-                    }
-                ])
-                .select();
+                .insert({
+                    name: name,
+                    parentPhone: parentPhone,
+                    schoolName: schoolName,
+                    class_name: className
+                });
 
 
-        // =================================
-        // ERROR CHECK
-        // =================================
-
-        if (error) {
+        if (result.error) {
 
             console.error(
                 "Supabase Insert Error:",
-                error
+                result.error
             );
-
 
             alert(
                 "❌ Student could not be saved.\n\n" +
-                error.message
+                result.error.message
             );
 
-
             return;
-
         }
-
-
-        // =================================
-        // SUCCESS
-        // =================================
-
-        console.log(
-            "Student saved:",
-            data
-        );
 
 
         clearStudentForm();
 
-
         await loadStudents();
-
 
         alert(
             "✅ Student Added Successfully"
@@ -320,14 +197,12 @@ async function addStudent() {
 
     }
 
-
     catch (error) {
 
         console.error(
-            "Unexpected Error:",
+            "Unexpected Insert Error:",
             error
         );
-
 
         alert(
             "❌ Something went wrong while saving student."
@@ -339,167 +214,162 @@ async function addStudent() {
 
 
 // =====================================
-// LOAD STUDENT LIST
-// SUPABASE
+// LOAD STUDENTS
 // =====================================
 
 async function loadStudents() {
 
     const table =
-        document.getElementById(
-            "studentList"
-        );
-
+        document.getElementById("studentList");
 
     if (!table) {
-
         return;
-
     }
 
 
-    table.innerHTML = "";
+    table.innerHTML = `
+        <tr>
+            <td colspan="5">
+                ⏳ Loading students...
+            </td>
+        </tr>
+    `;
 
 
     try {
 
-        const { data, error } =
+        const result =
             await supabaseClient
                 .from("students")
-                .select("*")
+                .select(
+                    "id,name,parentPhone,schoolName,class_name"
+                )
                 .order(
-                    "id",
+                    "created_at",
                     {
-                        ascending: true
+                        ascending: false
                     }
                 );
 
 
-        // =================================
-        // ERROR CHECK
-        // =================================
-
-        if (error) {
+        if (result.error) {
 
             console.error(
                 "Supabase Select Error:",
-                error
+                result.error
             );
 
-
             table.innerHTML = `
-
                 <tr>
-
                     <td colspan="5">
-
                         ❌ Unable to load students
-
                     </td>
-
                 </tr>
-
             `;
 
-
             return;
-
         }
 
 
         const students =
-            data || [];
+            result.data || [];
 
 
-        // =================================
-        // NO STUDENTS
-        // =================================
-
-        if (
-            students.length === 0
-        ) {
+        if (students.length === 0) {
 
             table.innerHTML = `
-
                 <tr>
-
                     <td colspan="5">
-
                         👨‍🎓 No Students Found
-
                     </td>
-
                 </tr>
-
             `;
 
-
             return;
-
         }
 
 
-        // =================================
-        // DISPLAY STUDENTS
-        // =================================
+        table.innerHTML = "";
+
 
         students.forEach(
-            function (
-                student,
-                index
-            ) {
+            function (student, index) {
 
-                table.innerHTML += `
-
-                    <tr>
-
-                        <td>
-                            ${index + 1}
-                        </td>
+                const row =
+                    document.createElement("tr");
 
 
-                        <td>
-                            ${escapeHTML(
-                                student.name || "-"
-                            )}
-                        </td>
+                const noCell =
+                    document.createElement("td");
+
+                noCell.textContent =
+                    index + 1;
 
 
-                        <td>
-                            ${escapeHTML(
-                                student.class_name || "-"
-                            )}
-                        </td>
+                const nameCell =
+                    document.createElement("td");
+
+                nameCell.textContent =
+                    student.name || "-";
 
 
-                        <td>
-                            ${escapeHTML(
-                                student.parentPhone || "-"
-                            )}
-                        </td>
+                const classCell =
+                    document.createElement("td");
+
+                classCell.textContent =
+                    student.class_name || "-";
 
 
-                        <td>
+                const phoneCell =
+                    document.createElement("td");
 
-                            <button
-                                type="button"
-                                onclick="deleteStudent('${student.id}')">
+                phoneCell.textContent =
+                    student.parentPhone || "-";
 
-                                🗑 Delete
 
-                            </button>
+                const actionCell =
+                    document.createElement("td");
 
-                        </td>
 
-                    </tr>
+                const deleteButton =
+                    document.createElement("button");
 
-                `;
+                deleteButton.type = "button";
+
+                deleteButton.textContent =
+                    "🗑 Delete";
+
+
+                deleteButton.addEventListener(
+                    "click",
+                    function () {
+
+                        deleteStudent(
+                            student.id
+                        );
+
+                    }
+                );
+
+
+                actionCell.appendChild(
+                    deleteButton
+                );
+
+
+                row.appendChild(noCell);
+                row.appendChild(nameCell);
+                row.appendChild(classCell);
+                row.appendChild(phoneCell);
+                row.appendChild(actionCell);
+
+
+                table.appendChild(row);
 
             }
         );
 
     }
-
 
     catch (error) {
 
@@ -508,19 +378,12 @@ async function loadStudents() {
             error
         );
 
-
         table.innerHTML = `
-
             <tr>
-
                 <td colspan="5">
-
                     ❌ Unable to load students
-
                 </td>
-
             </tr>
-
         `;
 
     }
@@ -534,65 +397,33 @@ async function loadStudents() {
 
 function clearStudentForm() {
 
-    const fields = [
+    const name =
+        document.getElementById("studentName");
 
-        "studentName",
+    const parentPhone =
+        document.getElementById("parentPhone");
 
-        "parentName",
-
-        "parentPhone",
-
-        "schoolName",
-
-        "birthDate",
-
-        "admissionDate"
-
-    ];
-
-
-    fields.forEach(
-        function (id) {
-
-            const element =
-                document.getElementById(
-                    id
-                );
-
-
-            if (element) {
-
-                element.value = "";
-
-            }
-
-        }
-    );
-
+    const schoolName =
+        document.getElementById("schoolName");
 
     const classSelect =
-        document.getElementById(
-            "studentClass"
-        );
+        document.getElementById("studentClass");
 
 
-    if (classSelect) {
-
-        classSelect.value = "";
-
+    if (name) {
+        name.value = "";
     }
 
+    if (parentPhone) {
+        parentPhone.value = "";
+    }
 
-    const gender =
-        document.getElementById(
-            "gender"
-        );
+    if (schoolName) {
+        schoolName.value = "";
+    }
 
-
-    if (gender) {
-
-        gender.value = "";
-
+    if (classSelect) {
+        classSelect.value = "";
     }
 
 }
@@ -600,7 +431,6 @@ function clearStudentForm() {
 
 // =====================================
 // DELETE STUDENT
-// SUPABASE
 // =====================================
 
 async function deleteStudent(id) {
@@ -612,44 +442,32 @@ async function deleteStudent(id) {
 
 
     if (!confirmDelete) {
-
         return;
-
     }
 
 
     try {
 
-        const { error } =
+        const result =
             await supabaseClient
                 .from("students")
                 .delete()
-                .eq(
-                    "id",
-                    id
-                );
+                .eq("id", id);
 
 
-        // =================================
-        // ERROR CHECK
-        // =================================
-
-        if (error) {
+        if (result.error) {
 
             console.error(
                 "Supabase Delete Error:",
-                error
+                result.error
             );
-
 
             alert(
                 "❌ Student could not be deleted.\n\n" +
-                error.message
+                result.error.message
             );
 
-
             return;
-
         }
 
 
@@ -662,7 +480,6 @@ async function deleteStudent(id) {
 
     }
 
-
     catch (error) {
 
         console.error(
@@ -670,47 +487,10 @@ async function deleteStudent(id) {
             error
         );
 
-
         alert(
             "❌ Something went wrong while deleting student."
         );
 
     }
-
-}
-
-
-// =====================================
-// HTML SAFETY
-// =====================================
-
-function escapeHTML(value) {
-
-    return String(value)
-
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-
-        .replace(
-            /</g,
-            "&lt;"
-        )
-
-        .replace(
-            />/g,
-            "&gt;"
-        )
-
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-
-        .replace(
-            /'/g,
-            "&#039;"
-        );
 
 }
