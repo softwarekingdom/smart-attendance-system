@@ -1,21 +1,26 @@
 // =====================================
 // AI SCHOOL
 // WhatsApp Parent Notification
-// Absent Students Only
 // =====================================
 
 let students = [];
+
 let allAbsentStudents = [];
+
 
 // =====================================
 // PAGE LOAD
 // =====================================
+
 window.addEventListener("load", function () {
 
-    loadAbsentStudents();
     loadClasses();
 
+    loadAbsentStudents();
+
 });
+
+
 // =====================================
 // LOAD CLASSES
 // =====================================
@@ -25,17 +30,30 @@ async function loadClasses() {
     const classSelect =
         document.getElementById("classSelect");
 
-    if (!classSelect) return;
+
+    if (!classSelect) {
+
+        return;
+
+    }
+
+
+    classSelect.innerHTML = `
+        <option value="">
+            Loading classes...
+        </option>
+    `;
+
 
     try {
 
         const {
             data,
             error
-        } =
-            await supabaseClient
-                .from("students")
-                .select("class_name");
+        } = await supabaseClient
+            .from("students")
+            .select("class_name");
+
 
         if (error) {
 
@@ -44,9 +62,57 @@ async function loadClasses() {
                 error
             );
 
+
             classSelect.innerHTML = `
                 <option value="">
                     Unable to load classes
+                </option>
+            `;
+
+
+            return;
+
+        }
+
+
+        // =================================
+        // GET UNIQUE CLASSES
+        // =================================
+
+        const classes = [
+            ...new Set(
+                (data || [])
+                    .map(function (student) {
+
+                        return String(
+                            student.class_name || ""
+                        ).trim();
+
+                    })
+                    .filter(function (className) {
+
+                        return className !== "";
+
+                    })
+            )
+        ];
+
+
+        console.log(
+            "🏫 Classes Loaded:",
+            classes
+        );
+
+
+        // =================================
+        // NO CLASSES
+        // =================================
+
+        if (classes.length === 0) {
+
+            classSelect.innerHTML = `
+                <option value="">
+                    No Classes Found
                 </option>
             `;
 
@@ -54,13 +120,10 @@ async function loadClasses() {
 
         }
 
-        const classes = [
-            ...new Set(
-                (data || [])
-                    .map(student => student.class_name)
-                    .filter(Boolean)
-            )
-        ].sort();
+
+        // =================================
+        // BUILD CLASS DROPDOWN
+        // =================================
 
         classSelect.innerHTML = `
             <option value="">
@@ -68,28 +131,47 @@ async function loadClasses() {
             </option>
         `;
 
-        classes.forEach(function (className) {
 
-            classSelect.innerHTML += `
-                <option value="${className}">
-                    ${className}
-                </option>
-            `;
+        classes.forEach(
+            function (className) {
 
-        });
+                const option =
+                    document.createElement(
+                        "option"
+                    );
 
-        console.log(
-            "🏫 Classes Loaded:",
-            classes
+
+                option.value =
+                    className;
+
+
+                option.textContent =
+                    className;
+
+
+                classSelect.appendChild(
+                    option
+                );
+
+            }
         );
 
     }
+
+
     catch (error) {
 
         console.error(
             "❌ Unexpected Class Error:",
             error
         );
+
+
+        classSelect.innerHTML = `
+            <option value="">
+                Unable to load classes
+            </option>
+        `;
 
     }
 
@@ -100,49 +182,43 @@ async function loadClasses() {
 
 async function loadAbsentStudents() {
 
-    const select =
-        document.getElementById("studentSelect");
-
-    if (!select) return;
-
-
-    if (
-        typeof supabaseClient === "undefined"
-    ) {
-
-        console.error(
-            "❌ Supabase client not available."
+    const studentSelect =
+        document.getElementById(
+            "studentSelect"
         );
+
+
+    if (!studentSelect) {
 
         return;
 
     }
 
 
-    select.innerHTML = `
+    studentSelect.innerHTML = `
         <option value="">
             Loading absent students...
         </option>
     `;
 
 
-    // =================================
-    // TODAY
-    // =================================
-
-    const today =
-        new Date()
-            .toISOString()
-            .split("T")[0];
-
-
-    console.log(
-        "📅 WhatsApp Attendance Date:",
-        today
-    );
-
-
     try {
+
+        // =================================
+        // TODAY'S DATE
+        // =================================
+
+        const today =
+            new Date()
+                .toISOString()
+                .split("T")[0];
+
+
+        console.log(
+            "📅 Attendance Date:",
+            today
+        );
+
 
         // =================================
         // GET TODAY'S ABSENT ATTENDANCE
@@ -167,6 +243,10 @@ async function loadAbsentStudents() {
                 );
 
 
+        // =================================
+        // ATTENDANCE ERROR
+        // =================================
+
         if (attendanceError) {
 
             console.error(
@@ -174,15 +254,23 @@ async function loadAbsentStudents() {
                 attendanceError
             );
 
-            select.innerHTML = `
+
+            studentSelect.innerHTML = `
                 <option value="">
                     Unable to load absent students
                 </option>
             `;
 
+
             return;
 
         }
+
+
+        console.log(
+            "❌ Today's Absent Attendance:",
+            attendance
+        );
 
 
         // =================================
@@ -194,15 +282,12 @@ async function loadAbsentStudents() {
             attendance.length === 0
         ) {
 
-            select.innerHTML = `
+            studentSelect.innerHTML = `
                 <option value="">
                     No absent students today
                 </option>
             `;
 
-            console.log(
-                "✅ No absent students today."
-            );
 
             return;
 
@@ -215,20 +300,27 @@ async function loadAbsentStudents() {
 
         const studentIds =
             attendance
-                .map(
-                    record =>
-                        record.student_id
-                )
-                .filter(Boolean);
+                .map(function (record) {
+
+                    return record.student_id;
+
+                })
+                .filter(function (id) {
+
+                    return id !== null &&
+                           id !== undefined;
+
+                });
 
 
         if (studentIds.length === 0) {
 
-            select.innerHTML = `
+            studentSelect.innerHTML = `
                 <option value="">
                     No student information found
                 </option>
             `;
+
 
             return;
 
@@ -246,13 +338,17 @@ async function loadAbsentStudents() {
             await supabaseClient
                 .from("students")
                 .select(
-                    "id,name,parentName,parentPhone,schoolName,class_name"
+                    "id,name,parentPhone,schoolName,class_name"
                 )
                 .in(
                     "id",
                     studentIds
                 );
 
+
+        // =================================
+        // STUDENT ERROR
+        // =================================
 
         if (studentError) {
 
@@ -261,27 +357,54 @@ async function loadAbsentStudents() {
                 studentError
             );
 
-            select.innerHTML = `
+
+            studentSelect.innerHTML = `
                 <option value="">
                     Unable to load student details
                 </option>
             `;
+
 
             return;
 
         }
 
 
+        // =================================
+        // SAVE STUDENTS
+        // =================================
+
         students =
             studentData || [];
-allAbsentStudents =
-    studentData || [];
+
+
+        allAbsentStudents =
+            studentData || [];
+
 
         // =================================
-        // BUILD DROPDOWN
+        // NO STUDENT DETAILS
         // =================================
 
-        select.innerHTML = `
+        if (students.length === 0) {
+
+            studentSelect.innerHTML = `
+                <option value="">
+                    No absent students found
+                </option>
+            `;
+
+
+            return;
+
+        }
+
+
+        // =================================
+        // BUILD STUDENT DROPDOWN
+        // =================================
+
+        studentSelect.innerHTML = `
             <option value="">
                 Select Absent Student
             </option>
@@ -291,17 +414,31 @@ allAbsentStudents =
         students.forEach(
             function (student) {
 
-                select.innerHTML += `
+                const option =
+                    document.createElement(
+                        "option"
+                    );
 
-                    <option value="${student.id}">
 
-                        ${student.name || "Unknown"}
-                        -
-                        ${student.class_name || ""}
+                option.value =
+                    student.id;
 
-                    </option>
 
-                `;
+                option.textContent =
+                    (
+                        student.name ||
+                        "Unknown"
+                    ) +
+                    " - " +
+                    (
+                        student.class_name ||
+                        ""
+                    );
+
+
+                studentSelect.appendChild(
+                    option
+                );
 
             }
         );
@@ -313,20 +450,171 @@ allAbsentStudents =
         );
 
     }
+
+
     catch (error) {
 
         console.error(
-            "❌ Unexpected WhatsApp Error:",
+            "❌ Unexpected Absent Student Error:",
             error
         );
 
-        select.innerHTML = `
+
+        studentSelect.innerHTML = `
             <option value="">
                 Unable to load absent students
             </option>
         `;
 
     }
+
+}
+// =====================================
+// FILTER ABSENT STUDENTS BY CLASS
+// =====================================
+
+function filterStudentsByClass() {
+
+    const classSelect =
+        document.getElementById(
+            "classSelect"
+        );
+
+
+    const studentSelect =
+        document.getElementById(
+            "studentSelect"
+        );
+
+
+    if (
+        !classSelect ||
+        !studentSelect
+    ) {
+
+        return;
+
+    }
+
+
+    const selectedClass =
+        classSelect.value;
+
+
+    // =================================
+    // NO CLASS SELECTED
+    // =================================
+
+    if (selectedClass === "") {
+
+        studentSelect.innerHTML = `
+            <option value="">
+                Select Absent Student
+            </option>
+        `;
+
+        students =
+            allAbsentStudents;
+
+        return;
+
+    }
+
+
+    // =================================
+    // FILTER STUDENTS
+    // =================================
+
+    const filteredStudents =
+        allAbsentStudents.filter(
+            function (student) {
+
+                return (
+                    student.class_name ===
+                    selectedClass
+                );
+
+            }
+        );
+
+
+    // =================================
+    // NO ABSENT STUDENTS
+    // =================================
+
+    if (
+        filteredStudents.length === 0
+    ) {
+
+        studentSelect.innerHTML = `
+            <option value="">
+                No absent students in this class
+            </option>
+        `;
+
+        return;
+
+    }
+
+
+    // =================================
+    // UPDATE CURRENT STUDENTS
+    // =================================
+
+    students =
+        filteredStudents;
+
+
+    // =================================
+    // BUILD DROPDOWN
+    // =================================
+
+    studentSelect.innerHTML = `
+        <option value="">
+            Select Absent Student
+        </option>
+    `;
+
+
+    filteredStudents.forEach(
+        function (student) {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                student.id;
+
+
+            option.textContent =
+                student.name || "Unknown";
+
+
+            studentSelect.appendChild(
+                option
+            );
+
+        }
+    );
+
+
+    console.log(
+        "🏫 Selected Class:",
+        selectedClass
+    );
+
+
+    console.log(
+        "❌ Absent Students:",
+        filteredStudents
+    );
+
+
+    // Refresh WhatsApp status
+    loadWhatsAppStatus();
 
 }
 
@@ -337,30 +625,46 @@ allAbsentStudents =
 
 function loadStudentPhone() {
 
-    const select =
+    const studentSelect =
         document.getElementById(
             "studentSelect"
         );
+
+
+    if (!studentSelect) {
+
+        return;
+
+    }
+
+
+    const selectedId =
+        studentSelect.value;
+
 
     const phoneInput =
         document.getElementById(
             "parentNumber"
         );
 
+
     const messageBox =
         document.getElementById(
             "message"
         );
+
 
     const previewName =
         document.getElementById(
             "previewStudentName"
         );
 
+
     const previewClass =
         document.getElementById(
             "previewClass"
         );
+
 
     const previewPhone =
         document.getElementById(
@@ -368,24 +672,31 @@ function loadStudentPhone() {
         );
 
 
-    if (!select) return;
+    // =================================
+    // NOTHING SELECTED
+    // =================================
 
-
-    const student =
-        students.find(
-            s =>
-                String(s.id) ===
-                String(select.value)
-        );
-
-
-    if (!student) {
+    if (!selectedId) {
 
         if (phoneInput)
             phoneInput.value = "";
 
+
         if (messageBox)
             messageBox.value = "";
+
+
+        if (previewName)
+            previewName.textContent = "-";
+
+
+        if (previewClass)
+            previewClass.textContent = "-";
+
+
+        if (previewPhone)
+            previewPhone.textContent = "-";
+
 
         return;
 
@@ -393,7 +704,29 @@ function loadStudentPhone() {
 
 
     // =================================
-    // PARENT WHATSAPP NUMBER
+    // FIND STUDENT
+    // =================================
+
+    const student =
+        students.find(
+            function (item) {
+
+                return String(item.id) ===
+                    String(selectedId);
+
+            }
+        );
+
+
+    if (!student) {
+
+        return;
+
+    }
+
+
+    // =================================
+    // PHONE
     // =================================
 
     if (phoneInput) {
@@ -405,87 +738,117 @@ function loadStudentPhone() {
 
 
     // =================================
-    // UPDATE STUDENT DETAILS
+    // STUDENT NAME
     // =================================
 
     if (previewName) {
 
-        previewName.innerText =
+        previewName.textContent =
             student.name || "-";
 
     }
 
 
+    // =================================
+    // CLASS
+    // =================================
+
     if (previewClass) {
 
-        previewClass.innerText =
+        previewClass.textContent =
             student.class_name || "-";
 
     }
 
 
+    // =================================
+    // PARENT PHONE
+    // =================================
+
     if (previewPhone) {
 
-        previewPhone.innerText =
+        previewPhone.textContent =
             student.parentPhone || "-";
 
     }
 
 
     // =================================
-    // ABSENT MESSAGE
+    // MESSAGE
     // =================================
 
     if (messageBox) {
 
-    const today = new Date();
+        const today =
+            new Date();
 
-    const todayDate = today.toLocaleDateString("en-GB", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric"
-    });
 
-    messageBox.value = `Student Name: ${student.name || ""}
-was absent from today's English class (${todayDate}).
+        const todayDate =
+            today.toLocaleDateString(
+                "en-GB",
+                {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric"
+                }
+            );
 
-Please let me know the reason for missing class.
+
+        messageBox.value =
+`Dear Parent,
+
+${student.name || "[Student Name]"} was absent from today’s English class (${todayDate}). Please let me know the reason for missing class.
 
 Thank you,
-${student.schoolName || "School"}.`;
+${student.schoolName || "[School name]"}`;
+
     }
+
 }
-
-
-// =====================================
+ // =====================================
 // SEND WHATSAPP
 // =====================================
 
 async function sendWhatsApp() {
 
-    const number =
-        document
-            .getElementById(
-                "parentNumber"
-            )
-            .value
-            .trim();
+    const studentSelect =
+        document.getElementById(
+            "studentSelect"
+        );
 
 
-    const message =
-        document
-            .getElementById(
-                "message"
-            )
-            .value
-            .trim();
+    const phoneInput =
+        document.getElementById(
+            "parentNumber"
+        );
+
+
+    const messageBox =
+        document.getElementById(
+            "message"
+        );
+
+
+    if (
+        !studentSelect ||
+        !phoneInput ||
+        !messageBox
+    ) {
+
+        return;
+
+    }
 
 
     // =================================
-    // VALIDATION
+    // SELECTED STUDENT
     // =================================
 
-    if (number === "") {
+    const studentId =
+        studentSelect.value;
+
+
+    if (!studentId) {
 
         alert(
             "Please select an absent student."
@@ -496,10 +859,37 @@ async function sendWhatsApp() {
     }
 
 
+    // =================================
+    // PHONE
+    // =================================
+
+    const number =
+        phoneInput.value.trim();
+
+
+    if (number === "") {
+
+        alert(
+            "Parent WhatsApp number is missing."
+        );
+
+        return;
+
+    }
+
+
+    // =================================
+    // MESSAGE
+    // =================================
+
+    const message =
+        messageBox.value.trim();
+
+
     if (message === "") {
 
         alert(
-            "Please enter message."
+            "Please enter a message."
         );
 
         return;
@@ -520,9 +910,9 @@ async function sendWhatsApp() {
 
     // =================================
     // SRI LANKAN NUMBER
-    // 0771234567
+    // 0761234567
     // ↓
-    // 94771234567
+    // 94761234567
     // =================================
 
     if (
@@ -538,7 +928,7 @@ async function sendWhatsApp() {
 
 
     // =================================
-    // VALIDATE NUMBER
+    // PHONE VALIDATION
     // =================================
 
     if (
@@ -553,170 +943,100 @@ async function sendWhatsApp() {
 
     }
 
-// =================================
-// SAVE WHATSAPP MESSAGE STATUS
-// =================================
 
-const selectedStudent =
-    document.getElementById("studentSelect").value;
+    try {
 
-if (!selectedStudent) {
+        // =================================
+        // GET TODAY
+        // =================================
 
-    alert("Please select an absent student.");
-
-    return;
-
-}
-
-
-const {
-    error: messageError
-} = await supabaseClient
-    .from("whatsapp_messages")
-    .insert({
-
-        student_id: selectedStudent,
-
-        attendance_date:
+        const today =
             new Date()
                 .toISOString()
-                .split("T")[0],
-
-        sent: true,
-
-        sent_at:
-            new Date().toISOString()
-
-    });
+                .split("T")[0];
 
 
-if (messageError) {
+        // =================================
+        // SAVE MESSAGE STATUS
+        // =================================
 
-    console.error(
-        "❌ WhatsApp Tracking Error:",
-        messageError
-    );
+        const {
+            error
+        } =
+            await supabaseClient
+                .from("whatsapp_messages")
+                .insert({
 
-}
-  else {
-    alert("✅ WhatsApp message status saved successfully!");
+                    student_id:
+                        studentId,
 
-    // Refresh WhatsApp status table
-    await loadWhatsAppStatus();
-  }
-    // =================================
-    // OPEN WHATSAPP
-    // =================================
+                    attendance_date:
+                        today,
 
-    const whatsappURL =
-        "whatsapp://send?phone=" +
-        phone +
-        "&text=" +
-        encodeURIComponent(
-            message
-        );
+                    sent:
+                        true,
 
+                    sent_at:
+                        new Date().toISOString()
 
-    window.location.href =
-        whatsappURL;
-
-}
-// =====================================
-// FILTER ABSENT STUDENTS BY CLASS
-// =====================================
-
-function filterStudentsByClass() {
-
-    const classSelect =
-        document.getElementById("classSelect");
-
-    const studentSelect =
-        document.getElementById("studentSelect");
-
-    if (!classSelect || !studentSelect) return;
+                });
 
 
-    const selectedClass =
-        classSelect.value;
+        if (error) {
 
+            console.error(
+                "❌ WhatsApp Status Error:",
+                error
+            );
 
-    // No class selected
-    if (selectedClass === "") {
+            alert(
+                "❌ Unable to save WhatsApp status.\n\n" +
+                error.message
+            );
 
-        studentSelect.innerHTML = `
-            <option value="">
-                Select Absent Student
-            </option>
-        `;
-
-        return;
-
-    }
-
-
-    // Filter today's absent students
-    const filteredStudents =
-        allAbsentStudents.filter(
-            student =>
-                student.class_name ===
-                selectedClass
-        );
-
-
-    // No absent students in this class
-    if (filteredStudents.length === 0) {
-
-        studentSelect.innerHTML = `
-            <option value="">
-                No absent students in this class
-            </option>
-        `;
-
-        return;
-
-    }
-
-
-    // Update global students
-    students =
-        filteredStudents;
-
-
-    // Build student dropdown
-    studentSelect.innerHTML = `
-        <option value="">
-            Select Absent Student
-        </option>
-    `;
-
-
-    filteredStudents.forEach(
-        function (student) {
-
-            studentSelect.innerHTML += `
-
-                <option value="${student.id}">
-
-                    ${student.name || "Unknown"}
-
-                </option>
-
-            `;
+            return;
 
         }
-    );
 
 
-    console.log(
-        "🏫 Selected Class:",
-        selectedClass
-    );
+        console.log(
+            "✅ WhatsApp status saved."
+        );
 
-    console.log(
-        "❌ Absent Students:",
-        filteredStudents
-    );
-loadWhatsAppStatus();
+
+        // =================================
+        // OPEN WHATSAPP
+        // =================================
+
+        const whatsappURL =
+            "whatsapp://send?phone=" +
+            phone +
+            "&text=" +
+            encodeURIComponent(
+                message
+            );
+
+
+        window.location.href =
+            whatsappURL;
+
+    }
+
+
+    catch (error) {
+
+        console.error(
+            "❌ WhatsApp Error:",
+            error
+        );
+
+
+        alert(
+            "❌ Something went wrong while sending WhatsApp message."
+        );
+
+    }
+
 }
 // =====================================
 // LOAD WHATSAPP MESSAGE STATUS
@@ -725,22 +1045,35 @@ loadWhatsAppStatus();
 async function loadWhatsAppStatus() {
 
     const classSelect =
-        document.getElementById("classSelect");
+        document.getElementById(
+            "classSelect"
+        );
 
     const tableContainer =
         document.getElementById(
             "whatsappStatusTable"
         );
 
-    if (!classSelect || !tableContainer)
+
+    if (
+        !classSelect ||
+        !tableContainer
+    ) {
+
         return;
+
+    }
 
 
     const selectedClass =
         classSelect.value;
 
 
-    if (!selectedClass) {
+    // =================================
+    // NO CLASS
+    // =================================
+
+    if (selectedClass === "") {
 
         tableContainer.innerHTML = `
             <p>
@@ -760,27 +1093,38 @@ async function loadWhatsAppStatus() {
     `;
 
 
-    const today =
-        new Date()
-            .toISOString()
-            .split("T")[0];
-
-
     try {
 
         // =================================
-        // GET ABSENT STUDENTS IN CLASS
+        // TODAY
+        // =================================
+
+        const today =
+            new Date()
+                .toISOString()
+                .split("T")[0];
+
+
+        // =================================
+        // STUDENTS IN SELECTED CLASS
         // =================================
 
         const classStudents =
             allAbsentStudents.filter(
-                student =>
-                    student.class_name ===
-                    selectedClass
+                function (student) {
+
+                    return (
+                        student.class_name ===
+                        selectedClass
+                    );
+
+                }
             );
 
 
-        if (classStudents.length === 0) {
+        if (
+            classStudents.length === 0
+        ) {
 
             tableContainer.innerHTML = `
                 <p>
@@ -793,10 +1137,17 @@ async function loadWhatsAppStatus() {
         }
 
 
+        // =================================
+        // STUDENT IDs
+        // =================================
+
         const studentIds =
             classStudents.map(
-                student =>
-                    String(student.id)
+                function (student) {
+
+                    return student.id;
+
+                }
             );
 
 
@@ -842,7 +1193,7 @@ async function loadWhatsAppStatus() {
 
 
         // =================================
-        // BUILD TABLE
+        // TABLE
         // =================================
 
         let html = `
@@ -874,7 +1225,6 @@ async function loadWhatsAppStatus() {
                 </thead>
 
                 <tbody>
-
         `;
 
 
@@ -883,15 +1233,24 @@ async function loadWhatsAppStatus() {
 
                 const record =
                     (messages || []).find(
-                        message =>
-                            String(
-                                message.student_id
-                            ) ===
-                            String(
-                                student.id
-                            )
+                        function (message) {
+
+                            return (
+                                String(
+                                    message.student_id
+                                ) ===
+                                String(
+                                    student.id
+                                )
+                            );
+
+                        }
                     );
 
+
+                // =================================
+                // STATUS
+                // =================================
 
                 const sent =
                     record &&
@@ -899,13 +1258,22 @@ async function loadWhatsAppStatus() {
 
 
                 const status =
-    sent
-        ? `<span class="whatsapp-status sent">
-            ✅ Sent
-           </span>`
-        : `<span class="whatsapp-status pending">
-            ⏳ Pending
-           </span>`;
+                    sent
+                        ? `
+                            <span class="whatsapp-status sent">
+                                ✅ Sent
+                            </span>
+                          `
+                        : `
+                            <span class="whatsapp-status pending">
+                                ⏳ Pending
+                            </span>
+                          `;
+
+
+                // =================================
+                // TIME
+                // =================================
 
                 const sentTime =
                     sent &&
@@ -921,11 +1289,15 @@ async function loadWhatsAppStatus() {
                     <tr>
 
                         <td>
-                            ${student.name || "-"}
+                            ${escapeHTML(
+                                student.name || "-"
+                            )}
                         </td>
 
                         <td>
-                            ${student.class_name || "-"}
+                            ${escapeHTML(
+                                student.class_name || "-"
+                            )}
                         </td>
 
                         <td>
@@ -963,12 +1335,15 @@ async function loadWhatsAppStatus() {
         );
 
     }
+
+
     catch (error) {
 
         console.error(
-            "❌ Unexpected WhatsApp Status Error:",
+            "❌ Unexpected Status Error:",
             error
         );
+
 
         tableContainer.innerHTML = `
             <p>
@@ -979,3 +1354,43 @@ async function loadWhatsAppStatus() {
     }
 
 }
+// =====================================
+// HTML SAFETY
+// =====================================
+
+function escapeHTML(value) {
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+// =====================================
+// PAGE LOAD
+// =====================================
+
