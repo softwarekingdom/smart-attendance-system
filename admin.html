@@ -233,35 +233,7 @@ Management System
 
 <!-- Activity log Section -->
 
-  <div class="activity-box">
-    
-    <h2>
-     📋📜 System Activity logs
-    </h2>
-<table>
-
-<thead>
-
-<tr>
-
-<th>No</th>
-<th>User</th>
-<th>Role</th>
-<th>Action</th>
-<th>Date</th>
-
-</tr>
-
-</thead>
-
-
-<tbody id="activityList">
-
-</tbody>
-
-
-</table>
-  </div>
+  
 
 <!-- Admin Menu -->
 
@@ -342,16 +314,13 @@ Management System
 
 
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="supabase-config.js"></script>
 <script src="auth.js"></script>
 <script src="sidebar.js"></script>
 <script src="rolesidebar.js"></script>
 <script src="admin.js"></script>
-<script src="activity.js"></script>
-
-
-<script>
-loadActivityLogs();
-</script>
 </body>
 
 </html>

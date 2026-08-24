@@ -1,170 +1,205 @@
 // =====================================
-// AI ATTENDANCE MANAGEMENT SYSTEM
-// admin.js
+// AI SCHOOL
+// Admin Panel
+// Supabase Version
 // =====================================
 
 
-// Admin Access Check
+// =====================================
+// PAGE LOAD
+// =====================================
 
-function checkAdmin(){
+document.addEventListener("DOMContentLoaded", function () {
 
+    loadAdminStats();
 
-let role = localStorage.getItem(
-"userRole"
-);
-
-
-
-if(role !== "admin"){
-
-
-window.location.href =
-"teacher login.html";
-
-
-return;
-
-}
-
-
-
-loadAdminData();
-
-
-}
-
-
-
+});
 
 
 // =====================================
-// Load Admin Dashboard Data
+// LOAD ADMIN STATISTICS
 // =====================================
 
+async function loadAdminStats() {
 
-function loadAdminData(){
+    console.log("Loading Admin Statistics...");
 
+    // Show loading state
 
+    document.getElementById("studentCount").textContent = "...";
+    document.getElementById("teacherCount").textContent = "...";
+    document.getElementById("attendanceCount").textContent = "...";
 
-// Students Count
 
-let students = JSON.parse(
+    try {
 
-localStorage.getItem("students")
+        // =====================================
+        // CHECK SUPABASE CONNECTION
+        // =====================================
 
-) || [];
+        if (!supabaseClient) {
 
+            throw new Error(
+                "Supabase client is not available."
+            );
 
+        }
 
-let studentCount = document.getElementById(
 
-"studentCount"
+        // =====================================
+        // STUDENTS COUNT
+        // =====================================
 
-);
+        const {
+            count: studentCount,
+            error: studentError
+        } = await supabaseClient
 
+            .from("students")
 
+            .select("id", {
+                count: "exact",
+                head: true
+            });
 
-if(studentCount){
 
-studentCount.innerText =
-students.length;
+        if (studentError) {
 
-}
+            console.error(
+                "Students Count Error:",
+                studentError
+            );
 
+            throw studentError;
 
+        }
 
 
+        document.getElementById(
+            "studentCount"
+        ).textContent = studentCount ?? 0;
 
 
-// Teacher Count
+        // =====================================
+        // TEACHERS COUNT
+        // =====================================
 
-let teachers = JSON.parse(
+        const {
+            count: teacherCount,
+            error: teacherError
+        } = await supabaseClient
 
-localStorage.getItem("teachers")
+            .from("teachers")
 
-) || [];
+            .select("id", {
+                count: "exact",
+                head: true
+            });
 
 
+        if (teacherError) {
 
-let teacherCount = document.getElementById(
+            console.error(
+                "Teachers Count Error:",
+                teacherError
+            );
 
-"teacherCount"
+            throw teacherError;
 
-);
+        }
 
 
+        document.getElementById(
+            "teacherCount"
+        ).textContent = teacherCount ?? 0;
 
-if(teacherCount){
 
-teacherCount.innerText =
-teachers.length;
+        // =====================================
+        // ATTENDANCE RECORDS COUNT
+        // =====================================
 
-}
+        const {
+            count: attendanceCount,
+            error: attendanceError
+        } = await supabaseClient
 
+            .from("attendance")
 
+            .select("id", {
+                count: "exact",
+                head: true
+            });
 
 
+        if (attendanceError) {
 
+            console.error(
+                "Attendance Count Error:",
+                attendanceError
+            );
 
-// Attendance Count
+            throw attendanceError;
 
-let attendance = JSON.parse(
+        }
 
-localStorage.getItem("attendanceHistory")
 
-) || [];
+        document.getElementById(
+            "attendanceCount"
+        ).textContent = attendanceCount ?? 0;
 
 
+        // =====================================
+        // SUCCESS
+        // =====================================
 
-let attendanceCount = document.getElementById(
+        console.log(
+            "Admin Statistics Loaded Successfully"
+        );
 
-"attendanceCount"
+        console.log(
+            "Students:",
+            studentCount
+        );
 
-);
+        console.log(
+            "Teachers:",
+            teacherCount
+        );
 
+        console.log(
+            "Attendance:",
+            attendanceCount
+        );
 
+    }
 
-if(attendanceCount){
 
-attendanceCount.innerText =
-attendance.length;
+    catch (error) {
 
-}
+        console.error(
+            "Admin Statistics Error:",
+            error
+        );
 
 
+        // =====================================
+        // SHOW ERROR
+        // =====================================
 
-}
+        document.getElementById(
+            "studentCount"
+        ).textContent = "—";
 
 
+        document.getElementById(
+            "teacherCount"
+        ).textContent = "—";
 
 
+        document.getElementById(
+            "attendanceCount"
+        ).textContent = "—";
 
-
-// =====================================
-// Logout System
-// =====================================
-
-
-function logout(){
-
-
-saveActivity(
-"Logout"
-);
-
-
-localStorage.removeItem(
-"currentUser"
-);
-
-
-localStorage.removeItem(
-"userRole"
-);
-
-
-window.location.href =
-"login.html";
-
+    }
 
 }
