@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1f3a">
+  <title>Create Account | Smart Attendance System</title>
+  <link rel="stylesheet" href="signup.css">
+</head>
+<body>
+
+  <main class="signup-container">
+    <a href="index.html" class="back-link">← Back to Home</a>
+
+    <section class="signup-card">
+      <div class="brand-icon">SA</div>
+
+      <h1>Create Your Account</h1>
+      <p class="subtitle">
+        Register your institution to manage student attendance.
+      </p>
+
+      <form action="#" method="post">
+
+        <div class="form-group">
+          <label for="institution">Institution Name</label>
+          <input
+            type="text"
+            id="institution"
+            name="institution"
+            placeholder="Enter institution name"
+            autocomplete="organization"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="teacher">Teacher's Full Name</label>
+          <input
+            type="text"
+            id="teacher"
+            name="teacher"
+            placeholder="Enter your full name"
+            autocomplete="name"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Enter your email address"
+            autocomplete="email"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Contact Number</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder="Enter contact number"
+            autocomplete="tel"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Create a password"
+            autocomplete="new-password"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="confirm-password">Confirm Password</label>
+          <input
+            type="password"
+            id="confirm-password"
+            name="confirm-password"
+            placeholder="Enter password again"
+            autocomplete="new-password"
+            required
+          >
+        </div>
+
+        <div class="privacy-row">
+          <label class="privacy-checkbox">
+            <input
+              type="checkbox"
+              id="privacy"
+              name="privacy"
+              required
+            >
+            <span>I accept the Privacy Policy</span>
+          </label>
+
+          <a href="privacypolicy.html" class="privacy-link">
+            View Privacy Policy
+          </a>
+        </div>
+
+        <button type="submit" class="signup-button">
+          Create Account
+        </button>
+
+        <p class="login-text">
+          Already have an account?
+          <a href="login.html">Login</a>
+        </p>
+
+      </form>
+    </section>
+
+    <p class="footer-text">
+      © <span id="year">2026</span> Smart Attendance System
+    </p>
+  </main>
+
+  <script>
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+  </script>
+
+</body>
+</html>

@@ -1,79 +1,485 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
+    <meta name="description"
+          content="Smart Attendance System simplifies attendance management, parent communication, and student ID card generation.">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ffffff">
 
-<title>AI School Login</title>
+    <title>Smart Attendance System | Official Website</title>
 
-<link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="index.css">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
 </head>
 
+<body>
 
-<body class="login-body">
+    <!-- Navigation -->
+    <header class="header">
+        <nav class="navbar container">
+
+            <a href="index.html" class="brand" aria-label="Smart Attendance Home">
+                <span class="brand-icon" aria-hidden="true">
+                    <svg viewBox="0 0 48 48" fill="none">
+                        <path d="M24 3L3 13L24 23L45 13L24 3Z"
+                              fill="currentColor"/>
+                        <path d="M10 19V30C10 34 19 40 24 40C29 40 38 34 38 30V19L24 26L10 19Z"
+                              fill="currentColor" opacity=".75"/>
+                        <path d="M43 15V29"
+                              stroke="currentColor" stroke-width="3"
+                              stroke-linecap="round"/>
+                    </svg>
+                </span>
+
+                <span class="brand-name">
+                    Smart Attendance
+                    <small>SYSTEM</small>
+                </span>
+            </a>
+
+            <button class="menu-toggle"
+                    id="menuToggle"
+                    aria-label="Open navigation menu"
+                    aria-expanded="false"
+                    aria-controls="navContent">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <div class="nav-content" id="navContent">
+
+                <div class="nav-links">
+                    <a class="nav-link active" href="#home">Home</a>
+                    <a class="nav-link" href="#about">About</a>
+                    <a class="nav-link" href="#features">Features</a>
+                </div>
+
+                <div class="nav-actions">
+                    <a href="login.html" class="login-link">Login</a>
+                    <a href="signup.html" class="nav-cta">
+                        Get Started <span>→</span>
+                    </a>
+                </div>
+
+            </div>
+        </nav>
+    </header>
 
 
-<div class="login-box">
+    <main>
+
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+
+            <div class="hero-decoration decoration-one"></div>
+            <div class="hero-decoration decoration-two"></div>
+
+            <div class="container hero-grid">
+
+                <div class="hero-content reveal">
+
+                    <span class="eyebrow">
+                        <span class="eyebrow-line"></span>
+                        SMART ATTENDANCE SYSTEM
+                    </span>
+
+                    <h1>
+                        Smarter Attendance.
+                        <span>Simpler Management.</span>
+                    </h1>
+
+                    <p class="hero-description">
+                        Manage student attendance, prepare WhatsApp
+                        absence notifications for parents, and generate
+                        multiple student ID cards through one convenient
+                        system.
+                    </p>
+
+                    <div class="hero-actions">
+
+                        <a href="signup.html" class="button button-primary">
+                            Get Started
+                            <span class="button-arrow">→</span>
+                        </a>
+
+                        <a href="login.html" class="button button-outline">
+                            Login to Your Account
+                        </a>
+
+                    </div>
+
+                    <div class="hero-note">
+                        <span class="note-check">✓</span>
+                        <span>Designed for simpler attendance management</span>
+                    </div>
+
+                </div>
 
 
-    <h2>
-        🤖 AI School
-    </h2>
+                <!-- Illustrative Product Preview -->
+                <div class="hero-visual reveal">
 
-    <p>
-        Attendance Management System
-    </p>
+                    <div class="visual-orb"></div>
+
+                    <div class="product-window">
+
+                        <div class="window-topbar">
+                            <div class="window-dots">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+
+                            <span class="window-label">System Preview</span>
+                            <span class="window-menu">•••</span>
+                        </div>
+
+                        <div class="preview-layout">
+
+                            <aside class="preview-sidebar">
+                                <div class="preview-brand">
+                                    <span class="preview-brand-icon">✓</span>
+                                    <span>Smart Attend</span>
+                                </div>
+
+                                <div class="sidebar-item selected">
+                                    <span>▦</span> Dashboard
+                                </div>
+
+                                <div class="sidebar-item">
+                                    <span>✓</span> Attendance
+                                </div>
+
+                                <div class="sidebar-item">
+                                    <span>▣</span> ID Cards
+                                </div>
+
+                                <div class="sidebar-item">
+                                    <span>↗</span> Messages
+                                </div>
+                            </aside>
+
+                            <div class="preview-main">
+
+                                <div class="preview-heading">
+                                    <div>
+                                        <span class="preview-kicker">
+                                            MANAGEMENT
+                                        </span>
+                                        <h3>Attendance System</h3>
+                                    </div>
+
+                                    <span class="preview-status">Preview</span>
+                                </div>
+
+                                <div class="preview-placeholder">
+                                    <div class="placeholder-icon">✓</div>
+                                    <h4>Student Attendance</h4>
+                                    <p>
+                                        Organize attendance records
+                                        in one place.
+                                    </p>
+                                </div>
+
+                                <div class="preview-feature-list">
+
+                                    <div class="preview-feature">
+                                        <span class="preview-feature-icon whatsapp">
+                                            W
+                                        </span>
+                                        <div>
+                                            <strong>Parent Notifications</strong>
+                                            <small>Review and send messages</small>
+                                        </div>
+                                        <span class="feature-arrow">→</span>
+                                    </div>
+
+                                    <div class="preview-feature">
+                                        <span class="preview-feature-icon idcard">
+                                            ID
+                                        </span>
+                                        <div>
+                                            <strong>ID Card Generator</strong>
+                                            <small>Prepare student ID cards</small>
+                                        </div>
+                                        <span class="feature-arrow">→</span>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="floating-note">
+                        <div class="floating-icon">▣</div>
+                        <div>
+                            <strong>Multiple ID Cards</strong>
+                            <span>Organized generation</span>
+                        </div>
+                    </div>
+
+                    <div class="floating-note floating-note-bottom">
+                        <div class="floating-icon whatsapp-icon">W</div>
+                        <div>
+                            <strong>WhatsApp Messages</strong>
+                            <span>Teacher-reviewed alerts</span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
 
 
-    <input
-        type="text"
-        id="username"
-        placeholder="Username"
-        autocomplete="username"
-    >
+        <!-- About -->
+        <section class="about section" id="about">
+
+            <div class="container about-grid">
+
+                <div class="about-heading reveal">
+                    <span class="eyebrow">
+                        ABOUT THE SYSTEM
+                    </span>
+
+                    <h2>
+                        A practical solution for
+                        <span>everyday attendance tasks.</span>
+                    </h2>
+                </div>
+
+                <div class="about-description reveal">
+                    <p>
+                        Smart Attendance System aims to simplify the
+                        way attendance information and student records
+                        are managed.
+                    </p>
+
+                    <p>
+                        Teachers can prepare absence notifications for
+                        parents to review and send, while the ID card
+                        generator helps organize card creation for
+                        multiple students.
+                    </p>
+
+                    <a href="signup.html" class="text-link">
+                        Get started with the system <span>→</span>
+                    </a>
+                </div>
+
+            </div>
+
+        </section>
 
 
-    <input
-        type="password"
-        id="password"
-        placeholder="Password"
-        autocomplete="current-password"
-    >
+        <!-- Features -->
+        <section class="features section" id="features">
+
+            <div class="container">
+
+                <div class="section-heading reveal">
+                    <span class="eyebrow">
+                        CORE FEATURES
+                    </span>
+
+                    <h2>
+                        Essential tools.
+                        <span>One system.</span>
+                    </h2>
+
+                    <p>
+                        Designed to make everyday attendance
+                        administration more convenient.
+                    </p>
+                </div>
 
 
-    <label class="remember-box">
+                <div class="feature-grid">
 
-        <input
-            type="checkbox"
-            id="rememberMe"
-        >
+                    <article class="feature-card reveal">
 
-        Remember Me
+                        <div class="feature-icon icon-blue">
+                            <svg viewBox="0 0 48 48" fill="none"
+                                 aria-hidden="true">
+                                <path d="M24 5C13.5 5 5 12.9 5 22.6C5 27 6.8 31 10 34L8 42L17 38.5C19.2 39.3 21.6 39.8 24 39.8C34.5 39.8 43 31.9 43 22.2C43 12.7 34.5 5 24 5Z"
+                                      stroke="currentColor" stroke-width="3"
+                                      stroke-linejoin="round"/>
+                                <path d="M17 16C18 14.8 19 15.5 20 17.5L22 21L19.5 23C21 26 23 28 26 29.5L28 27C30 28 32 29 31 31C30 33 28 34 25 33C19 31 14 26 13 21C12 18 14 17 17 16Z"
+                                      fill="currentColor"/>
+                            </svg>
+                        </div>
 
-    </label>
+                        <span class="feature-number">01</span>
+
+                        <h3>WhatsApp Absence Notifications</h3>
+
+                        <p>
+                            When a student is marked absent, a
+                            notification can be prepared for the
+                            student's parent. The teacher reviews
+                            and sends the message.
+                        </p>
+
+                        <div class="feature-tag">
+                            Teacher-reviewed messaging
+                        </div>
+
+                    </article>
 
 
-    <button onclick="login()">
+                    <article class="feature-card reveal">
 
-        🔐 Login
+                        <div class="feature-icon icon-purple">
+                            <svg viewBox="0 0 48 48" fill="none"
+                                 aria-hidden="true">
+                                <rect x="5" y="9" width="38" height="30"
+                                      rx="5" stroke="currentColor"
+                                      stroke-width="3"/>
+                                <circle cx="17" cy="21" r="5"
+                                        stroke="currentColor" stroke-width="3"/>
+                                <path d="M9 34C10 28 14 27 17 27C20 27 24 28 25 34"
+                                      stroke="currentColor" stroke-width="3"
+                                      stroke-linecap="round"/>
+                                <path d="M29 19H37M29 25H37M29 31H35"
+                                      stroke="currentColor" stroke-width="2.5"
+                                      stroke-linecap="round"/>
+                            </svg>
+                        </div>
 
-    </button>
+                        <span class="feature-number">02</span>
+
+                        <h3>Multiple ID Card Generator</h3>
+
+                        <p>
+                            Prepare student identification cards
+                            for multiple students in a consistent,
+                            organized format.
+                        </p>
+
+                        <div class="feature-tag">
+                            Bulk ID card creation
+                        </div>
+
+                    </article>
+
+                </div>
+
+                <div class="feature-bottom reveal">
+                    <span class="bottom-check">✓</span>
+                    <p>
+                        Focused on useful features without unnecessary
+                        complexity.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
 
 
-</div>
+        <!-- Call To Action -->
+        <section class="cta-section">
 
-<!-- Supabase Library -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+            <div class="container">
+                <div class="cta-card reveal">
 
-<!-- Supabase Configuration -->
-<script src="supabase-config.js"></script>
+                    <div class="cta-content">
+                        <span class="eyebrow eyebrow-light">
+                            SMART ATTENDANCE SYSTEM
+                        </span>
 
-<!-- Login System -->
-<script src="index.js"></script>
+                        <h2>
+                            Make attendance management simpler.
+                        </h2>
+
+                        <p>
+                            Access the system to get started.
+                        </p>
+
+                        <div class="cta-actions">
+                            <a href="signup.html"
+                               class="button button-white">
+                                Get Started <span>→</span>
+                            </a>
+
+                            <a href="login.html"
+                               class="cta-login">
+                                Already have an account? Login
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="cta-decoration" aria-hidden="true">
+                        <span class="cta-check">✓</span>
+                        <span class="cta-ring ring-one"></span>
+                        <span class="cta-ring ring-two"></span>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+
+        <div class="container footer-inner">
+
+            <a href="index.html" class="brand footer-brand">
+                <span class="brand-icon" aria-hidden="true">
+                    <svg viewBox="0 0 48 48" fill="none">
+                        <path d="M24 3L3 13L24 23L45 13L24 3Z"
+                              fill="currentColor"/>
+                        <path d="M10 19V30C10 34 19 40 24 40C29 40 38 34 38 30V19L24 26L10 19Z"
+                              fill="currentColor" opacity=".75"/>
+                    </svg>
+                </span>
+
+                <span class="brand-name">
+                    Smart Attendance
+                    <small>SYSTEM</small>
+                </span>
+            </a>
+
+            <p class="footer-description">
+                Smarter attendance and simpler student record management.
+            </p>
+
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#features">Features</a>
+                <a href="login.html">Login</a>
+            </div>
+
+            <div class="footer-bottom">
+                <span>
+                    © <span id="currentYear"></span>
+                    Smart Attendance System.
+                </span>
+
+                <a href="signup.html">Get Started →</a>
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <script src="index.js"></script>
 
 </body>
 </html>
